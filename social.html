@@ -1,1 +1,290 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Social Content Toolkit — GlobalDev Hub</title><meta name="description" content="Responsible tools for social-media content planning and profile improvement."><link rel="stylesheet" href="style.css"></head><body><header><div class="wrap nav"><a class="brand" href="index.html">GlobalDev <span>Hub</span></a><nav><a href="index.html">Home</a><a href="tools.html">Tools</a><a href="guides.html">Guides</a><a href="social.html">Social Toolkit</a><a href="careers.html">Careers</a><a href="resources.html">Resources</a></nav></div></header><main class="section"><div class="wrap"><div class="eyebrow">SOCIAL TOOLKIT</div><h1>Grow through useful content, not fake engagement.</h1><p class="lead">Plan captions, bios and content ideas. This site does not provide fake followers, likes, views, bots or automated engagement.</p><div class="notice">Use genuine audience growth: useful content, consistency, clear positioning and real interaction.</div><div class="grid two" style="margin-top:22px"><div class="tool"><h3>Caption draft</h3><input id="t" placeholder="Topic"><textarea id="p" placeholder="Key points"></textarea><button class="btn primary" onclick="cap()">Draft</button><div class="out" id="cap"></div></div><div class="tool"><h3>Hashtag organizer</h3><textarea id="h" placeholder="#webdev #coding #learning"></textarea><button class="btn" onclick="hh()">Organize</button><div class="out" id="ho"></div></div><div class="tool"><h3>Profile bio draft</h3><input id="who" placeholder="Who you help"><input id="help" placeholder="What you help them do"><button class="btn primary" onclick="bio()">Draft bio</button><div class="out" id="bio"></div></div><div class="tool"><h3>7-day content framework</h3><button class="btn primary" onclick="plan()">Generate</button><div class="out" id="plan"></div></div></div></div></main><footer><div class="wrap"><p><a href="index.html">Home</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></p></div></footer><script>const q=s=>document.querySelector(s);function cap(){q('#cap').textContent=`Hook: ${q('#t').value||'Your topic'}\n\n${q('#p').value||'Add 2–3 useful points here.'}\n\nTakeaway: give the reader one action they can try.`}function hh(){q('#ho').textContent=[...new Set(q('#h').value.split(/[\s,]+/).filter(x=>x.startsWith('#')).map(x=>x.toLowerCase()))].join(' ')}function bio(){q('#bio').textContent=`Helping ${q('#who').value||'people'} ${q('#help').value||'make progress online'}. Practical tips and useful resources.`}function plan(){q('#plan').textContent=['Day 1 — Answer a common question','Day 2 — Show a workflow','Day 3 — Share a lesson','Day 4 — Publish a tutorial','Day 5 — Explain a useful tool','Day 6 — Show a project','Day 7 — Summarize and invite genuine questions'].join('\n')}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Social Content Toolkit — GlobalDev Hub</title>
+
+<meta name="description" content="Responsible tools for social-media content planning and profile improvement.">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.social-tools {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:24px;
+}
+
+.social-tool {
+  background:#111827;
+  border:1px solid #202a3f;
+  border-radius:14px;
+  padding:20px;
+}
+
+.social-tool h3 {
+  margin-top:0;
+  margin-bottom:14px;
+}
+
+.social-tool input,
+.social-tool textarea {
+  width:100%;
+  box-sizing:border-box;
+  background:#0b1220;
+  color:#e5e7eb;
+  border:1px solid #2b3852;
+  border-radius:9px;
+  padding:12px;
+  margin-bottom:10px;
+  font:inherit;
+  outline:none;
+}
+
+.social-tool textarea {
+  min-height:110px;
+  resize:vertical;
+}
+
+.social-tool input:focus,
+.social-tool textarea:focus {
+  border-color:#5cc8ff;
+}
+
+.social-btn {
+  display:inline-block;
+  border:1px solid #2b3852;
+  border-radius:9px;
+  padding:10px 15px;
+  background:#172033;
+  color:#e5e7eb;
+  font:inherit;
+  cursor:pointer;
+}
+
+.social-btn.primary {
+  background:#12344a;
+  border-color:#5cc8ff;
+  color:#ffffff;
+}
+
+.social-btn:hover {
+  opacity:.9;
+}
+
+.social-output {
+  white-space:pre-wrap;
+  margin-top:14px;
+  padding:13px;
+  background:#0b1220;
+  border:1px solid #202a3f;
+  border-radius:9px;
+  color:#cbd5e1;
+  min-height:20px;
+}
+
+@media (max-width:700px) {
+  .social-tools {
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">GlobalDev <span>Hub</span></a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="wrap">
+
+    <div class="eyebrow">SOCIAL TOOLKIT</div>
+
+    <h1>Grow through useful content, not fake engagement.</h1>
+
+    <p class="lead">
+      Plan captions, bios and content ideas.
+      This site does not provide fake followers, likes, views, bots or automated engagement.
+    </p>
+
+    <div class="notice">
+      Use genuine audience growth: useful content, consistency,
+      clear positioning and real interaction.
+    </div>
+
+    <div class="social-tools">
+
+      <div class="social-tool">
+        <h3>Caption draft</h3>
+
+        <input id="topic" placeholder="Topic">
+
+        <textarea id="points" placeholder="Key points"></textarea>
+
+        <button class="social-btn primary" onclick="makeCaption()">
+          Draft caption
+        </button>
+
+        <div class="social-output" id="captionOutput"></div>
+      </div>
+
+
+      <div class="social-tool">
+        <h3>Hashtag organizer</h3>
+
+        <textarea
+          id="hashtags"
+          placeholder="#webdev #coding #learning"
+        ></textarea>
+
+        <button class="social-btn" onclick="organizeHashtags()">
+          Organize hashtags
+        </button>
+
+        <div class="social-output" id="hashtagOutput"></div>
+      </div>
+
+
+      <div class="social-tool">
+        <h3>Profile bio draft</h3>
+
+        <input
+          id="who"
+          placeholder="Who you help"
+        >
+
+        <input
+          id="help"
+          placeholder="What you help them do"
+        >
+
+        <button class="social-btn primary" onclick="makeBio()">
+          Draft bio
+        </button>
+
+        <div class="social-output" id="bioOutput"></div>
+      </div>
+
+
+      <div class="social-tool">
+        <h3>7-day content framework</h3>
+
+        <p>
+          Generate a simple weekly content plan you can adapt
+          to your own audience.
+        </p>
+
+        <button class="social-btn primary" onclick="makePlan()">
+          Generate plan
+        </button>
+
+        <div class="social-output" id="planOutput"></div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="index.html">Home</a> ·
+      <a href="terms.html">Terms</a> ·
+      <a href="privacy.html">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+
+<script>
+
+function makeCaption() {
+
+  const topic =
+    document.getElementById("topic").value.trim() ||
+    "Your topic";
+
+  const points =
+    document.getElementById("points").value.trim() ||
+    "Add 2–3 useful points here.";
+
+  document.getElementById("captionOutput").textContent =
+`Hook: ${topic}
+
+${points}
+
+Takeaway: give the reader one useful action they can try.`;
+}
+
+
+function organizeHashtags() {
+
+  const text =
+    document.getElementById("hashtags").value;
+
+  const tags = [
+    ...new Set(
+      text
+        .split(/[\s,]+/)
+        .filter(tag => tag.startsWith("#"))
+        .map(tag => tag.toLowerCase())
+    )
+  ];
+
+  document.getElementById("hashtagOutput").textContent =
+    tags.length
+      ? tags.join(" ")
+      : "Add hashtags such as #webdev #coding #learning";
+}
+
+
+function makeBio() {
+
+  const who =
+    document.getElementById("who").value.trim() ||
+    "people";
+
+  const help =
+    document.getElementById("help").value.trim() ||
+    "make progress online";
+
+  document.getElementById("bioOutput").textContent =
+`Helping ${who} ${help}.
+Practical tips and useful resources.`;
+}
+
+
+function makePlan() {
+
+  document.getElementById("planOutput").textContent =
+`Day 1 — Answer a common question
+Day 2 — Show a useful workflow
+Day 3 — Share a lesson
+Day 4 — Publish a tutorial
+Day 5 — Explain a useful tool
+Day 6 — Show a project
+Day 7 — Summarize the week and invite genuine questions`;
+}
+
+</script>
+
+</body>
+</html>
