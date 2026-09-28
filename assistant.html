@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>AI Assistant — GlobalDev Hub</title>
+
+  <meta
+    name="description"
+    content="GlobalDev Hub AI Assistant — an honest assistant for technology, digital skills, careers and online resources."
+  >
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .assistant-box {
+      max-width: 850px;
+      margin: 30px auto;
+      background: #111827;
+      border: 1px solid #202a3f;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .assistant-intro {
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    .assistant-note {
+      margin: 18px 0;
+      padding: 14px;
+      background: #0b1220;
+      border: 1px solid #202a3f;
+      border-radius: 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .assistant-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 130px;
+      resize: vertical;
+      background: #0b1220;
+      color: #e5e7eb;
+      border: 1px solid #2b3852;
+      border-radius: 9px;
+      padding: 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    .assistant-form textarea:focus {
+      border-color: #5cc8ff;
+    }
+
+    .assistant-btn {
+      margin-top: 10px;
+      border: 1px solid #5cc8ff;
+      border-radius: 9px;
+      padding: 10px 15px;
+      background: #12344a;
+      color: #ffffff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .assistant-btn:hover {
+      opacity: .9;
+    }
+
+    .assistant-output {
+      margin-top: 18px;
+      padding: 14px;
+      background: #0b1220;
+      border: 1px solid #202a3f;
+      border-radius: 9px;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+
+    <a class="brand" href="index.html">
+      GlobalDev Hub
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<main class="section">
+
+  <div class="wrap">
+
+    <p class="eyebrow">AI ASSISTANT</p>
+
+    <h1>GlobalDev Hub AI Assistant</h1>
+
+    <div class="assistant-box">
+
+      <p class="assistant-intro">
+        Ask questions about technology, digital skills, careers,
+        websites, online tools and learning.
+      </p>
+
+      <div class="assistant-note">
+        <strong>Our honesty promise:</strong><br>
+        The assistant should not invent information or pretend to know
+        something it does not know. It should clearly say when it is
+        uncertain and encourage users to verify important information.
+        Never share passwords, security codes, API keys or payment details.
+      </div>
+
+      <form class="assistant-form" onsubmit="return prepareQuestion(event)">
+
+        <textarea
+          id="question"
+          placeholder="Ask your question here..."
+          aria-label="Ask the GlobalDev Hub AI Assistant"
+        ></textarea>
+
+        <button class="assistant-btn" type="submit">
+          Ask Assistant
+        </button>
+
+      </form>
+
+      <div class="assistant-output" id="assistantOutput">
+        The AI assistant is being connected securely.
+        Please do not enter passwords, verification codes,
+        API keys or payment information.
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <div class="wrap footer-inner">
+
+    <span>© 2026 GlobalDev Hub</span>
+
+    <a href="index.html">Home</a>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+function prepareQuestion(event) {
+
+  event.preventDefault();
+
+  const question =
+    document.querySelector("#question").value.trim();
+
+  const output =
+    document.querySelector("#assistantOutput");
+
+  if (!question) {
+
+    output.textContent =
+      "Please enter a question.";
+
+    return false;
+  }
+
+  output.textContent =
+    "Your question is ready. The secure AI connection will be added before this assistant provides live AI answers.";
+
+  return false;
+}
+
+</script>
+
+</body>
+</html>
