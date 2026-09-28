@@ -1,1 +1,196 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Career Resources — GlobalDev Hub</title><meta name="description" content="Practical resources for CVs, portfolios and interviews."><link rel="stylesheet" href="style.css"></head><body><header><div class="wrap nav"><a class="brand" href="index.html">GlobalDev <span>Hub</span></a><nav><a href="index.html">Home</a><a href="tools.html">Tools</a><a href="guides.html">Guides</a><a href="social.html">Social Toolkit</a><a href="careers.html">Careers</a><a href="resources.html">Resources</a></nav></div></header><main class="section"><div class="wrap"><div class="eyebrow">CAREERS</div><h1>Build proof, not just promises.</h1><div class="grid"><article class="card"><h3>CV checklist</h3><ul class="list"><li>Target role</li><li>Clear summary</li><li>Skills with examples</li><li>Projects and outcomes</li><li>Consistent dates</li></ul></article><article class="card"><h3>Portfolio checklist</h3><ul class="list"><li>3–5 strong projects</li><li>Problem and solution</li><li>Your role</li><li>Live demo or screenshots</li><li>Lessons learned</li></ul></article><article class="card"><h3>Interview checklist</h3><ul class="list"><li>Practice project explanations</li><li>Prepare real examples</li><li>Research the role</li><li>Prepare questions</li><li>Be accurate about experience</li></ul></article></div><div class="tool"><h3>Project description template</h3><textarea id="pr" placeholder="Project name, problem, role, tools, result..."></textarea><button class="btn primary" onclick="mk()">Create draft</button><div class="out" id="pro"></div></div></div></main><footer><div class="wrap"><p><a href="index.html">Home</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p></div></footer><script>function mk(){document.querySelector('#pro').textContent=`Problem: [what needed solving]\nSolution: [what you built]\nMy role: [your contribution]\nTools: [technologies]\nResult: [outcome]\nLesson: [what you learned]\n\nNotes: ${document.querySelector('#pr').value}`}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Career Resources — GlobalDev Hub</title>
+
+<meta name="description" content="Practical resources for CVs, portfolios and interviews.">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.career-tool {
+  margin-top: 24px;
+  background: #111827;
+  border: 1px solid #202a3f;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.career-tool textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 130px;
+  resize: vertical;
+  background: #0b1220;
+  color: #e5e7eb;
+  border: 1px solid #2b3852;
+  border-radius: 9px;
+  padding: 12px;
+  font: inherit;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.career-tool textarea:focus {
+  border-color: #5cc8ff;
+}
+
+.career-btn {
+  display: inline-block;
+  border: 1px solid #5cc8ff;
+  border-radius: 9px;
+  padding: 10px 15px;
+  background: #12344a;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.career-btn:hover {
+  opacity: .9;
+}
+
+.career-output {
+  white-space: pre-wrap;
+  margin-top: 14px;
+  padding: 13px;
+  background: #0b1220;
+  border: 1px solid #202a3f;
+  border-radius: 9px;
+  color: #cbd5e1;
+  min-height: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      GlobalDev <span>Hub</span>
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="wrap">
+
+    <div class="eyebrow">CAREERS</div>
+
+    <h1>Build proof, not just promises.</h1>
+
+    <div class="grid">
+
+      <article class="card">
+        <h3>CV checklist</h3>
+
+        <ul class="list">
+          <li>Target role</li>
+          <li>Clear summary</li>
+          <li>Skills with examples</li>
+          <li>Projects and outcomes</li>
+          <li>Consistent dates</li>
+        </ul>
+      </article>
+
+
+      <article class="card">
+        <h3>Portfolio checklist</h3>
+
+        <ul class="list">
+          <li>3–5 strong projects</li>
+          <li>Problem and solution</li>
+          <li>Your role</li>
+          <li>Live demo or screenshots</li>
+          <li>Lessons learned</li>
+        </ul>
+      </article>
+
+
+      <article class="card">
+        <h3>Interview checklist</h3>
+
+        <ul class="list">
+          <li>Practice project explanations</li>
+          <li>Prepare real examples</li>
+          <li>Research the role</li>
+          <li>Prepare questions</li>
+          <li>Be accurate about experience</li>
+        </ul>
+      </article>
+
+    </div>
+
+
+    <div class="career-tool">
+
+      <h3>Project description template</h3>
+
+      <p>
+        Turn your project details into a clear description you can edit
+        for a CV, portfolio or interview preparation.
+      </p>
+
+      <textarea
+        id="pr"
+        placeholder="Project name, problem, role, tools, result..."
+      ></textarea>
+
+      <button class="career-btn" onclick="mk()">
+        Create draft
+      </button>
+
+      <div class="career-output" id="pro"></div>
+
+    </div>
+
+  </div>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="index.html">Home</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="terms.html">Terms</a>
+    </p>
+  </div>
+</footer>
+
+
+<script>
+
+function mk() {
+
+  const input =
+    document.querySelector("#pr").value.trim();
+
+  document.querySelector("#pro").textContent =
+`Problem: [what needed solving]
+Solution: [what you built]
+My role: [your contribution]
+Tools: [technologies]
+Result: [outcome]
+Lesson: [what you learned]
+
+Notes: ${input || "Add your project details above."}`;
+}
+
+</script>
+
+</body>
+</html>
