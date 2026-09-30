@@ -6,7 +6,10 @@
 
 <title>AI Assistant — GlobalDev Hub</title>
 
-<meta name="description" content="GlobalDev Hub AI Assistant — an honest assistant for technology, digital skills, careers and online resources.">
+<meta
+  name="description"
+  content="GlobalDev Hub AI Assistant — an honest assistant for technology, digital skills, careers and online resources."
+>
 
 <link rel="stylesheet" href="style.css">
 
@@ -91,97 +94,178 @@
 <body>
 
 <header class="site-header">
-<div class="wrap nav">
+  <div class="wrap nav">
 
-<a class="brand" href="index.html">
-GlobalDev Hub
-</a>
+    <a class="brand" href="index.html">
+      GlobalDev Hub
+    </a>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="tools.html">Tools</a>
-<a href="guides.html">Guides</a>
-<a href="social.html">Social Toolkit</a>
-<a href="careers.html">Careers</a>
-<a href="resources.html">Resources</a>
-</nav>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
 
-</div>
+  </div>
 </header>
 
 <main class="section">
 
-<div class="wrap">
+  <div class="wrap">
 
-<p class="eyebrow">AI ASSISTANT</p>
+    <p class="eyebrow">AI ASSISTANT</p>
 
-<h1>GlobalDev Hub AI Assistant</h1>
+    <h1>GlobalDev Hub AI Assistant</h1>
 
-<div class="assistant-box">
+    <div class="assistant-box">
 
-<p class="assistant-intro">
-Ask questions about technology, digital skills, careers,
-websites, online tools and learning.
-</p>
+      <p class="assistant-intro">
+        Ask questions about technology, digital skills, careers,
+        websites, online tools and learning.
+      </p>
 
-<div class="assistant-note">
-<strong>Our honesty promise:</strong><br>
-The assistant should not invent information or pretend to know
-something it does not know. If it is uncertain, it should say so.
-Important information should be checked with appropriate official
-or qualified sources.
-<br><br>
-Never enter passwords, verification codes, API keys or payment details.
-</div>
+      <div class="assistant-note">
+        <strong>Our honesty promise:</strong><br>
+        The assistant should not invent information or pretend to know
+        something it does not know. If it is uncertain, it should say so.
+        Important information should be checked with appropriate official
+        or qualified sources.
+        <br><br>
+        Never enter passwords, verification codes, API keys or payment details.
+      </div>
 
-<form class="assistant-form" onsubmit="return askAssistant(event)">
+      <form
+        class="assistant-form"
+        onsubmit="return askAssistant(event)"
+      >
 
-<textarea
-id="question"
-placeholder="Ask your question here..."
-aria-label="Ask the GlobalDev Hub AI Assistant"
-></textarea>
+        <textarea
+          id="question"
+          placeholder="Ask your question here..."
+          aria-label="Ask the GlobalDev Hub AI Assistant"
+        ></textarea>
 
-<input
-class="assistant-file"
-id="image"
-type="file"
-accept="image/png,image/jpeg,image/webp"
-aria-label="Upload an image"
->
+        <input
+          class="assistant-file"
+          id="image"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          aria-label="Upload an image"
+        >
 
-<button
-class="assistant-btn"
-id="askButton"
-type="submit">
-Ask Assistant
-</button>
+        <button
+          class="assistant-btn"
+          id="askButton"
+          type="submit"
+        >
+          Ask Assistant
+        </button>
 
-</form>
+      </form>
 
-<div class="assistant-output" id="assistantOutput">
-Ask a question to begin.
-</div>
+      <div class="assistant-output" id="assistantOutput">
+        Ask a question to begin.
+      </div>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </main>
 
 <footer>
 
-<div class="wrap footer-inner">
+  <div class="wrap footer-inner">
 
-<span>© 2026 GlobalDev Hub</span>
+    <span>© 2026 GlobalDev Hub</span>
 
-<a href="index.html">Home</a>
+    <a href="index.html">Home</a>
 
-</div>
+  </div>
 
 </footer>
 
 <script>
 
 const WORKER_URL =
-"https://twilight-art-3263.samoyakubu1
+  "https://twilight-art-3263.samoyakubu1.workers.dev";
+
+async function askAssistant(event) {
+
+  event.preventDefault();
+
+  const question =
+    document.querySelector("#question").value.trim();
+
+  const output =
+    document.querySelector("#assistantOutput");
+
+  const button =
+    document.querySelector("#askButton");
+
+  if (!question) {
+    output.textContent =
+      "Please enter a question.";
+    return false;
+  }
+
+  button.disabled = true;
+  button.textContent = "Thinking...";
+
+  output.textContent =
+    "Connecting to the AI assistant...";
+
+  try {
+
+    const response = await fetch(
+      WORKER_URL,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          question: question
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      output.textContent =
+        data.error ||
+        "The AI assistant could not answer right now.";
+
+      return false;
+    }
+
+    output.textContent =
+      data.answer ||
+      "I could not produce an answer right now.";
+
+  } catch (error) {
+
+    output.textContent =
+      "The AI assistant could not connect right now. Please try again.";
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "Ask Assistant";
+
+  }
+
+  return false;
+}
+
+</script>
+
+</body>
+</html>
