@@ -1,0 +1,10 @@
+{
+  "name": "GlobalDev Hub",
+  "short_name": "GlobalDev",
+  "description": "Practical technology guides, useful tools, learning resources, careers, and legitimate online resources.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080d1d",
+  "theme_color": "#080d1d",
+  "orientation": "portrait"
+}
