@@ -6,7 +6,7 @@
 
 <title>Music — GlobalDev Hub</title>
 
-<meta name="description" content="Discover music and audio content on GlobalDev Hub using properly licensed and permitted tracks.">
+<meta name="description" content="Listen to music online through an authorized music player on GlobalDev Hub.">
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
@@ -16,116 +16,127 @@
 <body>
 
 <header class="site-header">
-<div class="wrap nav">
+  <div class="wrap nav">
 
-<a class="brand" href="index.html">GlobalDev Hub</a>
+    <a class="brand" href="index.html">GlobalDev Hub</a>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="tools.html">Tools</a>
-<a href="guides.html">Guides</a>
-<a href="music.html">Music</a>
-<a href="social.html">Social Toolkit</a>
-<a href="careers.html">Careers</a>
-<a href="resources.html">Resources</a>
-</nav>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
 
-</div>
+  </div>
 </header>
 
 <main>
 
 <section class="hero wrap">
 
-<p class="eyebrow">MUSIC • AUDIO • DISCOVERY</p>
+  <p class="eyebrow">MUSIC • STREAMING</p>
 
-<h1>Music on GlobalDev Hub.</h1>
+  <h1>Listen to music.</h1>
 
-<p class="lead">
-A dedicated place for music and audio content that can be shared
-legally and responsibly.
-</p>
+  <p class="lead">
+    Stream music online through an authorized music player.
+    GlobalDev Hub does not host or distribute copyrighted music.
+  </p>
 
 </section>
 
 <section class="wrap content-grid">
 
-<div>
+  <div>
 
-<h2>Music library</h2>
+    <article class="card">
 
-<article class="card">
+      <p class="tag">MUSIC PLAYER</p>
 
-<p class="tag">COMING SOON</p>
+      <h2>Spotify streaming</h2>
 
-<h3>Licensed music and independent artists</h3>
+      <p>
+        Paste a public Spotify track, album, or playlist link below
+        to create an authorized Spotify player.
+      </p>
 
-<p>
-We are preparing this section for music that GlobalDev Hub has
-permission to feature. This can include properly licensed tracks
-and music from independent creators who allow website use.
-</p>
+      <label for="spotify-url">
+        Spotify link
+      </label>
 
-<div class="card small">
+      <input
+        id="spotify-url"
+        type="url"
+        placeholder="Paste Spotify link here"
+        style="width:100%;padding:12px;margin-top:8px;margin-bottom:12px;"
+      >
 
-<h3>🎵 Music player</h3>
+      <button
+        id="load-button"
+        type="button"
+      >
+        Load music
+      </button>
 
-<p>
-Music will appear here when a properly licensed track is available.
-</p>
+      <p id="status" aria-live="polite">
+        Ready.
+      </p>
 
-<a href="contact.html">Contact GlobalDev Hub →</a>
+      <div
+        id="player"
+        style="margin-top:20px;"
+      ></div>
 
-</div>
+    </article>
 
-</article>
+    <article class="card">
 
-<article class="card">
+      <p class="tag">CREATOR RESPECT</p>
 
-<p class="tag">OUR STANDARD</p>
+      <h2>Listen legally</h2>
 
-<h3>Respect for creators</h3>
+      <p>
+        GlobalDev Hub does not upload, copy, or distribute
+        copyrighted songs without the required rights or permission.
+      </p>
 
-<p>
-GlobalDev Hub does not upload or distribute copyrighted songs
-without the required permission or license.
-</p>
+      <p>
+        Music is streamed through the authorized music service
+        instead of being stored on this website.
+      </p>
 
-<p>
-When music is added, the appropriate creator, license, and
-usage requirements will be respected.
-</p>
+    </article>
 
-</article>
+  </div>
 
-</div>
+  <aside class="sidebar">
 
-<aside class="sidebar">
+    <div class="card small">
 
-<div class="card small">
+      <h3>About Music</h3>
 
-<h3>About the Music page</h3>
+      <p>
+        This is a separate music section of GlobalDev Hub.
+        The main website remains focused on technology,
+        learning, tools, and digital skills.
+      </p>
 
-<p>
-This is a separate section of GlobalDev Hub for music and audio.
-The main website remains focused on practical technology,
-learning, tools, and digital skills.
-</p>
+    </div>
 
-</div>
+    <div class="adbox">
 
-<div class="adbox">
+      <span>ADVERTISEMENT</span>
 
-<span>ADVERTISEMENT</span>
+      <p>
+        Ad space — connect an approved advertising network only
+        after your site meets its requirements.
+      </p>
 
-<p>
-Ad space — connect an approved advertising network only
-after your site meets its requirements.
-</p>
+    </div>
 
-</div>
-
-</aside>
+  </aside>
 
 </section>
 
@@ -133,21 +144,98 @@ after your site meets its requirements.
 
 <footer>
 
-<div class="wrap footer-inner">
+  <div class="wrap footer-inner">
 
-<span>© 2026 GlobalDev Hub</span>
+    <span>© 2026 GlobalDev Hub</span>
 
-<span>
-<a href="privacy.html">Privacy</a>
-·
-<a href="contact.html">Contact</a>
-·
-<a href="terms.html">Terms</a>
-</span>
+    <span>
+      <a href="privacy.html">Privacy</a>
+      ·
+      <a href="contact.html">Contact</a>
+      ·
+      <a href="terms.html">Terms</a>
+    </span>
 
-</div>
+  </div>
 
 </footer>
+
+<script>
+const spotifyInput = document.getElementById("spotify-url");
+const loadButton = document.getElementById("load-button");
+const player = document.getElementById("player");
+const status = document.getElementById("status");
+
+loadButton.addEventListener("click", function () {
+
+  const url = spotifyInput.value.trim();
+
+  if (!url) {
+    status.textContent = "Please paste a Spotify link first.";
+    player.innerHTML = "";
+    return;
+  }
+
+  try {
+
+    const parsed = new URL(url);
+
+    if (parsed.hostname !== "open.spotify.com") {
+      throw new Error("Not Spotify");
+    }
+
+    const parts = parsed.pathname.split("/").filter(Boolean);
+
+    if (parts.length < 2) {
+      throw new Error("Invalid Spotify link");
+    }
+
+    const type = parts[0];
+    const id = parts[1];
+
+    const allowedTypes = [
+      "track",
+      "album",
+      "playlist",
+      "episode",
+      "show"
+    ];
+
+    if (!allowedTypes.includes(type)) {
+      throw new Error("Unsupported Spotify link");
+    }
+
+    const embedUrl =
+      "https://open.spotify.com/embed/" +
+      type +
+      "/" +
+      encodeURIComponent(id);
+
+    player.innerHTML = `
+      <iframe
+        src="${embedUrl}"
+        width="100%"
+        height="352"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title="Spotify music player">
+      </iframe>
+    `;
+
+    status.textContent = "Spotify player loaded.";
+
+  } catch (error) {
+
+    player.innerHTML = "";
+
+    status.textContent =
+      "That does not look like a valid public Spotify link.";
+  }
+
+});
+</script>
 
 </body>
 </html>
