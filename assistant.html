@@ -1,271 +1,167 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>AI Assistant — GlobalDev Hub</title>
-
-<meta
-  name="description"
-  content="GlobalDev Hub AI Assistant — an honest assistant for technology, digital skills, careers and online resources."
->
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-.assistant-box {
-  max-width: 850px;
-  margin: 30px auto;
-  background: #111827;
-  border: 1px solid #202a3f;
-  border-radius: 14px;
-  padding: 20px;
-}
-
-.assistant-intro {
-  color: #cbd5e1;
-  line-height: 1.7;
-}
-
-.assistant-note {
-  margin: 18px 0;
-  padding: 14px;
-  background: #0b1220;
-  border: 1px solid #202a3f;
-  border-radius: 10px;
-  color: #cbd5e1;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.assistant-form textarea {
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 130px;
-  resize: vertical;
-  background: #0b1220;
-  color: #e5e7eb;
-  border: 1px solid #2b3852;
-  border-radius: 9px;
-  padding: 12px;
-  font: inherit;
-  outline: none;
-}
-
-.assistant-form textarea:focus {
-  border-color: #5cc8ff;
-}
-
-.assistant-btn {
-  margin-top: 10px;
-  border: 1px solid #5cc8ff;
-  border-radius: 9px;
-  padding: 10px 15px;
-  background: #12344a;
-  color: #ffffff;
-  font: inherit;
-  cursor: pointer;
-}
-
-.assistant-btn:disabled {
-  opacity: .6;
-  cursor: wait;
-}
-
-.assistant-file {
-  margin-top: 12px;
-  color: #cbd5e1;
-}
-
-.assistant-output {
-  margin-top: 18px;
-  padding: 14px;
-  background: #0b1220;
-  border: 1px solid #202a3f;
-  border-radius: 9px;
-  color: #cbd5e1;
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Assistant - GlobalDev Hub</title>
+  <meta name="description" content="GlobalDev Hub AI Assistant - an honest assistant for technology, digital skills, careers and online resources.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .assistant-box {
+      max-width: 850px;
+      margin: 30px auto;
+      background: #111827;
+      border: 1px solid #20263f;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .assistant-intro {
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+    .assistant-note {
+      margin: 18px 0;
+      padding: 14px;
+      background: #0b1220;
+      border: 1px solid #20263f;
+      border-radius: 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .assistant-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 130px;
+      resize: vertical;
+      background: #0b1220;
+      color: #e2e8f0;
+      border: 1px solid #203852;
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      outline: none;
+    }
+    .assistant-form textarea:focus {
+      border-color: #3cc8ff;
+    }
+    .assistant-btn {
+      margin-top: 10px;
+      border: 1px solid #3cc8ff;
+      border-radius: 8px;
+      padding: 11px 16px;
+      background: #123445;
+      color: #ffffff;
+      font: inherit;
+      cursor: pointer;
+    }
+    .assistant-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+    .assistant-output {
+      margin-top: 14px;
+      padding: 14px;
+      background: #0b1220;
+      border: 1px solid #20263f;
+      border-radius: 8px;
+      color: #cbd5e1;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
-
 <body>
-
-<header class="site-header">
-  <div class="wrap nav">
-
-    <a class="brand" href="index.html">
-      GlobalDev Hub
-    </a>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="tools.html">Tools</a>
-      <a href="guides.html">Guides</a>
-      <a href="social.html">Social Toolkit</a>
-      <a href="careers.html">Careers</a>
-      <a href="resources.html">Resources</a>
-    </nav>
-
-  </div>
-</header>
-
-<main class="section">
-
-  <div class="wrap">
-
-    <p class="eyebrow">AI ASSISTANT</p>
-
-    <h1>GlobalDev Hub AI Assistant</h1>
-
-    <div class="assistant-box">
-
-      <p class="assistant-intro">
-        Ask questions about technology, digital skills, careers,
-        websites, online tools and learning.
-      </p>
-
-      <div class="assistant-note">
-        <strong>Our honesty promise:</strong><br>
-        The assistant should not invent information or pretend to know
-        something it does not know. If it is uncertain, it should say so.
-        Important information should be checked with appropriate official
-        or qualified sources.
-        <br><br>
-        Never enter passwords, verification codes, API keys or payment details.
-      </div>
-
-      <form
-        class="assistant-form"
-        onsubmit="return askAssistant(event)"
-      >
-
-        <textarea
-          id="question"
-          placeholder="Ask your question here..."
-          aria-label="Ask the GlobalDev Hub AI Assistant"
-        ></textarea>
-
-        <input
-          class="assistant-file"
-          id="image"
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          aria-label="Upload an image"
-        >
-
-        <button
-          class="assistant-btn"
-          id="askButton"
-          type="submit"
-        >
-          Ask Assistant
-        </button>
-
-      </form>
-
-      <div class="assistant-output" id="assistantOutput">
-        Ask a question to begin.
-      </div>
-
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="index.html">GlobalDev Hub</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="guides.html">Guides</a>
+        <a href="social.html">Social Toolkit</a>
+        <a href="careers.html">Careers</a>
+        <a href="resources.html">Resources</a>
+      </nav>
     </div>
+  </header>
 
-  </div>
+  <main class="section">
+    <div class="wrap">
+      <p class="eyebrow">AI ASSISTANT</p>
+      <h1>GlobalDev Hub AI Assistant</h1>
 
-</main>
+      <div class="assistant-box">
+        <p class="assistant-intro">
+          Ask questions about technology, digital skills, careers, websites, online tools and learning.
+        </p>
 
-<footer>
+        <div class="assistant-note">
+          <strong>Our honesty promise:</strong><br>
+          The assistant should not invent information or pretend to know something it does not know. If it is uncertain, it should say so. Important information should be checked with appropriate official or qualified sources.<br><br>
+          Never enter passwords, verification codes, API keys or payment details.
+        </div>
 
-  <div class="wrap footer-inner">
+        <form class="assistant-form" onsubmit="return askAssistant(event)">
+          <textarea id="question" placeholder="Ask your question here..." aria-label="Ask the GlobalDev Hub AI Assistant"></textarea>
+          <button class="assistant-btn" id="askButton" type="submit">Ask Assistant</button>
+        </form>
 
-    <span>© 2026 GlobalDev Hub</span>
+        <div class="assistant-output" id="assistantOutput">Ask a question to begin.</div>
+      </div>
+    </div>
+  </main>
 
-    <a href="index.html">Home</a>
+  <script>
+    const WORKER_URL = "https://twilight-art-3263.samoyakubu1.workers.dev";
 
-  </div>
+    async function askAssistant(event) {
+      event.preventDefault();
 
-</footer>
+      const questionInput = document.querySelector("#question");
+      const output = document.querySelector("#assistantOutput");
+      const button = document.querySelector("#askButton");
 
-<script>
+      const question = questionInput.value.trim();
 
-const WORKER_URL =
-  "https://twilight-art-3263.samoyakubu1.workers.dev";
-
-async function askAssistant(event) {
-
-  event.preventDefault();
-
-  const question =
-    document.querySelector("#question").value.trim();
-
-  const output =
-    document.querySelector("#assistantOutput");
-
-  const button =
-    document.querySelector("#askButton");
-
-  if (!question) {
-    output.textContent =
-      "Please enter a question.";
-    return false;
-  }
-
-  button.disabled = true;
-  button.textContent = "Thinking...";
-
-  output.textContent =
-    "Connecting to the AI assistant...";
-
-  try {
-
-    const response = await fetch(
-      WORKER_URL,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          question: question
-        })
+      if (!question) {
+        output.textContent = "Please enter a question.";
+        return false;
       }
-    );
 
-    const data = await response.json();
+      button.disabled = true;
+      button.textContent = "Thinking...";
+      output.textContent = "Connecting to the AI assistant...";
 
-    if (!response.ok) {
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            question: question
+          })
+        });
 
-      output.textContent =
-        data.error ||
-        "The AI assistant could not answer right now.";
+        const data = await response.json();
+
+        if (!response.ok) {
+          output.textContent = data.error || "The AI assistant could not answer right now.";
+          return false;
+        }
+
+        output.textContent = data.answer || "I could not produce an answer right now.";
+
+      } catch (err) {
+        output.textContent = "The AI assistant could not connect right now. Please try again.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Ask Assistant";
+      }
 
       return false;
     }
-
-    output.textContent =
-      data.answer ||
-      "I could not produce an answer right now.";
-
-  } catch (error) {
-
-    output.textContent =
-      "The AI assistant could not connect right now. Please try again.";
-
-  } finally {
-
-    button.disabled = false;
-    button.textContent = "Ask Assistant";
-
-  }
-
-  return false;
-}
-
-</script>
-
+  </script>
 </body>
 </html>
