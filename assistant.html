@@ -1,167 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Assistant - GlobalDev Hub</title>
-  <meta name="description" content="GlobalDev Hub AI Assistant - an honest assistant for technology, digital skills, careers and online resources.">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Assistant — GlobalDev Hub</title>
+  <meta
+    name="description"
+    content="Ask the GlobalDev Hub AI Assistant for helpful, honest answers about technology, digital skills, careers, websites, and more."
+  >
+
   <style>
-    .assistant-box {
-      max-width: 850px;
-      margin: 30px auto;
-      background: #111827;
-      border: 1px solid #20263f;
-      border-radius: 10px;
-      padding: 20px;
+    * {
+      box-sizing: border-box;
     }
-    .assistant-intro {
-      color: #cbd5e1;
-      line-height: 1.7;
-    }
-    .assistant-note {
-      margin: 18px 0;
-      padding: 14px;
-      background: #0b1220;
-      border: 1px solid #20263f;
-      border-radius: 10px;
-      color: #cbd5e1;
-      font-size: 14px;
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080d1d;
+      color: #ffffff;
       line-height: 1.6;
     }
-    .assistant-form textarea {
-      width: 100%;
-      box-sizing: border-box;
-      min-height: 130px;
-      resize: vertical;
-      background: #0b1220;
-      color: #e2e8f0;
-      border: 1px solid #203852;
-      border-radius: 8px;
-      padding: 12px;
-      font: inherit;
-      outline: none;
+
+    header {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: #080d1d;
     }
-    .assistant-form textarea:focus {
-      border-color: #3cc8ff;
-    }
-    .assistant-btn {
-      margin-top: 10px;
-      border: 1px solid #3cc8ff;
-      border-radius: 8px;
-      padding: 11px 16px;
-      background: #123445;
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
       color: #ffffff;
-      font: inherit;
-      cursor: pointer;
+      text-decoration: none;
     }
-    .assistant-btn:disabled {
-      opacity: 0.7;
-      cursor: wait;
+
+    nav {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .assistant-output {
-      margin-top: 14px;
-      padding: 14px;
-      background: #0b1220;
-      border: 1px solid #20263f;
-      border-radius: 8px;
-      color: #cbd5e1;
-      line-height: 1.7;
-      white-space: pre-wrap;
+
+    nav a {
+      color: #dbe4ff;
+      text-decoration: none;
+      font-size: 14px;
     }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="wrap nav">
-      <a class="brand" href="index.html">GlobalDev Hub</a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="tools.html">Tools</a>
-        <a href="guides.html">Guides</a>
-        <a href="social.html">Social Toolkit</a>
-        <a href="careers.html">Careers</a>
-        <a href="resources.html">Resources</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="section">
-    <div class="wrap">
-      <p class="eyebrow">AI ASSISTANT</p>
-      <h1>GlobalDev Hub AI Assistant</h1>
-
-      <div class="assistant-box">
-        <p class="assistant-intro">
-          Ask questions about technology, digital skills, careers, websites, online tools and learning.
-        </p>
-
-        <div class="assistant-note">
-          <strong>Our honesty promise:</strong><br>
-          The assistant should not invent information or pretend to know something it does not know. If it is uncertain, it should say so. Important information should be checked with appropriate official or qualified sources.<br><br>
-          Never enter passwords, verification codes, API keys or payment details.
-        </div>
-
-        <form class="assistant-form" onsubmit="return askAssistant(event)">
-          <textarea id="question" placeholder="Ask your question here..." aria-label="Ask the GlobalDev Hub AI Assistant"></textarea>
-          <button class="assistant-btn" id="askButton" type="submit">Ask Assistant</button>
-        </form>
-
-        <div class="assistant-output" id="assistantOutput">Ask a question to begin.</div>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    const WORKER_URL = "https://twilight-art-3263.samoyakubu1.workers.dev";
-
-    async function askAssistant(event) {
-      event.preventDefault();
-
-      const questionInput = document.querySelector("#question");
-      const output = document.querySelector("#assistantOutput");
-      const button = document.querySelector("#askButton");
-
-      const question = questionInput.value.trim();
-
-      if (!question) {
-        output.textContent = "Please enter a question.";
-        return false;
-      }
-
-      button.disabled = true;
-      button.textContent = "Thinking...";
-      output.textContent = "Connecting to the AI assistant...";
-
-      try {
-        const response = await fetch(WORKER_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            question: question
-          })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          output.textContent = data.error || "The AI assistant could not answer right now.";
-          return false;
-        }
-
-        output.textContent = data.answer || "I could not produce an answer right now.";
-
-      } catch (err) {
-        output.textContent = "The AI assistant could not connect right now. Please try again.";
-      } finally {
-        button.disabled = false;
-        button.textContent = "Ask Assistant";
-      }
-
-      return false;
+    nav a:hover {
+      text-decoration: underline;
     }
-  </script>
-</body>
-</html>
+
+    main {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      color: #8fb3ff;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin: 10px 0;
+    }
+
+    .intro {
+      color: #c7d0e8;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .assistant-box {
+      background: #111936;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #354267;
+      background: #080d1d;
+      color: #ffffff;
+      font-size: 16px;
+      outline: none;
