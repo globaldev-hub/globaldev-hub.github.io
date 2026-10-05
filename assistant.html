@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>AI Assistant — GlobalDev Hub</title>
+
   <meta
     name="description"
     content="Ask the GlobalDev Hub AI Assistant for helpful, honest answers about technology, digital skills, careers, websites, and more."
@@ -107,3 +108,239 @@
       color: #ffffff;
       font-size: 16px;
       outline: none;
+      font-family: Arial, sans-serif;
+    }
+
+    textarea:focus {
+      border-color: #8fb3ff;
+    }
+
+    .button-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #askButton {
+      background: #ffffff;
+      color: #080d1d;
+    }
+
+    #clearButton {
+      background: #263250;
+      color: #ffffff;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 18px;
+      color: #aeb9d5;
+      font-size: 14px;
+    }
+
+    .response {
+      margin-top: 20px;
+      padding: 18px;
+      min-height: 100px;
+      border-radius: 12px;
+      background: #080d1d;
+      border: 1px solid #263250;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      color: #8995b4;
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 30px 15px 50px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .assistant-box {
+        padding: 17px;
+      }
+
+      textarea {
+        min-height: 130px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a class="brand" href="index.html">GlobalDev Hub</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="eyebrow">ASK • LEARN • BUILD</div>
+
+      <h1>GlobalDev Hub AI Assistant</h1>
+
+      <p class="intro">
+        Ask questions about technology, digital skills, websites,
+        careers, software, and other useful topics.
+      </p>
+    </section>
+
+    <section class="assistant-box">
+
+      <label for="question">Your question</label>
+
+      <textarea
+        id="question"
+        placeholder="Type your question here..."
+        aria-label="Your question"
+      ></textarea>
+
+      <div class="button-row">
+        <button id="askButton" type="button">
+          Ask Assistant
+        </button>
+
+        <button id="clearButton" type="button">
+          Clear
+        </button>
+      </div>
+
+      <div id="status" class="status">
+        Ready.
+      </div>
+
+      <div id="response" class="response">
+        The assistant's answer will appear here.
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 GlobalDev Hub. Helpful technology and digital resources.
+  </footer>
+
+  <script>
+    const WORKER_URL =
+      "https://mute-frost-a9f8.yakubsamuel966.workers.dev";
+
+    const questionBox = document.getElementById("question");
+    const askButton = document.getElementById("askButton");
+    const clearButton = document.getElementById("clearButton");
+    const statusBox = document.getElementById("status");
+    const responseBox = document.getElementById("response");
+
+    askButton.addEventListener("click", askAssistant);
+
+    clearButton.addEventListener("click", () => {
+      questionBox.value = "";
+      responseBox.textContent =
+        "The assistant's answer will appear here.";
+      statusBox.textContent = "Ready.";
+      questionBox.focus();
+    });
+
+    questionBox.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        askAssistant();
+      }
+    });
+
+    async function askAssistant() {
+      const question = questionBox.value.trim();
+
+      if (!question) {
+        statusBox.textContent = "Please enter a question first.";
+        questionBox.focus();
+        return;
+      }
+
+      askButton.disabled = true;
+      clearButton.disabled = true;
+
+      statusBox.textContent = "Thinking...";
+      responseBox.textContent = "";
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            input: question
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error || "The assistant could not respond."
+          );
+        }
+
+        responseBox.textContent =
+          data.reply || "The assistant returned an empty response.";
+
+        statusBox.textContent = "Answer received.";
+
+      } catch (error) {
+        console.error(error);
+
+        responseBox.textContent =
+          "Sorry, the assistant could not respond right now. Please try again.";
+
+        statusBox.textContent =
+          "Connection error.";
+      }
+
+      askButton.disabled = false;
+      clearButton.disabled = false;
+    }
+  </script>
+
+</body>
+</html>
