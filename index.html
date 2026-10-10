@@ -4,13 +4,138 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>GlobalDev Hub — Practical Tech Guides</title>
+<title>GlobalDev Hub — Learn, Build & Grow</title>
 
-<meta name="description" content="Original, practical guides about web development, software tools, digital skills, careers, and online resources.">
+<meta name="description" content="Explore practical technology guides, digital skills, software tools, career resources, and the GlobalDev Hub AI Assistant.">
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#080d1d">
+
+<style>
+.hero {
+  padding-top: 65px;
+  padding-bottom: 55px;
+}
+
+.hero h1 {
+  max-width: 800px;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+}
+
+.hero .lead {
+  max-width: 650px;
+  line-height: 1.8;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 13px 21px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7065ff, #4285ff);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .2s, opacity .2s;
+}
+
+.home-button:hover {
+  transform: translateY(-2px);
+  opacity: .92;
+}
+
+.home-button.secondary {
+  background: transparent;
+  border: 1px solid #64748b;
+}
+
+.ai-feature {
+  margin-top: 15px;
+  margin-bottom: 35px;
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px solid rgba(123, 113, 255, .45);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #141c38, #10162b 60%, #1b1740);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.ai-feature h2 {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.ai-feature p {
+  max-width: 620px;
+  line-height: 1.8;
+}
+
+.ai-label {
+  color: #a9a1ff;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  padding: 23px;
+  border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.feature-card h3 {
+  margin-top: 8px;
+}
+
+.feature-card p {
+  line-height: 1.7;
+}
+
+.section-intro {
+  margin-bottom: 22px;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+
+  .home-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-button {
+    text-align: center;
+  }
+
+  .ai-feature {
+    align-items: flex-start;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -20,13 +145,14 @@
 
 <a class="brand" href="index.html">GlobalDev Hub</a>
 
-<nav>
+<nav aria-label="Main navigation">
 <a href="index.html">Home</a>
 <a href="tools.html">Tools</a>
 <a href="guides.html">Guides</a>
 <a href="social.html">Social Toolkit</a>
 <a href="careers.html">Careers</a>
 <a href="resources.html">Resources</a>
+<a href="assistant.html">AI Assistant</a>
 </nav>
 
 </div>
@@ -38,12 +164,74 @@
 
 <p class="eyebrow">LEARN • BUILD • GROW</p>
 
-<h1>Practical technology guides for real people.</h1>
+<h1>Practical technology skills for a world full of possibilities.</h1>
 
 <p class="lead">
-Clear, original tutorials on web development, useful software,
-online tools, digital skills, and practical technology.
+Discover useful technology guides, explore digital tools,
+develop real-world skills, and get help from your personal
+GlobalDev Hub AI Assistant.
 </p>
+
+<div class="home-actions">
+<a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
+<a class="home-button secondary" href="guides.html">Explore Our Guides</a>
+</div>
+
+</section>
+
+<section class="wrap">
+
+<div class="ai-feature">
+
+<div>
+<span class="ai-label">YOUR DIGITAL HELPER</span>
+<h2>Meet the GlobalDev Hub AI Assistant</h2>
+<p>
+Have a question about coding, websites, digital tools,
+or learning technology? Ask our AI Assistant for explanations,
+ideas, and practical guidance to help you move forward.
+</p>
+<a class="home-button" href="assistant.html">Start a Conversation →</a>
+</div>
+
+</div>
+
+</section>
+
+<section class="wrap">
+
+<div class="section-intro">
+<h2>Explore GlobalDev Hub</h2>
+<p>Find practical resources to help you learn, create, and grow.</p>
+</div>
+
+<div class="feature-grid">
+
+<article class="feature-card">
+<h3>💻 Web Development</h3>
+<p>Learn the basics of websites, HTML, CSS, JavaScript, and publishing.</p>
+<a href="guides.html">Explore guides →</a>
+</article>
+
+<article class="feature-card">
+<h3>🧰 Digital Tools</h3>
+<p>Discover helpful tools and resources for everyday digital work.</p>
+<a href="tools.html">Explore tools →</a>
+</article>
+
+<article class="feature-card">
+<h3>🚀 Careers & Skills</h3>
+<p>Find learning paths and resources to develop practical digital skills.</p>
+<a href="careers.html">Explore careers →</a>
+</article>
+
+<article class="feature-card">
+<h3>🌐 Social Toolkit</h3>
+<p>Explore resources for planning and improving your online presence.</p>
+<a href="social.html">Open toolkit →</a>
+</article>
+
+</div>
 
 </section>
 
@@ -121,6 +309,19 @@ after your site meets its requirements.
 GlobalDev Hub publishes original educational content.
 We do not promise guaranteed earnings or instant monetization.
 </p>
+
+</div>
+
+<div class="card small">
+
+<h3>Need help?</h3>
+
+<p>
+Our AI Assistant can help explain technology topics and guide
+you through your next learning step.
+</p>
+
+<a href="assistant.html">Ask the AI Assistant →</a>
 
 </div>
 
