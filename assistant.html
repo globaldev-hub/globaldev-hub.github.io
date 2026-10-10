@@ -1,4 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalDev Hub AI Assistant</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #0b1120;
+      color: #f1f5f9;
+      font-family: Arial, sans-serif;
     }
+
+    main {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #111c30;
+      border: 1px solid #26364f;
+      border-radius: 16px;
+    }
+
+    h1 { color: #60a5fa; }
+    p { line-height: 1.6; color: #cbd5e1; }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      padding: 14px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      background: #0b1120;
+      color: white;
+      font: inherit;
+      resize: vertical;
+    }
+
+    button {
+      margin: 12px 8px 0 0;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #clearButton { background: #334155; }
+    #status { color: #93c5fd; }
+
+    #response {
+      margin-top: 18px;
+      padding: 16px;
+      min-height: 70px;
+      border-radius: 10px;
+      background: #0b1120;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>GlobalDev Hub AI Assistant</h1>
+    <p>Ask a question and our AI assistant will try to help.</p>
+
+    <textarea id="question" placeholder="Type your message here..."></textarea>
+
+    <div>
+      <button id="askButton">Ask Assistant</button>
+      <button id="clearButton">Clear</button>
+    </div>
+
+    <p id="status" role="status">Ready. Ask me anything.</p>
+    <div id="response" aria-live="polite">The assistant's answer will appear here.</div>
+  </main>
+
+  <script>
+    const workerUrl =
+      "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
+
+    const questionBox = document.getElementById("question");
+    const askButton = document.getElementById("askButton");
+    const clearButton = document.getElementById("clearButton");
+    const responseBox = document.getElementById("response");
+    const statusBox = document.getElementById("status");
+
+    async function askAssistant() {
+      const question = questionBox.value.trim();
+
+      if (!question) {
+        statusBox.textContent = "Please type a message first.";
+        questionBox.focus();
+        return;
+      }
+
+      askButton.disabled = true;
+      statusBox.textContent = "Thinking...";
+      responseBox.textContent = "";
+
+      try {
+        const response = await fetch(workerUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: question })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "The request failed.");
+        }
+
+        responseBox.textContent =
+          data.reply || data.response || "The assistant returned no answer.";
+        statusBox.textContent = "Answer received.";
+      } catch (error) {
+        responseBox.textContent =
+          "Sorry, I couldn't connect. Please try again.";
+        statusBox.textContent = "Connection error: " + error.message;
+      } finally {
+        askButton.disabled = false;
+      }
+    }
+
+    askButton.addEventListener("click", askAssistant);
 
     clearButton.addEventListener("click", () => {
       questionBox.value = "";
