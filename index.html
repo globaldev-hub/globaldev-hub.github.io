@@ -1,353 +1,717 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
 
-<title>GlobalDev Hub — Learn, Build & Grow</title>
+  <title>GlobalDev Hub | Learn, Build and Grow</title>
 
-<meta name="description" content="Explore practical technology guides, digital skills, software tools, career resources, and the GlobalDev Hub AI Assistant.">
+  <meta name="description" content="Learn practical technology skills, explore digital tools, build websites, discover career opportunities, and grow with GlobalDev Hub.">
 
-<link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#080d1d">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --surface: #121a2d;
+      --surface-light: #19243b;
+      --text: #f4f7ff;
+      --muted: #a8b4cc;
+      --primary: #6c8cff;
+      --secondary: #27d9b0;
+      --border: rgba(255,255,255,0.10);
+    }
 
-<style>
-.hero {
-  padding-top: 65px;
-  padding-bottom: 55px;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.hero h1 {
-  max-width: 800px;
-  font-size: clamp(2.2rem, 6vw, 4rem);
-  line-height: 1.12;
-  letter-spacing: -1.5px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.hero .lead {
-  max-width: 650px;
-  line-height: 1.8;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
 
-.home-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 25px;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.home-button {
-  display: inline-block;
-  padding: 13px 21px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #7065ff, #4285ff);
-  color: #fff !important;
-  text-decoration: none;
-  font-weight: 700;
-  transition: transform .2s, opacity .2s;
-}
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
 
-.home-button:hover {
-  transform: translateY(-2px);
-  opacity: .92;
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11,16,32,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
 
-.home-button.secondary {
-  background: transparent;
-  border: 1px solid #64748b;
-}
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
 
-.ai-feature {
-  margin-top: 15px;
-  margin-bottom: 35px;
-  padding: clamp(24px, 5vw, 42px);
-  border: 1px solid rgba(123, 113, 255, .45);
-  border-radius: 20px;
-  background: linear-gradient(135deg, #141c38, #10162b 60%, #1b1740);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  flex-wrap: wrap;
-}
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
 
-.ai-feature h2 {
-  margin-top: 8px;
-  margin-bottom: 12px;
-}
+    .logo span {
+      color: var(--secondary);
+    }
 
-.ai-feature p {
-  max-width: 620px;
-  line-height: 1.8;
-}
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px 17px;
+    }
 
-.ai-label {
-  color: #a9a1ff;
-  font-size: .8rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
+    nav a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-}
+    nav a:hover {
+      color: var(--secondary);
+    }
 
-.feature-card {
-  padding: 23px;
-  border: 1px solid rgba(148, 163, 184, .22);
-  border-radius: 15px;
-  background: rgba(255, 255, 255, .025);
-}
+    .hero {
+      padding: 100px 0 85px;
+      background:
+        radial-gradient(ellipse at 85% 20%, rgba(108,140,255,0.19), transparent 38%),
+        radial-gradient(ellipse at 10% 80%, rgba(39,217,176,0.10), transparent 35%);
+    }
 
-.feature-card h3 {
-  margin-top: 8px;
-}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: center;
+      gap: 55px;
+    }
 
-.feature-card p {
-  line-height: 1.7;
-}
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 13px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(39,217,176,0.3);
+      border-radius: 30px;
+      color: var(--secondary);
+      background: rgba(39,217,176,0.07);
+      font-size: 0.85rem;
+    }
 
-.section-intro {
-  margin-bottom: 22px;
-}
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      line-height: 1.12;
+      letter-spacing: -2px;
+      margin-bottom: 23px;
+    }
 
-@media (max-width: 600px) {
-  .hero {
-    padding-top: 40px;
-    padding-bottom: 30px;
-  }
+    .gradient-text {
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-  .home-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 1.05rem;
+      margin-bottom: 30px;
+    }
 
-  .home-button {
-    text-align: center;
-  }
+    .home-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-  .ai-feature {
-    align-items: flex-start;
-  }
-}
-</style>
+    .home-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 19px;
+      min-height: 48px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .home-button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .home-button.secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .hero-visual {
+      padding: 28px;
+      background: linear-gradient(145deg, #1b2945, #11182a);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.2);
+    }
+
+    .visual-top {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 25px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff7185;
+    }
+
+    .dot:nth-child(2) {
+      background: #ffd166;
+    }
+
+    .dot:nth-child(3) {
+      background: var(--secondary);
+    }
+
+    .code-line {
+      margin: 12px 0;
+      padding: 10px 13px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      color: #c5d2ed;
+      font-family: monospace;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+
+    .code-line span {
+      color: var(--secondary);
+    }
+
+    .visual-note {
+      color: var(--muted);
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.2;
+      margin-bottom: 13px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 25px;
+      min-width: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108,140,255,0.55);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 17px;
+      border-radius: 13px;
+      background: var(--surface-light);
+      font-size: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-card a {
+      color: var(--secondary);
+      font-weight: 700;
+      margin-top: auto;
+    }
+
+    .feature-card a:hover {
+      text-decoration: underline;
+    }
+
+    .ai-section {
+      background: linear-gradient(120deg, rgba(108,140,255,0.12), rgba(39,217,176,0.06));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ai-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 35px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .ai-panel h2 {
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      margin-bottom: 12px;
+    }
+
+    .ai-panel p {
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .guide-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .guide-item {
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .guide-item h3 {
+      margin-bottom: 8px;
+    }
+
+    .guide-item p {
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .guide-item a {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    .cta-section {
+      text-align: center;
+    }
+
+    .cta-panel {
+      padding: 45px 25px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at top right, rgba(108,140,255,0.18), transparent 50%),
+        var(--surface);
+    }
+
+    .cta-panel h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 14px;
+    }
+
+    .cta-panel p {
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 25px;
+    }
+
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary);
+    }
+
+    @media (max-width: 850px) {
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .hero {
+        padding: 70px 0;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ai-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .feature-grid,
+      .guide-list {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .home-actions {
+        flex-direction: column;
+      }
+
+      .home-button {
+        width: 100%;
+      }
+
+      .hero-visual,
+      .ai-panel {
+        padding: 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="site-header">
-<div class="wrap nav">
-
-<a class="brand" href="index.html">GlobalDev Hub</a>
-
-<nav aria-label="Main navigation">
-<a href="index.html">Home</a>
-<a href="tools.html">Tools</a>
-<a href="guides.html">Guides</a>
-<a href="social.html">Social Toolkit</a>
-<a href="careers.html">Careers</a>
-<a href="resources.html">Resources</a>
-<a href="assistant.html">AI Assistant</a>
-</nav>
-
-</div>
-</header>
-
-<main>
-
-<section class="hero wrap">
-
-<p class="eyebrow">LEARN • BUILD • GROW</p>
-
-<h1>Practical technology skills for a world full of possibilities.</h1>
-
-<p class="lead">
-Discover useful technology guides, explore digital tools,
-develop real-world skills, and get help from your personal
-GlobalDev Hub AI Assistant.
-</p>
-
-<div class="home-actions">
-<a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
-<a class="home-button secondary" href="guides.html">Explore Our Guides</a>
-</div>
-
-</section>
-
-<section class="wrap">
-
-<div class="ai-feature">
-
-<div>
-<span class="ai-label">YOUR DIGITAL HELPER</span>
-<h2>Meet the GlobalDev Hub AI Assistant</h2>
-<p>
-Have a question about coding, websites, digital tools,
-or learning technology? Ask our AI Assistant for explanations,
-ideas, and practical guidance to help you move forward.
-</p>
-<a class="home-button" href="assistant.html">Start a Conversation →</a>
-</div>
-
-</div>
-
-</section>
-
-<section class="wrap">
-
-<div class="section-intro">
-<h2>Explore GlobalDev Hub</h2>
-<p>Find practical resources to help you learn, create, and grow.</p>
-</div>
-
-<div class="feature-grid">
-
-<article class="feature-card">
-<h3>💻 Web Development</h3>
-<p>Learn the basics of websites, HTML, CSS, JavaScript, and publishing.</p>
-<a href="guides.html">Explore guides →</a>
-</article>
-
-<article class="feature-card">
-<h3>🧰 Digital Tools</h3>
-<p>Discover helpful tools and resources for everyday digital work.</p>
-<a href="tools.html">Explore tools →</a>
-</article>
-
-<article class="feature-card">
-<h3>🚀 Careers & Skills</h3>
-<p>Find learning paths and resources to develop practical digital skills.</p>
-<a href="careers.html">Explore careers →</a>
-</article>
-
-<article class="feature-card">
-<h3>🌐 Social Toolkit</h3>
-<p>Explore resources for planning and improving your online presence.</p>
-<a href="social.html">Open toolkit →</a>
-</article>
-
-</div>
-
-</section>
-
-<section class="wrap content-grid">
-
-<div>
-
-<h2>Latest guides</h2>
-
-<article class="card">
-
-<p class="tag">WEB DEVELOPMENT</p>
-
-<h3>How a website goes from code to a live page</h3>
-
-<p>
-Understand domains, hosting, HTML, CSS, JavaScript,
-and what actually happens when someone visits your site.
-</p>
-
-<a href="article-website-basics.html">Read guide →</a>
-
-</article>
-
-<article class="card">
-
-<p class="tag">GITHUB</p>
-
-<h3>GitHub Pages for beginners</h3>
-
-<p>
-A simple explanation of repositories, publishing,
-and the steps required to put a static website online.
-</p>
-
-<a href="article-github-pages.html">Read guide →</a>
-
-</article>
-
-<article class="card">
-
-<p class="tag">DIGITAL SKILLS</p>
-
-<h3>How to build useful digital skills from zero</h3>
-
-<p>
-A practical learning path for HTML, CSS, JavaScript,
-Git, and basic web publishing.
-</p>
-
-<a href="article-digital-skills.html">Read guide →</a>
-
-</article>
-
-</div>
-
-<aside class="sidebar">
-
-<div class="adbox">
-
-<span>ADVERTISEMENT</span>
-
-<p>
-Ad space — connect an approved advertising network only
-after your site meets its requirements.
-</p>
-
-</div>
-
-<div class="card small">
-
-<h3>About this site</h3>
-
-<p>
-GlobalDev Hub publishes original educational content.
-We do not promise guaranteed earnings or instant monetization.
-</p>
-
-</div>
-
-<div class="card small">
-
-<h3>Need help?</h3>
-
-<p>
-Our AI Assistant can help explain technology topics and guide
-you through your next learning step.
-</p>
-
-<a href="assistant.html">Ask the AI Assistant →</a>
-
-</div>
-
-</aside>
-
-</section>
-
-</main>
-
-<footer>
-
-<div class="wrap footer-inner">
-
-<span>© 2026 GlobalDev Hub</span>
-
-<span>
-<a href="privacy.html">Privacy</a>
-·
-<a href="contact.html">Contact</a>
-·
-<a href="terms.html">Terms</a>
-</span>
-
-</div>
-
-</footer>
+  <header>
+    <div class="container navbar">
+      <a class="logo" href="index.html">GlobalDev <span>Hub</span></a>
+
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="#tools">Tools</a>
+        <a href="guides.html">Guides</a>
+        <a href="social.html">Social Toolkit</a>
+        <a href="careers.html">Careers</a>
+        <a href="resources.html">Resources</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="playground.html">Code Playground</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+          <span class="eyebrow">Learn something useful. Build something real.</span>
+
+          <h1>
+            Practical technology skills for a
+            <span class="gradient-text">world full of possibilities.</span>
+          </h1>
+
+          <p>
+            Welcome to GlobalDev Hub. Explore practical guides, discover digital
+            tools, improve your skills, practise coding, and take your next step
+            in technology.
+          </p>
+
+          <div class="home-actions">
+            <a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
+            <a class="home-button secondary" href="guides.html">Explore Our Guides</a>
+            <a class="home-button secondary" href="playground.html">💻 Try Code Playground</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Illustration of a code editor">
+          <div class="visual-top">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <div class="code-line"><span>&lt;h1&gt;</span> Hello, developer! <span>&lt;/h1&gt;</span></div>
+          <div class="code-line"><span>const</span> ideas = "possibilities";</div>
+          <div class="code-line"><span>function</span> buildFuture() { }</div>
+          <div class="code-line">Learn. Build. <span>Grow.</span></div>
+
+          <p class="visual-note">
+            Your journey into digital skills starts with one small step.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Explore what you can do</h2>
+          <p>
+            Find useful resources and practical tools to help you learn,
+            create, solve problems, and grow your digital skills.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+
+          <article class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Web Development</h3>
+            <p>
+              Learn HTML, CSS, JavaScript, and the fundamentals of building
+              websites for the modern web.
+            </p>
+            <a href="guides.html">Explore guides →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🧰</div>
+            <h3>Digital Tools</h3>
+            <p>
+              Discover useful digital tools that can help you work smarter,
+              create content, and get things done.
+            </p>
+            <a href="resources.html">Explore resources →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Careers &amp; Skills</h3>
+            <p>
+              Explore technology career paths, build useful skills, and
+              discover opportunities for professional growth.
+            </p>
+            <a href="careers.html">Explore careers →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Social Toolkit</h3>
+            <p>
+              Explore resources for planning and improving your online
+              presence and digital communication.
+            </p>
+            <a href="social.html">Open toolkit →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">💻</div>
+            <h3>Code Playground</h3>
+            <p>
+              Practise HTML, CSS, and JavaScript, run your code, and see
+              your webpage come to life in a live preview.
+            </p>
+            <a href="playground.html">Start coding →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Assistant</h3>
+            <p>
+              Ask questions, understand technical concepts, and get help
+              as you learn and work on projects.
+            </p>
+            <a href="assistant.html">Chat with AI →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-section">
+      <div class="container">
+
+        <div class="ai-panel">
+          <div>
+            <h2>Meet the GlobalDev Hub AI Assistant</h2>
+            <p>
+              Need help understanding code, planning a project, or learning
+              a new digital skill? Start a conversation and explore ideas
+              at your own pace.
+            </p>
+          </div>
+
+          <a class="home-button" href="assistant.html">✨ Ask the AI</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="guides">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Keep learning. Keep building.</h2>
+          <p>
+            Start with a topic that interests you and take the next step
+            in your learning journey.
+          </p>
+        </div>
+
+        <div class="guide-list">
+
+          <article class="guide-item">
+            <h3>📘 Explore Practical Guides</h3>
+            <p>
+              Find learning materials and step-by-step resources for
+              developing your digital skills.
+            </p>
+            <a href="guides.html">Browse guides →</a>
+          </article>
+
+          <article class="guide-item">
+            <h3>🧪 Practise Your Code</h3>
+            <p>
+              Experiment with HTML, CSS, and JavaScript in your own
+              browser-based coding workspace.
+            </p>
+            <a href="playground.html">Open the playground →</a>
+          </article>
+
+          <article class="guide-item">
+            <h3>🎯 Discover Opportunities</h3>
+            <p>
+              Learn about technology skills and career directions
+              that you can explore.
+            </p>
+            <a href="careers.html">Explore careers →</a>
+          </article>
+
+          <article class="guide-item">
+            <h3>🤖 Get Learning Support</h3>
+            <p>
+              Ask questions and get assistance while working through
+              technical topics and ideas.
+            </p>
+            <a href="assistant.html">Open AI Assistant →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>Your next idea starts here.</h2>
+          <p>
+            Whether you're learning your first coding language or exploring
+            a new opportunity, GlobalDev Hub is here to help you take the
+            next step.
+          </p>
+
+          <div class="home-actions" style="justify-content:center">
+            <a class="home-button" href="playground.html">💻 Start Coding</a>
+            <a class="home-button secondary" href="assistant.html">Talk to the AI Assistant</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="current-year">2026</span> GlobalDev Hub. Learn, build, and grow.</p>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guides.html">Guides</a>
+        <a href="resources.html">Resources</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="playground.html">Code Playground</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+  </script>
 
 </body>
 </html>
