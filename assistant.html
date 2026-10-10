@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,14 +128,68 @@
     const workerUrl =
       "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
 
+    const storageKey = "globaldevHubAssistantHistory";
+
     const questionBox = document.getElementById("question");
     const askButton = document.getElementById("askButton");
     const clearButton = document.getElementById("clearButton");
     const responseBox = document.getElementById("response");
     const statusBox = document.getElementById("status");
 
-    // Conversation history stays available while this page is open.
-    let conversationHistory = [];
+    // Restore the conversation when the page opens.
+    function loadHistory() {
+      try {
+        const saved = localStorage.getItem(storageKey);
+        const parsed = saved ? JSON.parse(saved) : [];
+
+        if (!Array.isArray(parsed)) {
+          return [];
+        }
+
+        return parsed
+          .filter(item =>
+            item &&
+            ["user", "assistant"].includes(item.role) &&
+            typeof item.content === "string"
+          )
+          .slice(-20);
+      } catch (error) {
+        return [];
+      }
+    }
+
+    let conversationHistory = loadHistory();
+
+    // Save the latest conversation in this browser.
+    function saveHistory() {
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify(conversationHistory)
+        );
+        return true;
+      } catch (error) {
+        statusBox.textContent =
+          "Conversation works, but browser storage is unavailable.";
+        return false;
+      }
+    }
+
+    // Show the most recent saved answer when reopening the page.
+    function restoreLastAnswer() {
+      for (let i = conversationHistory.length - 1; i >= 0; i--) {
+        if (conversationHistory[i].role === "assistant") {
+          responseBox.textContent = conversationHistory[i].content;
+          statusBox.textContent =
+            "Previous conversation restored.";
+          return;
+        }
+      }
+
+      statusBox.textContent = "Ready. Ask me anything.";
+    }
+
+    restoreLastAnswer();
 
     async function askAssistant() {
       const question = questionBox.value.trim();
@@ -176,19 +229,24 @@
           data.response ||
           "The assistant returned no answer.";
 
-        // Save the question and answer for the next turn.
         conversationHistory.push(
           { role: "user", content: question },
           { role: "assistant", content: answer }
         );
 
-        // Keep the most recent 20 messages.
+        // Keep the latest 20 messages.
         conversationHistory =
           conversationHistory.slice(-20);
 
         responseBox.textContent = answer;
-        statusBox.textContent = "Answer received.";
         questionBox.value = "";
+
+        saveHistory();
+
+        if (conversationHistory.length > 0) {
+          statusBox.textContent = "Answer received.";
+        }
+
         questionBox.focus();
 
       } catch (error) {
@@ -206,17 +264,22 @@
     askButton.addEventListener("click", askAssistant);
 
     clearButton.addEventListener("click", () => {
-      questionBox.value = "";
       conversationHistory = [];
 
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {
+        // The visible conversation is still cleared.
+      }
+
+      questionBox.value = "";
       responseBox.textContent =
         "The assistant's answer will appear here.";
-
       statusBox.textContent = "Conversation cleared.";
       questionBox.focus();
     });
 
-    questionBox.addEventListener("keydown", (event) => {
+    questionBox.addEventListener("keydown", event => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         askAssistant();
