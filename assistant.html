@@ -136,7 +136,7 @@
     const responseBox = document.getElementById("response");
     const statusBox = document.getElementById("status");
 
-    // Restore the conversation when the page opens.
+    // Restore saved conversation from this browser.
     function loadHistory() {
       try {
         const saved = localStorage.getItem(storageKey);
@@ -160,7 +160,7 @@
 
     let conversationHistory = loadHistory();
 
-    // Save the latest conversation in this browser.
+    // Save conversation after each successful answer.
     function saveHistory() {
       try {
         localStorage.setItem(
@@ -170,18 +170,21 @@
         return true;
       } catch (error) {
         statusBox.textContent =
-          "Conversation works, but browser storage is unavailable.";
+          "Warning: conversation could not be saved in this browser.";
         return false;
       }
     }
 
-    // Show the most recent saved answer when reopening the page.
+    // Restore the most recent answer when reopening the page.
     function restoreLastAnswer() {
       for (let i = conversationHistory.length - 1; i >= 0; i--) {
         if (conversationHistory[i].role === "assistant") {
-          responseBox.textContent = conversationHistory[i].content;
+          responseBox.textContent =
+            conversationHistory[i].content;
+
           statusBox.textContent =
             "Previous conversation restored.";
+
           return;
         }
       }
@@ -205,14 +208,19 @@
       responseBox.textContent = "";
 
       try {
+        // Send saved messages plus the new question.
+        const messagesToSend = [
+          ...conversationHistory,
+          { role: "user", content: question }
+        ].slice(-20);
+
         const response = await fetch(workerUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            message: question,
-            history: conversationHistory
+            messages: messagesToSend
           })
         });
 
@@ -227,14 +235,15 @@
         const answer =
           data.reply ||
           data.response ||
+          data.message ||
           "The assistant returned no answer.";
 
+        // Save the new question and answer locally.
         conversationHistory.push(
           { role: "user", content: question },
           { role: "assistant", content: answer }
         );
 
-        // Keep the latest 20 messages.
         conversationHistory =
           conversationHistory.slice(-20);
 
@@ -243,7 +252,8 @@
 
         saveHistory();
 
-        if (conversationHistory.length > 0) {
+        if (statusBox.textContent !==
+            "Warning: conversation could not be saved in this browser.") {
           statusBox.textContent = "Answer received.";
         }
 
@@ -269,12 +279,14 @@
       try {
         localStorage.removeItem(storageKey);
       } catch (error) {
-        // The visible conversation is still cleared.
+        // Continue clearing the visible conversation.
       }
 
       questionBox.value = "";
+
       responseBox.textContent =
         "The assistant's answer will appear here.";
+
       statusBox.textContent = "Conversation cleared.";
       questionBox.focus();
     });
