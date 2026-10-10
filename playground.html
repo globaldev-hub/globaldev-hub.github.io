@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Playground — GlobalDev Hub</title>
+<meta name="description" content="Practice HTML, CSS and JavaScript with the free GlobalDev Hub Code Playground.">
+<meta name="theme-color" content="#080d1d">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #080d1d;
+  color: #eef2ff;
+  font-family: system-ui, Arial, sans-serif;
+}
+
+header {
+  padding: 18px 5%;
+  border-bottom: 1px solid #29324b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+header nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+a { color: #a9b7ff; }
+
+header nav a { text-decoration: none; }
+
+main {
+  width: min(1200px, 92%);
+  margin: 35px auto;
+}
+
+.intro { margin-bottom: 25px; }
+
+.eyebrow {
+  color: #a9a1ff;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  margin: 10px 0;
+  line-height: 1.15;
+}
+
+.intro p {
+  color: #b8c2dc;
+  line-height: 1.7;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 18px;
+  font-size: .95rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.run {
+  color: white;
+  background: linear-gradient(135deg, #7567ff, #3988ff);
+}
+
+.reset {
+  color: #e4eaff;
+  background: #202b45;
+  border: 1px solid #3a4664;
+}
+
+.status {
+  color: #aab6d0;
+  font-size: .85rem;
+}
+
+.editors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #303b57;
+  border-radius: 12px;
+  background: #10182a;
+}
+
+.panel h2 {
+  font-size: .95rem;
+  margin: 0;
+  padding: 13px 15px;
+  background: #17223a;
+  border-bottom: 1px solid #303b57;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 280px;
+  resize: vertical;
+  padding: 14px;
+  border: 0;
+  outline: none;
+  background: #0c1323;
+  color: #e2e8ff;
+  font: 13px/1.65 monospace;
+  tab-size: 2;
+}
+
+.preview-panel {
+  margin-top: 25px;
+  overflow: hidden;
+  border: 1px solid #303b57;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.preview-heading {
+  padding: 14px 17px;
+  color: #fff;
+  background: #17223a;
+}
+
+.preview-heading h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+iframe {
+  display: block;
+  width: 100%;
+  height: 360px;
+  border: 0;
+  background: white;
+}
+
+.tip {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #303b57;
+  border-radius: 12px;
+  color: #c0cbe2;
+  line-height: 1.7;
+}
+
+footer {
+  padding: 25px;
+  text-align: center;
+  color: #aab6d0;
+  border-top: 1px solid #29324b;
+  margin-top: 45px;
+}
+
+@media (max-width: 850px) {
+  .editors { grid-template-columns: 1fr; }
+  textarea { min-height: 200px; }
+}
+
+@media (max-width: 500px) {
+  header { align-items: flex-start; }
+  header nav { gap: 12px; }
+  main { margin-top: 25px; }
+  .toolbar button { flex: 1; }
+  iframe { height: 300px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="index.html">GlobalDev Hub</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="guides.html">Guides</a>
+    <a href="assistant.html">AI Assistant</a>
+  </nav>
+</header>
+
+<main>
+  <section class="intro">
+    <p class="eyebrow">LEARN • EXPERIMENT • BUILD</p>
+    <h1>Your Code Playground</h1>
+    <p>
+      Write HTML, style it with CSS, and add JavaScript.
+      Run your code and see your webpage come to life.
+      No installation required.
+    </p>
+  </section>
+
+  <div class="toolbar">
+    <button class="run" id="runButton">▶ Run Code</button>
+    <button class="reset" id="resetButton">Reset Example</button>
+    <span class="status" id="status" aria-live="polite">
+      Ready to code.
+    </span>
+  </div>
+
+  <section class="editors" aria-label="Code editors">
+
+    <div class="panel">
+      <h2>HTML</h2>
+      <textarea id="htmlCode" aria-label="HTML code editor" spellcheck="false"><main class="card">
+  <h1>Hello, GlobalDev Hub!</h1>
+  <p id="message">I built my first webpage.</p>
+  <button id="helloButton">Click me</button>
+</main></textarea>
+    </div>
+
+    <div class="panel">
+      <h2>CSS</h2>
+      <textarea id="cssCode" aria-label="CSS code editor" spellcheck="false">body {
+  font-family: Arial, sans-serif;
+  background: #eef2ff;
+  padding: 25px;
+}
+
+.card {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 25px #0001;
+}
+
+h1 { color: #5145cd; }
+
+button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #5145cd;
+  color: white;
+  cursor: pointer;
+}</textarea>
+    </div>
+
+    <div class="panel">
+      <h2>JavaScript</h2>
+      <textarea id="jsCode" aria-label="JavaScript code editor" spellcheck="false">document
+  .getElementById("helloButton")
+  .addEventListener("click", function () {
+    document.getElementById("message").textContent =
+      "Great job! Your JavaScript works.";
+  });</textarea>
+    </div>
+
+  </section>
+
+  <section class="preview-panel">
+    <div class="preview-heading">
+      <h2>Live Preview</h2>
+    </div>
+    <iframe
+      id="preview"
+      title="Your webpage preview"
+      sandbox="allow-scripts"
+      referrerpolicy="no-referrer">
+    </iframe>
+  </section>
+
+  <section class="tip">
+    <strong>💡 Beginner's tip</strong>
+    <p>
+      HTML creates the page structure. CSS controls its appearance.
+      JavaScript adds interaction. Try changing the heading, colors,
+      or button behavior, then tap Run Code.
+    </p>
+    <p>
+      Need help learning? Visit the
+      <a href="assistant.html">GlobalDev Hub AI Assistant</a>.
+    </p>
+  </section>
+</main>
+
+<footer>
+  © 2026 GlobalDev Hub · Learn, Build & Grow
+</footer>
+
+<script>
+const htmlEditor = document.getElementById("htmlCode");
+const cssEditor = document.getElementById("cssCode");
+const jsEditor = document.getElementById("jsCode");
+const preview = document.getElementById("preview");
+const status = document.getElementById("status");
+
+function runCode() {
+  const html = htmlEditor.value;
+  const css = cssEditor.value;
+  const js = jsEditor.value;
+
+  const page =
+    '<!doctype html><html lang="en"><head>' +
+    '<meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+    '<style>' + css + '</style>' +
+    '</head><body>' +
+    html +
+    '<script>' + js + '<' + '/script>' +
+    '</body></html>';
+
+  preview.srcdoc = page;
+  status.textContent = "Preview updated.";
+}
+
+function resetExample() {
+  htmlEditor.value =
+    '<main class="card">\n' +
+    '  <h1>Hello, GlobalDev Hub!</h1>\n' +
+    '  <p id="message">I built my first webpage.</p>\n' +
+    '  <button id="helloButton">Click me</button>\n' +
+    '</main>';
+
+  cssEditor.value =
+    'body {\n' +
+    '  font-family: Arial, sans-serif;\n' +
+    '  background: #eef2ff;\n' +
+    '  padding: 25px;\n' +
+    '}\n\n' +
+    '.card {\n' +
+    '  max-width: 500px;\n' +
+    '  margin: 30px auto;\n' +
+    '  padding: 25px;\n' +
+    '  background: white;\n' +
+    '  border-radius: 16px;\n' +
+    '  text-align: center;\n' +
+    '  box-shadow: 0 8px 25px #0001;\n' +
+    '}\n\n' +
+    'h1 { color: #5145cd; }\n\n' +
+    'button {\n' +
+    '  padding: 12px 18px;\n' +
+    '  border: 0;\n' +
+    '  border-radius: 8px;\n' +
+    '  background: #5145cd;\n' +
+    '  color: white;\n' +
+    '  cursor: pointer;\n' +
+    '}';
+
+  jsEditor.value =
+    'document\n' +
+    '  .getElementById("helloButton")\n' +
+    '  .addEventListener("click", function () {\n' +
+    '    document.getElementById("message").textContent =\n' +
+    '      "Great job! Your JavaScript works.";\n' +
+    '  });';
+
+  runCode();
+  status.textContent = "Example restored.";
+}
+
+document.getElementById("runButton")
+  .addEventListener("click", runCode);
+
+document.getElementById("resetButton")
+  .addEventListener("click", resetExample);
+
+runCode();
+</script>
+
+</body>
+  </html>
