@@ -1,83 +1,128 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GlobalDev Hub AI Assistant</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      padding: 24px 16px;
-      background: #0b1120;
-      color: #f1f5f9;
+      padding: 20px;
       font-family: Arial, sans-serif;
+      background: #101827;
+      color: #ffffff;
     }
 
-    main {
+    .container {
       max-width: 700px;
       margin: 40px auto;
       padding: 24px;
-      background: #111c30;
-      border: 1px solid #26364f;
-      border-radius: 16px;
+      background: #1b2638;
+      border-radius: 12px;
     }
 
-    h1 { color: #60a5fa; }
-    p { line-height: 1.6; color: #cbd5e1; }
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    p {
+      color: #d1d5db;
+      line-height: 1.6;
+    }
 
     textarea {
       width: 100%;
-      min-height: 130px;
+      min-height: 120px;
       padding: 14px;
       border: 1px solid #475569;
-      border-radius: 10px;
-      background: #0b1120;
-      color: white;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #ffffff;
       font: inherit;
       resize: vertical;
     }
 
     button {
-      margin: 12px 8px 0 0;
+      margin: 12px 8px 12px 0;
       padding: 12px 18px;
-      border: 0;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      font-weight: bold;
+      border: none;
+      border-radius: 7px;
+      font-size: 15px;
       cursor: pointer;
     }
 
-    #clearButton { background: #334155; }
-    #status { color: #93c5fd; }
+    #askButton {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    #clearButton {
+      background: #475569;
+      color: #ffffff;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #status {
+      min-height: 22px;
+      color: #93c5fd;
+      overflow-wrap: anywhere;
+    }
 
     #response {
-      margin-top: 18px;
+      min-height: 100px;
       padding: 16px;
-      min-height: 70px;
-      border-radius: 10px;
-      background: #0b1120;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
+      line-height: 1.7;
     }
   </style>
 </head>
-<body>
-  <main>
-    <h1>GlobalDev Hub AI Assistant</h1>
-    <p>Ask a question and our AI assistant will try to help.</p>
 
-    <textarea id="question" placeholder="Type your message here..."></textarea>
+<body>
+  <main class="container">
+    <h1>GlobalDev Hub AI Assistant</h1>
+
+    <p>
+      Ask a question and our AI assistant will try to help.
+    </p>
+
+    <textarea
+      id="question"
+      placeholder="Type your message here..."
+      aria-label="Your message"
+    ></textarea>
 
     <div>
-      <button id="askButton">Ask Assistant</button>
-      <button id="clearButton">Clear</button>
+      <button id="askButton" type="button">
+        Ask Assistant
+      </button>
+
+      <button id="clearButton" type="button">
+        Clear
+      </button>
     </div>
 
-    <p id="status" role="status">Ready. Ask me anything.</p>
-    <div id="response" aria-live="polite">The assistant's answer will appear here.</div>
+    <p id="status" role="status" aria-live="polite">
+      Ready. Ask me anything.
+    </p>
+
+    <div id="response" aria-live="polite">
+      The assistant's answer will appear here.
+    </div>
   </main>
 
   <script>
@@ -89,6 +134,9 @@
     const clearButton = document.getElementById("clearButton");
     const responseBox = document.getElementById("response");
     const statusBox = document.getElementById("status");
+
+    // Conversation history stays available while this page is open.
+    let conversationHistory = [];
 
     async function askAssistant() {
       const question = questionBox.value.trim();
@@ -106,23 +154,50 @@
       try {
         const response = await fetch(workerUrl, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: question })
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: question,
+            history: conversationHistory
+          })
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "The request failed.");
+          throw new Error(
+            data.error || "The request failed."
+          );
         }
 
-        responseBox.textContent =
-          data.reply || data.response || "The assistant returned no answer.";
+        const answer =
+          data.reply ||
+          data.response ||
+          "The assistant returned no answer.";
+
+        // Save the question and answer for the next turn.
+        conversationHistory.push(
+          { role: "user", content: question },
+          { role: "assistant", content: answer }
+        );
+
+        // Keep the most recent 20 messages.
+        conversationHistory =
+          conversationHistory.slice(-20);
+
+        responseBox.textContent = answer;
         statusBox.textContent = "Answer received.";
+        questionBox.value = "";
+        questionBox.focus();
+
       } catch (error) {
         responseBox.textContent =
           "Sorry, I couldn't connect. Please try again.";
-        statusBox.textContent = "Connection error: " + error.message;
+
+        statusBox.textContent =
+          "Connection error: " + error.message;
+
       } finally {
         askButton.disabled = false;
       }
@@ -132,9 +207,12 @@
 
     clearButton.addEventListener("click", () => {
       questionBox.value = "";
+      conversationHistory = [];
+
       responseBox.textContent =
         "The assistant's answer will appear here.";
-      statusBox.textContent = "Ready. Ask me anything.";
+
+      statusBox.textContent = "Conversation cleared.";
       questionBox.focus();
     });
 
