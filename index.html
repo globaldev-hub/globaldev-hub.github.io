@@ -8,7 +8,7 @@
 
   <title>GlobalDev Hub | Learn, Build and Grow</title>
 
-  <meta name="description" content="Learn practical technology skills, explore digital tools, build websites, discover career opportunities, and grow with GlobalDev Hub.">
+  <meta name="description" content="Learn practical technology skills, explore digital tools, build websites, discover career opportunities, and grow with GlobalDev Hub. Support GlobalDev Hub in keeping learning accessible.">
 
   <style>
     :root {
@@ -160,6 +160,8 @@
       font-weight: 700;
       border: 1px solid transparent;
       transition: transform 0.2s, opacity 0.2s;
+      cursor: pointer;
+      text-align: center;
     }
 
     .home-button:hover {
@@ -171,6 +173,11 @@
       background: transparent;
       border-color: var(--border);
       color: var(--text);
+    }
+
+    .home-button.donation-button {
+      background: var(--secondary);
+      color: #071b19;
     }
 
     .hero-visual {
@@ -351,6 +358,86 @@
       font-weight: 700;
     }
 
+    /* Dedicated donation section */
+    .support-section {
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(39,217,176,0.10), transparent 42%),
+        radial-gradient(ellipse at 90% 85%, rgba(108,140,255,0.12), transparent 45%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .support-panel {
+      max-width: 850px;
+      margin: auto;
+      padding: clamp(28px, 5vw, 55px);
+      text-align: center;
+      background: linear-gradient(145deg, #192b3b, #121a2d);
+      border: 1px solid rgba(39,217,176,0.25);
+      border-radius: 24px;
+      box-shadow: 0 25px 65px rgba(0,0,0,0.18);
+    }
+
+    .support-icon {
+      display: grid;
+      place-items: center;
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 22px;
+      border-radius: 20px;
+      background: rgba(39,217,176,0.12);
+      font-size: 2rem;
+    }
+
+    .support-panel h2 {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .support-panel p {
+      max-width: 650px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+    }
+
+    .support-benefits {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0;
+      text-align: left;
+    }
+
+    .support-benefit {
+      padding: 18px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+
+    .support-benefit strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--secondary);
+    }
+
+    .support-benefit span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .support-panel .home-actions {
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .support-note {
+      margin-top: 20px !important;
+      margin-bottom: 0 !important;
+      font-size: 0.85rem;
+    }
+
     .cta-section {
       text-align: center;
     }
@@ -425,6 +512,10 @@
       .ai-panel {
         grid-template-columns: 1fr;
       }
+
+      .support-benefits {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 540px) {
@@ -457,6 +548,10 @@
       .footer-inner {
         flex-direction: column;
       }
+
+      .support-panel {
+        padding: 28px 20px;
+      }
     }
   </style>
 </head>
@@ -476,6 +571,7 @@
         <a href="resources.html">Resources</a>
         <a href="assistant.html">AI Assistant</a>
         <a href="playground.html">Code Playground</a>
+        <a href="#support">Support</a>
       </nav>
     </div>
   </header>
@@ -503,7 +599,7 @@
             <a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
             <a class="home-button secondary" href="guides.html">Explore Our Guides</a>
             <a class="home-button secondary" href="playground.html">💻 Try Code Playground</a>
-            <a class="home-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
+            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
           </div>
         </div>
 
@@ -676,6 +772,62 @@
       </div>
     </section>
 
+    <!-- Dedicated GlobalDev Hub support section -->
+    <section class="support-section" id="support">
+      <div class="container">
+        <div class="support-panel">
+
+          <div class="support-icon" aria-hidden="true">💚</div>
+
+          <h2>Support GlobalDev Hub</h2>
+
+          <p>
+            Help us keep learning accessible by supporting free educational
+            resources, practical technology guides, and digital learning tools.
+          </p>
+
+          <p>
+            Your voluntary contribution helps us continue improving the
+            resources we share with our learning community.
+          </p>
+
+          <div class="support-benefits">
+            <div class="support-benefit">
+              <strong>📚 Free Learning</strong>
+              <span>Help support accessible educational resources.</span>
+            </div>
+
+            <div class="support-benefit">
+              <strong>💻 Digital Skills</strong>
+              <span>Help us maintain practical technology content.</span>
+            </div>
+
+            <div class="support-benefit">
+              <strong>🌱 Community Growth</strong>
+              <span>Help our learning community continue to grow.</span>
+            </div>
+          </div>
+
+          <div class="home-actions">
+            <a
+              class="home-button donation-button"
+              href="https://paystack.shop/pay/globaldevhub"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💚 Make a Voluntary Contribution
+            </a>
+          </div>
+
+          <p class="support-note">
+            Every contribution is appreciated. Donations are voluntary.
+            Payments are handled through Paystack.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
     <section class="cta-section">
       <div class="container">
         <div class="cta-panel">
@@ -689,7 +841,7 @@
           <div class="home-actions" style="justify-content:center">
             <a class="home-button" href="playground.html">💻 Start Coding</a>
             <a class="home-button secondary" href="assistant.html">Talk to the AI Assistant</a>
-            <a class="home-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
+            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
           </div>
         </div>
       </div>
@@ -707,6 +859,7 @@
         <a href="resources.html">Resources</a>
         <a href="assistant.html">AI Assistant</a>
         <a href="playground.html">Code Playground</a>
+        <a href="#support">Support GlobalDev Hub</a>
       </div>
     </div>
   </footer>
