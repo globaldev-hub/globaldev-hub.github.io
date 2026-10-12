@@ -1,155 +1,435 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1020">
-  <meta name="description" content="Learn practical technology skills, explore digital tools, build websites, discover career opportunities, and grow with GlobalDev Hub. Support GlobalDev Hub in keeping learning accessible.">
-  <title>GlobalDev Hub | Learn, Build and Grow</title>
+  <meta name="theme-color" content="#101a32">
+
+  <title>GlobalDev Hub | Digital Knowledge & Resources</title>
+  <meta name="description" content="Learn practical digital skills, explore technology resources, discover career opportunities and build your knowledge with GlobalDev Hub.">
+
   <style>
     :root {
-      --bg: #0b1020;
-      --surface: #121a2d;
-      --surface-light: #19243b;
-      --text: #f4f7ff;
-      --muted: #a8b4cc;
-      --primary: #6c8cff;
-      --secondary: #27d9b0;
-      --border: rgba(255,255,255,.10);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; line-height: 1.7; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1120px, 92%); margin: auto; }
-    header { position: sticky; top: 0; z-index: 10; background: rgba(11,16,32,.95); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
-    .navbar { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 0; }
-    .logo { font-size: 1.35rem; font-weight: 800; letter-spacing: -.5px; white-space: nowrap; }
-    .logo span { color: var(--secondary); }
-    nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 17px; }
-    nav a { color: var(--muted); font-size: .88rem; transition: color .2s; }
-    nav a:hover, .footer-links a:hover { color: var(--secondary); }
-    .hero { padding: 100px 0 85px; background: radial-gradient(ellipse at 85% 20%, rgba(108,140,255,.19), transparent 38%), radial-gradient(ellipse at 10% 80%, rgba(39,217,176,.10), transparent 35%); }
-    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; align-items: center; gap: 55px; }
-    .eyebrow { display: inline-block; padding: 6px 13px; margin-bottom: 22px; border: 1px solid rgba(39,217,176,.3); border-radius: 30px; color: var(--secondary); background: rgba(39,217,176,.07); font-size: .85rem; }
-    h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); line-height: 1.12; letter-spacing: -2px; margin-bottom: 23px; }
-    .gradient-text { background: linear-gradient(90deg, var(--secondary), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero p { color: var(--muted); max-width: 650px; font-size: 1.05rem; margin-bottom: 30px; }
-    .home-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .home-button { display: inline-flex; justify-content: center; align-items: center; padding: 12px 19px; min-height: 48px; border-radius: 10px; background: var(--primary); color: white; font-weight: 700; border: 1px solid transparent; transition: transform .2s, opacity .2s; cursor: pointer; text-align: center; }
-    .home-button:hover { transform: translateY(-2px); opacity: .9; }
-    .home-button.secondary { background: transparent; border-color: var(--border); color: var(--text); }
-    .home-button.donation-button { background: var(--secondary); color: #071b19; }
-    .hero-visual { padding: 28px; background: linear-gradient(145deg, #1b2945, #11182a); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 25px 70px rgba(0,0,0,.2); }
-    .visual-top { display: flex; gap: 7px; margin-bottom: 25px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff7185; }
-    .dot:nth-child(2) { background: #ffd166; }
-    .dot:nth-child(3) { background: var(--secondary); }
-    .code-line { margin: 12px 0; padding: 10px 13px; border-radius: 8px; background: rgba(255,255,255,.04); color: #c5d2ed; font-family: monospace; font-size: .9rem; overflow-wrap: anywhere; }
-    .code-line span { color: var(--secondary); }
-    .visual-note { color: var(--muted); margin-top: 20px; font-size: .9rem; }
-    section { padding: 76px 0; }
-    .section-heading { max-width: 720px; margin-bottom: 35px; }
-    .section-heading h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.2; margin-bottom: 13px; }
-    .section-heading p, .feature-card p, .ai-panel p, .guide-item p, .support-panel p, .support-benefit span, .cta-panel p { color: var(--muted); }
-    .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-    .feature-card { display: flex; flex-direction: column; align-items: flex-start; padding: 25px; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 17px; transition: transform .2s, border-color .2s; }
-    .feature-card:hover { transform: translateY(-4px); border-color: rgba(108,140,255,.55); }
-    .feature-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 17px; border-radius: 13px; background: var(--surface-light); font-size: 1.5rem; }
-    .feature-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
-    .feature-card p { font-size: .94rem; margin-bottom: 20px; }
-    .feature-card a, .guide-item a { color: var(--secondary); font-weight: 700; }
-    .feature-card a { margin-top: auto; }
-    .feature-card a:hover, .guide-item a:hover { text-decoration: underline; }
-    .ai-section { background: linear-gradient(120deg, rgba(108,140,255,.12), rgba(39,217,176,.06)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .ai-panel { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 30px; padding: 35px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; }
-    .ai-panel h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 12px; }
-    .ai-panel p { max-width: 680px; }
-    .guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .guide-item { padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; }
-    .guide-item h3 { margin-bottom: 8px; }
-    .guide-item p { margin-bottom: 12px; }
-    .support-section { background: radial-gradient(ellipse at 15% 15%, rgba(39,217,176,.10), transparent 42%), radial-gradient(ellipse at 90% 85%, rgba(108,140,255,.12), transparent 45%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .support-panel { max-width: 850px; margin: auto; padding: clamp(28px, 5vw, 55px); text-align: center; background: linear-gradient(145deg, #192b3b, #121a2d); border: 1px solid rgba(39,217,176,.25); border-radius: 24px; box-shadow: 0 25px 65px rgba(0,0,0,.18); }
-    .support-icon { display: grid; place-items: center; width: 66px; height: 66px; margin: 0 auto 22px; border-radius: 20px; background: rgba(39,217,176,.12); font-size: 2rem; }
-    .support-panel h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.2; margin-bottom: 16px; }
-    .support-panel p { max-width: 650px; margin: 0 auto 18px; }
-    .support-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 30px 0; text-align: left; }
-    .support-benefit { padding: 18px; background: rgba(255,255,255,.035); border: 1px solid var(--border); border-radius: 13px; }
-    .support-benefit strong { display: block; margin-bottom: 6px; color: var(--secondary); }
-    .support-benefit span { font-size: .9rem; }
-    .support-panel .home-actions { justify-content: center; margin-top: 25px; }
-    .support-note { margin-top: 20px !important; margin-bottom: 0 !important; font-size: .85rem; }
-    .cta-section { text-align: center; }
-    .cta-panel { padding: 45px 25px; border: 1px solid var(--border); border-radius: 22px; background: radial-gradient(ellipse at top right, rgba(108,140,255,.18), transparent 50%), var(--surface); }
-    .cta-panel h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 14px; }
-    .cta-panel p { max-width: 620px; margin: 0 auto 25px; }
-    footer { padding: 30px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
-    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 15px; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 15px; }
-    @media (max-width: 850px) {
-      .navbar { align-items: flex-start; flex-direction: column; }
-      nav { justify-content: flex-start; }
-      .hero-grid { grid-template-columns: 1fr; gap: 35px; }
-      .hero { padding: 70px 0; }
-      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .ai-panel { grid-template-columns: 1fr; }
-      .support-benefits { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 540px) {
-      .feature-grid, .guide-list { grid-template-columns: 1fr; }
-      h1 { letter-spacing: -1px; }
-      section { padding: 55px 0; }
-      .home-actions { flex-direction: column; }
-      .home-button { width: 100%; }
-      .hero-visual, .ai-panel { padding: 22px; }
-      .footer-inner { flex-direction: column; }
-      .support-panel { padding: 28px 20px; }
+      --bg: #0b1224;
+      --panel: #121e38;
+      --panel2: #182744;
+      --text: #f5f7ff;
+      --muted: #b4c0d7;
+      --blue: #4b83ff;
+      --cyan: #55e0d0;
+      --border: rgba(255,255,255,.12);
     }
 
-    /* Strong, explicit styling for the hero code panel */
-    .hero-visual {
-      display: block;
-      width: 100%;
-      min-width: 0;
-      padding: 28px;
-      background: #17233b;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 24px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.3);
-      overflow: hidden;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .hero-visual .visual-top {
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(11,18,36,.97);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      min-height: 76px;
       display: flex;
-      gap: 7px;
-      margin-bottom: 25px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+      flex-wrap: wrap;
     }
-    .hero-visual .code-line {
-      display: block;
-      width: 100%;
-      margin: 12px 0;
-      padding: 10px 13px;
-      border-radius: 8px;
-      background: #0d1527;
-      color: #e3eaff;
-      font-family: Consolas, Monaco, monospace;
-      font-size: .9rem;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
     }
-    .hero-visual .code-line span { color: #27d9b0; }
-    .hero-visual .visual-note {
-      display: block;
-      color: #a8b4cc;
-      margin-top: 20px;
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #071226;
+      font-size: 1.35rem;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
       font-size: .9rem;
+    }
+
+    nav a:hover {
+      color: var(--cyan);
+    }
+
+    .hero {
+      padding: 82px 0;
+      background:
+        radial-gradient(ellipse at 85% 15%, rgba(75,131,255,.16), transparent 42%),
+        radial-gradient(ellipse at 5% 90%, rgba(85,224,208,.08), transparent 36%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: .83rem;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 5vw, 3.8rem);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 22px;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.06rem;
+      max-width: 610px;
+      margin-bottom: 27px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 19px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .94rem;
+      border: 1px solid var(--border);
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: .92;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+
+    .welcome-panel {
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--panel), var(--panel2));
+      box-shadow: 0 22px 60px rgba(0,0,0,.2);
+    }
+
+    .welcome-icon {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      border-radius: 17px;
+      background: rgba(75,131,255,.17);
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: clamp(1.65rem, 3vw, 2.25rem);
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin-bottom: 9px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .welcome-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 22px;
+    }
+
+    .welcome-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--text);
+    }
+
+    .welcome-item span:first-child {
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .section-heading p {
+      margin-top: 10px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 16px;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(85,224,208,.5);
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 13px;
+    }
+
+    .card p {
+      font-size: .95rem;
+      margin-bottom: 17px;
+    }
+
+    .text-link {
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    .alt-section {
+      background: rgba(255,255,255,.025);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .guide-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .guide {
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .guide p {
+      margin-top: 5px;
+      font-size: .94rem;
+    }
+
+    .support-panel {
+      padding: 35px;
+      background: linear-gradient(135deg, #162a4d, #14243c);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .support-panel > div {
+      max-width: 700px;
+    }
+
+    .support-panel h2 {
+      margin-bottom: 10px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      font-size: .85rem;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .cta p {
+      max-width: 650px;
+      margin: 12px auto 0;
+    }
+
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--cyan);
+    }
+
+    .small {
+      font-size: .88rem;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero {
+        padding: 60px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .navbar {
+        align-items: flex-start;
+      }
+
+      nav {
+        gap: 11px 15px;
+      }
+
+      nav a {
+        font-size: .84rem;
+      }
+
+      .card-grid,
+      .guide-list {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 55px 0;
+      }
+
+      .welcome-panel,
+      .support-panel {
+        padding: 24px;
+      }
+
+      h1 {
+        letter-spacing: -.8px;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container navbar">
-      <a class="logo" href="index.html">GlobalDev <span>Hub</span></a>
+      <a class="brand" href="index.html" aria-label="GlobalDev Hub home">
+        <span class="brand-icon">G</span>
+        <span>GlobalDev Hub</span>
+      </a>
+
       <nav aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="#tools">Tools</a>
@@ -168,23 +448,51 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">Learn something useful. Build something real.</span>
-          <h1>Practical technology skills for a <span class="gradient-text">world full of possibilities.</span></h1>
-          <p>Welcome to GlobalDev Hub. Explore practical guides, discover digital tools, improve your skills, practise coding, and take your next step in technology.</p>
-          <div class="home-actions">
-            <a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
-            <a class="home-button secondary" href="guides.html">Explore Our Guides</a>
-            <a class="home-button secondary" href="playground.html">💻 Try Code Playground</a>
-            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
+          <p class="eyebrow">Learn something useful. Build something real.</p>
+
+          <h1>Practical digital skills for a world full of possibilities.</h1>
+
+          <p class="hero-copy">
+            Welcome to GlobalDev Hub — a place to explore technology,
+            learn useful digital skills, discover educational resources,
+            and take practical steps toward your online goals.
+          </p>
+
+          <div class="button-row">
+            <a class="btn btn-primary" href="guides.html">Explore Guides</a>
+            <a class="btn btn-secondary" href="playground.html">Practise Coding</a>
+            <a class="btn btn-secondary" href="resources.html">Browse Resources</a>
           </div>
         </div>
-        <div class="hero-visual" aria-label="Decorative code editor example">
-          <div class="visual-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-          <div class="code-line"><span>&lt;h1&gt;</span> Hello, developer! <span>&lt;/h1&gt;</span></div>
-          <div class="code-line"><span>const</span> ideas = "possibilities";</div>
-          <div class="code-line"><span>function</span> buildFuture() { }</div>
-          <div class="code-line">Learn. Build. <span>Grow.</span></div>
-          <p class="visual-note">Your journey into digital skills starts with one small step.</p>
+
+        <div class="welcome-panel">
+          <div class="welcome-icon" aria-hidden="true">🌍</div>
+
+          <h2>Welcome to GlobalDev Hub</h2>
+
+          <p>
+            Your space to learn, discover, practise, and grow.
+            Start small, build your knowledge, and keep moving forward.
+          </p>
+
+          <div class="welcome-list">
+            <div class="welcome-item">
+              <span>✓</span>
+              <span>Learn practical digital and technology skills.</span>
+            </div>
+            <div class="welcome-item">
+              <span>✓</span>
+              <span>Discover helpful tools and learning resources.</span>
+            </div>
+            <div class="welcome-item">
+              <span>✓</span>
+              <span>Explore careers and online opportunities carefully.</span>
+            </div>
+            <div class="welcome-item">
+              <span>✓</span>
+              <span>Practise building websites and digital projects.</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -192,89 +500,283 @@
     <section id="tools">
       <div class="container">
         <div class="section-heading">
-          <h2>Explore what you can do</h2>
-          <p>Find useful resources and practical tools to help you learn, create, solve problems, and grow your digital skills.</p>
+          <p class="eyebrow">Explore the hub</p>
+          <h2>Resources to help you move forward</h2>
+          <p>
+            Explore the sections below to find learning materials,
+            practical tools, and information that can help you develop
+            your digital knowledge.
+          </p>
         </div>
-        <div class="feature-grid">
-          <article class="feature-card"><div class="feature-icon">🌐</div><h3>Web Development</h3><p>Learn HTML, CSS, JavaScript, and the fundamentals of building websites for the modern web.</p><a href="guides.html">Explore guides →</a></article>
-          <article class="feature-card"><div class="feature-icon">🧰</div><h3>Digital Tools</h3><p>Discover useful digital tools that can help you work smarter, create content, and get things done.</p><a href="resources.html">Explore resources →</a></article>
-          <article class="feature-card"><div class="feature-icon">🚀</div><h3>Careers &amp; Skills</h3><p>Explore technology career paths, build useful skills, and discover opportunities for professional growth.</p><a href="careers.html">Explore careers →</a></article>
-          <article class="feature-card"><div class="feature-icon">📱</div><h3>Social Toolkit</h3><p>Explore resources for planning and improving your online presence and digital communication.</p><a href="social.html">Open toolkit →</a></article>
-          <article class="feature-card"><div class="feature-icon">💻</div><h3>Code Playground</h3><p>Practise HTML, CSS, and JavaScript, run your code, and see your webpage come to life in a live preview.</p><a href="playground.html">Start coding →</a></article>
-          <article class="feature-card"><div class="feature-icon">🤖</div><h3>AI Assistant</h3><p>Ask questions, understand technical concepts, and get help as you learn and work on projects.</p><a href="assistant.html">Chat with AI →</a></article>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">💻</div>
+            <h3>Web Development</h3>
+            <p>
+              Begin learning HTML, CSS, JavaScript, and the basics
+              of building websites.
+            </p>
+            <a class="text-link" href="playground.html">Explore coding →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🧰</div>
+            <h3>Digital Tools</h3>
+            <p>
+              Discover useful digital tools for learning, productivity,
+              creativity, and everyday work.
+            </p>
+            <a class="text-link" href="resources.html">View resources →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">📚</div>
+            <h3>Learning Guides</h3>
+            <p>
+              Use clear guides to understand digital topics and
+              build your skills step by step.
+            </p>
+            <a class="text-link" href="guides.html">Read guides →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🚀</div>
+            <h3>Career Opportunities</h3>
+            <p>
+              Learn about digital careers, job-search preparation,
+              and ways to evaluate online opportunities.
+            </p>
+            <a class="text-link" href="careers.html">Explore careers →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">📱</div>
+            <h3>Social Toolkit</h3>
+            <p>
+              Explore ideas for creating content, organising your
+              social presence, and communicating online.
+            </p>
+            <a class="text-link" href="social.html">Explore toolkit →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🤖</div>
+            <h3>AI Assistant</h3>
+            <p>
+              Visit the assistant page for help with digital learning
+              and your technology questions.
+            </p>
+            <a class="text-link" href="assistant.html">Visit assistant →</a>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="ai-section">
-      <div class="container">
-        <div class="ai-panel">
-          <div><h2>Meet the GlobalDev Hub AI Assistant</h2><p>Need help understanding code, planning a project, or learning a new digital skill? Start a conversation and explore ideas at your own pace.</p></div>
-          <a class="home-button" href="assistant.html">✨ Ask the AI</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="guides">
+    <section class="alt-section" id="guides-preview">
       <div class="container">
         <div class="section-heading">
-          <h2>Keep learning. Keep building.</h2>
-          <p>Start with a topic that interests you and take the next step in your learning journey.</p>
+          <p class="eyebrow">Start learning</p>
+          <h2>Build your knowledge one step at a time</h2>
+          <p>
+            You do not need to know everything at once. Start with a
+            subject that interests you and practise regularly.
+          </p>
         </div>
+
         <div class="guide-list">
-          <article class="guide-item"><h3>📘 Explore Practical Guides</h3><p>Find learning materials and step-by-step resources for developing your digital skills.</p><a href="guides.html">Browse guides →</a></article>
-          <article class="guide-item"><h3>🧪 Practise Your Code</h3><p>Experiment with HTML, CSS, and JavaScript in your own browser-based coding workspace.</p><a href="playground.html">Open the playground →</a></article>
-          <article class="guide-item"><h3>🎯 Discover Opportunities</h3><p>Learn about technology skills and career directions that you can explore.</p><a href="careers.html">Explore careers →</a></article>
-          <article class="guide-item"><h3>🤖 Get Learning Support</h3><p>Ask questions and get assistance while working through technical topics and ideas.</p><a href="assistant.html">Open AI Assistant →</a></article>
+          <article class="guide">
+            <h3>🌐 Understanding Websites</h3>
+            <p>
+              Learn what websites are, how web pages work, and what
+              you need to create a simple website.
+            </p>
+          </article>
+
+          <article class="guide">
+            <h3>🧑‍💻 Getting Started with HTML and CSS</h3>
+            <p>
+              Understand how HTML organises page content and how CSS
+              controls colours, spacing, and layout.
+            </p>
+          </article>
+
+          <article class="guide">
+            <h3>🔐 Staying Safe Online</h3>
+            <p>
+              Learn to recognise suspicious links, protect your
+              passwords, and check online claims before paying.
+            </p>
+          </article>
+
+          <article class="guide">
+            <h3>💼 Exploring Online Opportunities</h3>
+            <p>
+              Learn how to research websites offering work and
+              identify warning signs of possible scams.
+            </p>
+          </article>
+        </div>
+
+        <div class="button-row">
+          <a class="btn btn-primary" href="guides.html">Visit All Guides</a>
+          <a class="btn btn-secondary" href="resources.html">Find Resources</a>
         </div>
       </div>
     </section>
 
-    <section class="support-section" id="support">
+    <section id="opportunities">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Make informed choices</p>
+          <h2>Explore opportunities with care</h2>
+          <p>
+            Online learning and work opportunities can be useful,
+            but not every website is trustworthy. Research each platform,
+            read its terms, and avoid promises of guaranteed income.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🔎</div>
+            <h3>Research First</h3>
+            <p>
+              Check the company, payment rules, user feedback, and
+              withdrawal requirements before signing up.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🛡️</div>
+            <h3>Protect Yourself</h3>
+            <p>
+              Never share your passwords or one-time verification codes.
+              Be cautious when asked to pay to unlock supposed earnings.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">🎯</div>
+            <h3>Build Real Skills</h3>
+            <p>
+              Practise useful skills and build examples of your work
+              to support your longer-term goals.
+            </p>
+          </article>
+        </div>
+
+        <div class="button-row">
+          <a class="btn btn-primary" href="careers.html">Explore Career Resources</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt-section" id="resources">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Keep exploring</p>
+          <h2>Your next step starts here</h2>
+          <p>
+            Choose a section that matches what you want to learn today.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <h3>📖 Guides and Tutorials</h3>
+            <p>Learn new topics through practical explanations.</p>
+            <a class="text-link" href="guides.html">Open Guides →</a>
+          </article>
+
+          <article class="card">
+            <h3>🗂️ Digital Resources</h3>
+            <p>Find resources to support your learning and projects.</p>
+            <a class="text-link" href="resources.html">Open Resources →</a>
+          </article>
+
+          <article class="card">
+            <h3>🧪 Code Playground</h3>
+            <p>Visit the coding area to practise website development.</p>
+            <a class="text-link" href="playground.html">Open Playground →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
       <div class="container">
         <div class="support-panel">
-          <div class="support-icon" aria-hidden="true">💚</div>
-          <h2>Support GlobalDev Hub</h2>
-          <p>Help us keep learning accessible by supporting free educational resources, practical technology guides, and digital learning tools.</p>
-          <p>Your voluntary contribution helps us continue improving the resources we share with our learning community.</p>
-          <div class="support-benefits">
-            <div class="support-benefit"><strong>📚 Free Learning</strong><span>Help support accessible educational resources.</span></div>
-            <div class="support-benefit"><strong>💻 Digital Skills</strong><span>Help us maintain practical technology content.</span></div>
-            <div class="support-benefit"><strong>🌱 Community Growth</strong><span>Help our learning community continue to grow.</span></div>
+          <div>
+            <p class="eyebrow">Support the project</p>
+            <h2>Help GlobalDev Hub grow</h2>
+            <p>
+              If you find this website useful, you can choose to support
+              its development. Contributions are voluntary.
+            </p>
+            <p class="notice">
+              Please check the payment destination and amount carefully
+              before making any payment.
+            </p>
           </div>
-          <div class="home-actions"><a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Make a Voluntary Contribution</a></div>
-          <p class="support-note">Every contribution is appreciated. Donations are voluntary. Payments are handled through Paystack.</p>
+
+          <a
+            class="btn btn-primary"
+            href="https://paystack.shop/pay/globaldevhub"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Support GlobalDev Hub
+          </a>
         </div>
       </div>
     </section>
 
-    <section class="cta-section">
+    <section class="cta">
       <div class="container">
-        <div class="cta-panel">
-          <h2>Your next idea starts here.</h2>
-          <p>Whether you're learning your first coding language or exploring a new opportunity, GlobalDev Hub is here to help you take the next step.</p>
-          <div class="home-actions" style="justify-content:center">
-            <a class="home-button" href="playground.html">Start Coding</a>
-            <a class="home-button secondary" href="assistant.html">Talk to the AI Assistant</a>
-            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">Support GlobalDev Hub</a>
-          </div>
+        <p class="eyebrow">Learn. Build. Grow.</p>
+        <h2>Take your next digital step today.</h2>
+        <p>
+          Keep learning, practise what you discover, and use reliable
+          information to make better decisions online.
+        </p>
+
+        <div class="button-row" style="justify-content:center;">
+          <a class="btn btn-primary" href="guides.html">Start Learning</a>
+          <a class="btn btn-secondary" href="resources.html">Explore Resources</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container footer-inner">
-      <p>© 2026 GlobalDev Hub. Learn, build, and grow.</p>
-      <nav class="footer-links" aria-label="Footer navigation">
+    <div class="container footer-content">
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand-icon">G</span>
+          <span>GlobalDev Hub</span>
+        </a>
+        <p class="small" style="margin-top:10px;">
+          Practical digital knowledge and resources.
+        </p>
+        <p class="small" style="margin-top:6px;">
+          © <span id="year">2026</span> GlobalDev Hub. All rights reserved.
+        </p>
+      </div>
+
+      <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="guides.html">Guides</a>
         <a href="resources.html">Resources</a>
-        <a href="assistant.html">AI Assistant</a>
-        <a href="playground.html">Code Playground</a>
-        <a href="#support">Support GlobalDev Hub</a>
-      </nav>
+        <a href="careers.html">Careers</a>
+        <a href="#support">Support</a>
+      </div>
     </div>
   </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
 </body>
 </html>
