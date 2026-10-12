@@ -1,873 +1,109 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1020">
-
-  <title>GlobalDev Hub | Learn, Build and Grow</title>
-
-  <meta name="description" content="Learn practical technology skills, explore digital tools, build websites, discover career opportunities, and grow with GlobalDev Hub. Support GlobalDev Hub in keeping learning accessible.">
-
-  <style>
-    :root {
-      --bg: #0b1020;
-      --surface: #121a2d;
-      --surface-light: #19243b;
-      --text: #f4f7ff;
-      --muted: #a8b4cc;
-      --primary: #6c8cff;
-      --secondary: #27d9b0;
-      --border: rgba(255,255,255,0.10);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(1120px, 92%);
-      margin: auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(11,16,32,0.95);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .navbar {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 14px 0;
-    }
-
-    .logo {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      white-space: nowrap;
-    }
-
-    .logo span {
-      color: var(--secondary);
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 8px 17px;
-    }
-
-    nav a {
-      color: var(--muted);
-      font-size: 0.88rem;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--secondary);
-    }
-
-    .hero {
-      padding: 100px 0 85px;
-      background:
-        radial-gradient(ellipse at 85% 20%, rgba(108,140,255,0.19), transparent 38%),
-        radial-gradient(ellipse at 10% 80%, rgba(39,217,176,0.10), transparent 35%);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      align-items: center;
-      gap: 55px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 13px;
-      margin-bottom: 22px;
-      border: 1px solid rgba(39,217,176,0.3);
-      border-radius: 30px;
-      color: var(--secondary);
-      background: rgba(39,217,176,0.07);
-      font-size: 0.85rem;
-    }
-
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      line-height: 1.12;
-      letter-spacing: -2px;
-      margin-bottom: 23px;
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 650px;
-      font-size: 1.05rem;
-      margin-bottom: 30px;
-    }
-
-    .home-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .home-button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px 19px;
-      min-height: 48px;
-      border-radius: 10px;
-      background: var(--primary);
-      color: white;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform 0.2s, opacity 0.2s;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .home-button:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    .home-button.secondary {
-      background: transparent;
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .home-button.donation-button {
-      background: var(--secondary);
-      color: #071b19;
-    }
-
-    .hero-visual {
-      padding: 28px;
-      background: linear-gradient(145deg, #1b2945, #11182a);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.2);
-    }
-
-    .visual-top {
-      display: flex;
-      gap: 7px;
-      margin-bottom: 25px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #ff7185;
-    }
-
-    .dot:nth-child(2) {
-      background: #ffd166;
-    }
-
-    .dot:nth-child(3) {
-      background: var(--secondary);
-    }
-
-    .code-line {
-      margin: 12px 0;
-      padding: 10px 13px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.04);
-      color: #c5d2ed;
-      font-family: monospace;
-      font-size: 0.9rem;
-      overflow-wrap: anywhere;
-    }
-
-    .code-line span {
-      color: var(--secondary);
-    }
-
-    .visual-note {
-      color: var(--muted);
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-
-    section {
-      padding: 76px 0;
-    }
-
-    .section-heading {
-      max-width: 720px;
-      margin-bottom: 35px;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(1.8rem, 4vw, 2.7rem);
-      line-height: 1.2;
-      margin-bottom: 13px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .feature-card {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 25px;
-      min-width: 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(108,140,255,0.55);
-    }
-
-    .feature-icon {
-      display: grid;
-      place-items: center;
-      width: 48px;
-      height: 48px;
-      margin-bottom: 17px;
-      border-radius: 13px;
-      background: var(--surface-light);
-      font-size: 1.5rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 10px;
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin-bottom: 20px;
-    }
-
-    .feature-card a {
-      color: var(--secondary);
-      font-weight: 700;
-      margin-top: auto;
-    }
-
-    .feature-card a:hover {
-      text-decoration: underline;
-    }
-
-    .ai-section {
-      background: linear-gradient(120deg, rgba(108,140,255,0.12), rgba(39,217,176,0.06));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .ai-panel {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 30px;
-      padding: 35px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-    }
-
-    .ai-panel h2 {
-      font-size: clamp(1.7rem, 4vw, 2.4rem);
-      margin-bottom: 12px;
-    }
-
-    .ai-panel p {
-      color: var(--muted);
-      max-width: 680px;
-    }
-
-    .guide-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .guide-item {
-      padding: 22px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
-
-    .guide-item h3 {
-      margin-bottom: 8px;
-    }
-
-    .guide-item p {
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .guide-item a {
-      color: var(--secondary);
-      font-weight: 700;
-    }
-
-    /* Dedicated donation section */
-    .support-section {
-      background:
-        radial-gradient(ellipse at 15% 15%, rgba(39,217,176,0.10), transparent 42%),
-        radial-gradient(ellipse at 90% 85%, rgba(108,140,255,0.12), transparent 45%);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .support-panel {
-      max-width: 850px;
-      margin: auto;
-      padding: clamp(28px, 5vw, 55px);
-      text-align: center;
-      background: linear-gradient(145deg, #192b3b, #121a2d);
-      border: 1px solid rgba(39,217,176,0.25);
-      border-radius: 24px;
-      box-shadow: 0 25px 65px rgba(0,0,0,0.18);
-    }
-
-    .support-icon {
-      display: grid;
-      place-items: center;
-      width: 66px;
-      height: 66px;
-      margin: 0 auto 22px;
-      border-radius: 20px;
-      background: rgba(39,217,176,0.12);
-      font-size: 2rem;
-    }
-
-    .support-panel h2 {
-      font-size: clamp(1.8rem, 4vw, 2.7rem);
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
-    .support-panel p {
-      max-width: 650px;
-      margin: 0 auto 18px;
-      color: var(--muted);
-    }
-
-    .support-benefits {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 30px 0;
-      text-align: left;
-    }
-
-    .support-benefit {
-      padding: 18px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-    }
-
-    .support-benefit strong {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--secondary);
-    }
-
-    .support-benefit span {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .support-panel .home-actions {
-      justify-content: center;
-      margin-top: 25px;
-    }
-
-    .support-note {
-      margin-top: 20px !important;
-      margin-bottom: 0 !important;
-      font-size: 0.85rem;
-    }
-
-    .cta-section {
-      text-align: center;
-    }
-
-    .cta-panel {
-      padding: 45px 25px;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background:
-        radial-gradient(ellipse at top right, rgba(108,140,255,0.18), transparent 50%),
-        var(--surface);
-    }
-
-    .cta-panel h2 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      margin-bottom: 14px;
-    }
-
-    .cta-panel p {
-      color: var(--muted);
-      max-width: 620px;
-      margin: 0 auto 25px;
-    }
-
-    footer {
-      padding: 30px 0;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .footer-links a:hover {
-      color: var(--secondary);
-    }
-
-    @media (max-width: 850px) {
-      .navbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      nav {
-        justify-content: flex-start;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 35px;
-      }
-
-      .hero {
-        padding: 70px 0;
-      }
-
-      .feature-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .ai-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .support-benefits {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 540px) {
-      .feature-grid,
-      .guide-list {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        letter-spacing: -1px;
-      }
-
-      section {
-        padding: 55px 0;
-      }
-
-      .home-actions {
-        flex-direction: column;
-      }
-
-      .home-button {
-        width: 100%;
-      }
-
-      .hero-visual,
-      .ai-panel {
-        padding: 22px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-      }
-
-      .support-panel {
-        padding: 28px 20px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <div class="container navbar">
-      <a class="logo" href="index.html">GlobalDev <span>Hub</span></a>
-
-      <nav aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="#tools">Tools</a>
-        <a href="guides.html">Guides</a>
-        <a href="social.html">Social Toolkit</a>
-        <a href="careers.html">Careers</a>
-        <a href="resources.html">Resources</a>
-        <a href="assistant.html">AI Assistant</a>
-        <a href="playground.html">Code Playground</a>
-        <a href="#support">Support</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero">
-      <div class="container hero-grid">
-
-        <div>
-          <span class="eyebrow">Learn something useful. Build something real.</span>
-
-          <h1>
-            Practical technology skills for a
-            <span class="gradient-text">world full of possibilities.</span>
-          </h1>
-
-          <p>
-            Welcome to GlobalDev Hub. Explore practical guides, discover digital
-            tools, improve your skills, practise coding, and take your next step
-            in technology.
-          </p>
-
-          <div class="home-actions">
-            <a class="home-button" href="assistant.html">✨ Open AI Assistant</a>
-            <a class="home-button secondary" href="guides.html">Explore Our Guides</a>
-            <a class="home-button secondary" href="playground.html">💻 Try Code Playground</a>
-            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
-          </div>
-        </div>
-
-        <div class="hero-visual" aria-label="Illustration of a code editor">
-          <div class="visual-top">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
-
-          <div class="code-line"><span>&lt;h1&gt;</span> Hello, developer! <span>&lt;/h1&gt;</span></div>
-          <div class="code-line"><span>const</span> ideas = "possibilities";</div>
-          <div class="code-line"><span>function</span> buildFuture() { }</div>
-          <div class="code-line">Learn. Build. <span>Grow.</span></div>
-
-          <p class="visual-note">
-            Your journey into digital skills starts with one small step.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="tools">
-      <div class="container">
-
-        <div class="section-heading">
-          <h2>Explore what you can do</h2>
-          <p>
-            Find useful resources and practical tools to help you learn,
-            create, solve problems, and grow your digital skills.
-          </p>
-        </div>
-
-        <div class="feature-grid">
-
-          <article class="feature-card">
-            <div class="feature-icon">🌐</div>
-            <h3>Web Development</h3>
-            <p>
-              Learn HTML, CSS, JavaScript, and the fundamentals of building
-              websites for the modern web.
-            </p>
-            <a href="guides.html">Explore guides →</a>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-icon">🧰</div>
-            <h3>Digital Tools</h3>
-            <p>
-              Discover useful digital tools that can help you work smarter,
-              create content, and get things done.
-            </p>
-            <a href="resources.html">Explore resources →</a>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <h3>Careers &amp; Skills</h3>
-            <p>
-              Explore technology career paths, build useful skills, and
-              discover opportunities for professional growth.
-            </p>
-            <a href="careers.html">Explore careers →</a>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-icon">📱</div>
-            <h3>Social Toolkit</h3>
-            <p>
-              Explore resources for planning and improving your online
-              presence and digital communication.
-            </p>
-            <a href="social.html">Open toolkit →</a>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-icon">💻</div>
-            <h3>Code Playground</h3>
-            <p>
-              Practise HTML, CSS, and JavaScript, run your code, and see
-              your webpage come to life in a live preview.
-            </p>
-            <a href="playground.html">Start coding →</a>
-          </article>
-
-          <article class="feature-card">
-            <div class="feature-icon">🤖</div>
-            <h3>AI Assistant</h3>
-            <p>
-              Ask questions, understand technical concepts, and get help
-              as you learn and work on projects.
-            </p>
-            <a href="assistant.html">Chat with AI →</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="ai-section">
-      <div class="container">
-
-        <div class="ai-panel">
-          <div>
-            <h2>Meet the GlobalDev Hub AI Assistant</h2>
-            <p>
-              Need help understanding code, planning a project, or learning
-              a new digital skill? Start a conversation and explore ideas
-              at your own pace.
-            </p>
-          </div>
-
-          <a class="home-button" href="assistant.html">✨ Ask the AI</a>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="guides">
-      <div class="container">
-
-        <div class="section-heading">
-          <h2>Keep learning. Keep building.</h2>
-          <p>
-            Start with a topic that interests you and take the next step
-            in your learning journey.
-          </p>
-        </div>
-
-        <div class="guide-list">
-
-          <article class="guide-item">
-            <h3>📘 Explore Practical Guides</h3>
-            <p>
-              Find learning materials and step-by-step resources for
-              developing your digital skills.
-            </p>
-            <a href="guides.html">Browse guides →</a>
-          </article>
-
-          <article class="guide-item">
-            <h3>🧪 Practise Your Code</h3>
-            <p>
-              Experiment with HTML, CSS, and JavaScript in your own
-              browser-based coding workspace.
-            </p>
-            <a href="playground.html">Open the playground →</a>
-          </article>
-
-          <article class="guide-item">
-            <h3>🎯 Discover Opportunities</h3>
-            <p>
-              Learn about technology skills and career directions
-              that you can explore.
-            </p>
-            <a href="careers.html">Explore careers →</a>
-          </article>
-
-          <article class="guide-item">
-            <h3>🤖 Get Learning Support</h3>
-            <p>
-              Ask questions and get assistance while working through
-              technical topics and ideas.
-            </p>
-            <a href="assistant.html">Open AI Assistant →</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Dedicated GlobalDev Hub support section -->
-    <section class="support-section" id="support">
-      <div class="container">
-        <div class="support-panel">
-
-          <div class="support-icon" aria-hidden="true">💚</div>
-
-          <h2>Support GlobalDev Hub</h2>
-
-          <p>
-            Help us keep learning accessible by supporting free educational
-            resources, practical technology guides, and digital learning tools.
-          </p>
-
-          <p>
-            Your voluntary contribution helps us continue improving the
-            resources we share with our learning community.
-          </p>
-
-          <div class="support-benefits">
-            <div class="support-benefit">
-              <strong>📚 Free Learning</strong>
-              <span>Help support accessible educational resources.</span>
-            </div>
-
-            <div class="support-benefit">
-              <strong>💻 Digital Skills</strong>
-              <span>Help us maintain practical technology content.</span>
-            </div>
-
-            <div class="support-benefit">
-              <strong>🌱 Community Growth</strong>
-              <span>Help our learning community continue to grow.</span>
-            </div>
-          </div>
-
-          <div class="home-actions">
-            <a
-              class="home-button donation-button"
-              href="https://paystack.shop/pay/globaldevhub"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              💚 Make a Voluntary Contribution
-            </a>
-          </div>
-
-          <p class="support-note">
-            Every contribution is appreciated. Donations are voluntary.
-            Payments are handled through Paystack.
-          </p>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-panel">
-          <h2>Your next idea starts here.</h2>
-          <p>
-            Whether you're learning your first coding language or exploring
-            a new opportunity, GlobalDev Hub is here to help you take the
-            next step.
-          </p>
-
-          <div class="home-actions" style="justify-content:center">
-            <a class="home-button" href="playground.html">💻 Start Coding</a>
-            <a class="home-button secondary" href="assistant.html">Talk to the AI Assistant</a>
-            <a class="home-button donation-button" href="https://paystack.shop/pay/globaldevhub" target="_blank" rel="noopener noreferrer">💚 Support GlobalDev Hub</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <p>© <span id="current-year">2026</span> GlobalDev Hub. Learn, build, and grow.</p>
-
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="guides.html">Guides</a>
-        <a href="resources.html">Resources</a>
-        <a href="assistant.html">AI Assistant</a>
-        <a href="playground.html">Code Playground</a>
-        <a href="#support">Support GlobalDev Hub</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("current-year").textContent =
-      new Date().getFullYear();
-  </script>
-
-</body>
-</html>
+GlobalDev Hub
+Home
+Tools
+Guides
+Social Toolkit
+Careers
+Resources
+AI Assistant
+Code Playground
+Support
+Learn something useful. Build something real.
+Practical technology skills for a world full of possibilities.
+Welcome to GlobalDev Hub. Explore practical guides, discover digital tools, improve your skills, practise coding, and take your next step in technology.
+
+✨ Open AI Assistant
+Explore Our Guides
+💻 Try Code Playground
+💚 Support GlobalDev Hub
+<h1> Hello, developer! </h1>
+const ideas = "possibilities";
+function buildFuture() { }
+Learn. Build. Grow.
+Your journey into digital skills starts with one small step.
+
+Explore what you can do
+Find useful resources and practical tools to help you learn, create, solve problems, and grow your digital skills.
+
+🌐
+Web Development
+Learn HTML, CSS, JavaScript, and the fundamentals of building websites for the modern web.
+
+Explore guides →
+🧰
+Digital Tools
+Discover useful digital tools that can help you work smarter, create content, and get things done.
+
+Explore resources →
+🚀
+Careers & Skills
+Explore technology career paths, build useful skills, and discover opportunities for professional growth.
+
+Explore careers →
+📱
+Social Toolkit
+Explore resources for planning and improving your online presence and digital communication.
+
+Open toolkit →
+💻
+Code Playground
+Practise HTML, CSS, and JavaScript, run your code, and see your webpage come to life in a live preview.
+
+Start coding →
+🤖
+AI Assistant
+Ask questions, understand technical concepts, and get help as you learn and work on projects.
+
+Chat with AI →
+Meet the GlobalDev Hub AI Assistant
+Need help understanding code, planning a project, or learning a new digital skill? Start a conversation and explore ideas at your own pace.
+
+✨ Ask the AI
+Keep learning. Keep building.
+Start with a topic that interests you and take the next step in your learning journey.
+
+📘 Explore Practical Guides
+Find learning materials and step-by-step resources for developing your digital skills.
+
+Browse guides →
+🧪 Practise Your Code
+Experiment with HTML, CSS, and JavaScript in your own browser-based coding workspace.
+
+Open the playground →
+🎯 Discover Opportunities
+Learn about technology skills and career directions that you can explore.
+
+Explore careers →
+🤖 Get Learning Support
+Ask questions and get assistance while working through technical topics and ideas.
+
+Open AI Assistant →
+💚
+Support GlobalDev Hub
+Help us keep learning accessible by supporting free educational resources, practical technology guides, and digital learning tools.
+
+Your voluntary contribution helps us continue improving the resources we share with our learning community.
+
+📚 Free Learning
+Help support accessible educational resources.
+💻 Digital Skills
+Help us maintain practical technology content.
+🌱 Community Growth
+Help our learning community continue to grow.
+💚 Make a Voluntary Contribution
+Every contribution is appreciated. Donations are voluntary. Payments are handled through Paystack.
+
+Your next idea starts here.
+Whether you're learning your first coding language or exploring a new opportunity, GlobalDev Hub is here to help you take the next step.
+
+Start Coding
+Talk to the AI Assistant
+Support GlobalDev Hub
+© 2026 GlobalDev Hub. Learn, build, and grow.
+
+Home
+Guides
+Resources
+AI Assistant
+Code Playground
+Support GlobalDev Hub
