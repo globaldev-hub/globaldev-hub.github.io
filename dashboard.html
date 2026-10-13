@@ -349,16 +349,13 @@
             <button class="secondary" id="removeAvatar" type="button">Remove Picture</button>
           </div>
 
-          <p class="hint">Accepted formats: JPG, PNG and WebP. Your picture is stored in your private account folder.</p>
+          <p class="hint">Accepted formats: JPG, PNG and WebP. Your picture is stored in your account folder.</p>
         </section>
 
-        <!-- AI ASSISTANT -->
         <section class="panel" id="ai-assistant" style="grid-column:1 / -1;">
           <h3>🤖 GlobalDev Hub AI Assistant</h3>
 
-          <p id="aiGreeting">
-            Hello! 👋 How may I help you today?
-          </p>
+          <p id="aiGreeting">Hello! 👋 How may I help you today?</p>
 
           <div id="chatMessages" aria-live="polite">
             <div class="chat-bubble chat-ai">
@@ -372,17 +369,11 @@
             placeholder="Type your question here..."></textarea>
 
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-            <button class="primary" id="askButton" type="button">
-              Ask AI Assistant
-            </button>
-            <button class="secondary" id="clearButton" type="button">
-              Clear Chat
-            </button>
+            <button class="primary" id="askButton" type="button">Ask AI Assistant</button>
+            <button class="secondary" id="clearButton" type="button">Clear Chat</button>
           </div>
 
-          <p id="assistantStatus" class="hint" role="status" aria-live="polite">
-            Ready to help.
-          </p>
+          <p id="assistantStatus" class="hint" role="status" aria-live="polite">Ready to help.</p>
         </section>
 
         <section class="panel" id="learning">
@@ -439,8 +430,6 @@
     );
 
     const BUCKET = "profile-pictures";
-
-    // AI service address
     const AI_ENDPOINT =
       "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
 
@@ -465,12 +454,31 @@
     const chatMessages = document.getElementById("chatMessages");
     const assistantStatus = document.getElementById("assistantStatus");
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
     let currentUser = null;
     let currentAvatarPath = null;
     let assistantHistory = [];
+
+    // Keep each member's chat separate in this browser.
+    function getAssistantStorageKey() {
+      return currentUser
+        ? `globaldev_ai_history_v1_${currentUser.id}`
+        : null;
+    }
+
+    function saveAssistantHistory() {
+      const key = getAssistantStorageKey();
+      if (!key) return;
+
+      try {
+        localStorage.setItem(key, JSON.stringify(assistantHistory));
+      } catch (error) {
+        console.warn("Could not save AI chat history:", error);
+        assistantStatus.textContent =
+          "Chat is available, but this browser could not save its history.";
+      }
+    }
 
     function showNotice(message, isError = false) {
       notice.textContent = message;
@@ -479,8 +487,69 @@
     }
 
     function setAvatarInitial(name) {
-      avatarInitial.textContent =
-        name.trim().charAt(0).toUpperCase() || "M";
+      avatarInitial.textContent = name.trim().charAt(0).toUpperCase() || "M";
+    }
+
+    function addChatMessage(speaker, message) {
+      const bubble = document.createElement("div");
+      bubble.className = "chat-bubble " +
+        (speaker === "You" ? "chat-user" : "chat-ai");
+
+      const title = document.createElement("strong");
+      title.textContent = speaker;
+
+      const content = document.createElement("p");
+      content.textContent = message;
+
+      bubble.append(title, content);
+      chatMessages.appendChild(bubble);
+
+      bubble.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function restoreAssistantHistory() {
+      assistantHistory = [];
+      const key = getAssistantStorageKey();
+
+      if (key) {
+        try {
+          const saved = localStorage.getItem(key);
+          const parsed = saved ? JSON.parse(saved) : [];
+
+          if (Array.isArray(parsed)) {
+            assistantHistory = parsed
+              .filter(item =>
+                item &&
+                ["user", "assistant"].includes(item.role) &&
+                typeof item.content === "string"
+              )
+              .slice(-100);
+          }
+        } catch (error) {
+          console.warn("Could not restore AI chat history:", error);
+          assistantHistory = [];
+        }
+      }
+
+      chatMessages.replaceChildren();
+
+      if (assistantHistory.length === 0) {
+        addChatMessage(
+          "AI Assistant",
+          "Welcome! Ask me about digital skills, website building, online opportunities, or using GlobalDev Hub."
+        );
+        assistantStatus.textContent = "Ready to help.";
+        return;
+      }
+
+      for (const item of assistantHistory) {
+        addChatMessage(
+          item.role === "user" ? "You" : "AI Assistant",
+          item.content
+        );
+      }
+
+      assistantStatus.textContent = "Your saved conversation has been restored.";
     }
 
     async function displayAvatar(path) {
@@ -526,7 +595,6 @@
       displayName.value = name;
       setAvatarInitial(name);
 
-      // Personalised AI greeting appears after login
       aiGreeting.textContent =
         `Hello, ${name}! 👋 How may I help you today?`;
 
@@ -534,6 +602,7 @@
       dashboard.hidden = false;
       logoutButton.hidden = false;
 
+      restoreAssistantHistory();
       await displayAvatar(user.user_metadata?.avatar_path);
     }
 
@@ -548,7 +617,7 @@
       await showMember(data.session.user);
     }
 
-    // Save display name
+    // Update the member's display name.
     profileForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
@@ -588,7 +657,7 @@
       }
     });
 
-    // Upload profile picture
+    // Upload profile picture.
     uploadAvatar.addEventListener("click", async () => {
       if (!currentUser) {
         showNotice("Please sign in again before uploading.", true);
@@ -602,9 +671,7 @@
         return;
       }
 
-      const allowedTypes = [
-        "image/jpeg", "image/png", "image/webp"
-      ];
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
       if (!allowedTypes.includes(file.type)) {
         showNotice("Please choose a JPG, PNG or WebP image.", true);
@@ -648,12 +715,10 @@
         currentUser = data.user;
         await displayAvatar(path);
         avatarFile.value = "";
-
         showNotice("Your profile picture was uploaded successfully.");
       } catch (error) {
         showNotice(
-          error.message ||
-          "Upload failed. Check your storage permissions.",
+          error.message || "Upload failed. Check your storage permissions.",
           true
         );
       } finally {
@@ -662,7 +727,7 @@
       }
     });
 
-    // Remove profile picture
+    // Remove profile picture.
     removeAvatar.addEventListener("click", async () => {
       if (!currentUser) return;
 
@@ -693,8 +758,7 @@
         showNotice("Your profile picture has been removed.");
       } catch (error) {
         showNotice(
-          error.message ||
-          "Could not remove the picture. Check storage permissions.",
+          error.message || "Could not remove the picture. Check storage permissions.",
           true
         );
       } finally {
@@ -703,27 +767,7 @@
       }
     });
 
-    // Add a message to the AI chat
-    function addChatMessage(speaker, message) {
-      const bubble = document.createElement("div");
-      bubble.className = "chat-bubble " +
-        (speaker === "You" ? "chat-user" : "chat-ai");
-
-      const title = document.createElement("strong");
-      title.textContent = speaker;
-
-      const content = document.createElement("p");
-      content.textContent = message;
-
-      bubble.append(title, content);
-      chatMessages.appendChild(bubble);
-      bubble.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
-    }
-
-    // Ask the AI Assistant
+    // Ask the AI assistant and retain successful exchanges.
     askButton.addEventListener("click", async () => {
       const question = questionInput.value.trim();
 
@@ -781,11 +825,14 @@
           { role: "assistant", content: reply }
         );
 
+        // Prevent unlimited local growth.
+        assistantHistory = assistantHistory.slice(-100);
+        saveAssistantHistory();
+
         addChatMessage("AI Assistant", reply);
         assistantStatus.textContent = "Reply received.";
       } catch (error) {
         console.error("AI Assistant error:", error);
-
         assistantStatus.textContent =
           "The assistant could not connect: " +
           (error.message || "Please try again later.");
@@ -796,7 +843,7 @@
       }
     });
 
-    // Enter sends; Shift + Enter starts a new line
+    // Enter sends; Shift + Enter starts a new line.
     questionInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
@@ -804,29 +851,32 @@
       }
     });
 
-    // Clear the current conversation
+    // Clear the visible chat and the saved conversation.
     clearButton.addEventListener("click", () => {
       assistantHistory = [];
+
+      const key = getAssistantStorageKey();
+
+      if (key) {
+        try {
+          localStorage.removeItem(key);
+        } catch (error) {
+          console.warn("Could not remove saved AI history:", error);
+        }
+      }
+
       chatMessages.replaceChildren();
 
-      const welcome = document.createElement("div");
-      welcome.className = "chat-bubble chat-ai";
-
-      const title = document.createElement("strong");
-      title.textContent = "AI Assistant";
-
-      const message = document.createElement("p");
-      message.textContent =
-        "Chat cleared. What would you like help with?";
-
-      welcome.append(title, message);
-      chatMessages.appendChild(welcome);
+      addChatMessage(
+        "AI Assistant",
+        "Chat cleared. What would you like help with?"
+      );
 
       assistantStatus.textContent = "Chat cleared.";
       questionInput.value = "";
     });
 
-    // Log out
+    // Log out.
     async function logOut() {
       logoutButton.disabled = true;
       settingsLogout.disabled = true;
