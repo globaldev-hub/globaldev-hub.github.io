@@ -9,6 +9,44 @@
   <title>GlobalDev Hub | Digital Knowledge &amp; Resources</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+  <style>
+    .account-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .account-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 17px;
+      border: 1px solid #0b55db;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .account-login {
+      color: #0b55db;
+      background: #fff;
+    }
+    .account-signup {
+      color: #fff;
+      background: #0b55db;
+    }
+    .account-actions a:hover {
+      opacity: .86;
+    }
+    @media (max-width: 850px) {
+      .account-actions {
+        margin: 12px 0;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -40,6 +78,11 @@
         <a class="button button-outline button-small" href="contact.html">Contact</a>
         <a class="button button-primary button-small" href="guides.html">Get Started</a>
       </div>
+    </div>
+
+    <div class="container account-actions" aria-label="Member account">
+      <a class="account-login" href="auth.html">Log In</a>
+      <a class="account-signup" href="auth.html?mode=signup">Sign Up</a>
     </div>
   </header>
 
