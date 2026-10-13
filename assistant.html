@@ -1,302 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GlobalDev Hub AI Assistant</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1664ff">
+<title>Member Dashboard | GlobalDev Hub</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #101827;
-      color: #ffffff;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 24px;
-      background: #1b2638;
-      border-radius: 12px;
-    }
-
-    h1 {
-      margin-top: 0;
-      font-size: 28px;
-    }
-
-    p {
-      color: #d1d5db;
-      line-height: 1.6;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      padding: 14px;
-      border: 1px solid #475569;
-      border-radius: 8px;
-      background: #0f172a;
-      color: #ffffff;
-      font: inherit;
-      resize: vertical;
-    }
-
-    button {
-      margin: 12px 8px 12px 0;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 7px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    #askButton {
-      background: #2563eb;
-      color: #ffffff;
-    }
-
-    #clearButton {
-      background: #475569;
-      color: #ffffff;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #status {
-      min-height: 22px;
-      color: #93c5fd;
-      overflow-wrap: anywhere;
-    }
-
-    #response {
-      min-height: 100px;
-      padding: 16px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      line-height: 1.7;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+a{color:#165be8;text-decoration:none}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{background:#fff;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 10px #17203310}
+.brand{font-size:19px;font-weight:bold;color:#1558dc}
+.top-actions{display:flex;align-items:center;gap:10px}
+.btn{border:0;border-radius:8px;padding:11px 15px;background:#1664ff;color:white;font-weight:bold}
+.btn.secondary{background:#e7edf7;color:#24344f}
+.btn.danger{background:#b42318}
+button:disabled{opacity:.6;cursor:not-allowed}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1200px;margin:auto;gap:22px;padding:22px}
+.sidebar,.panel,.welcome{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 20px #17203308}
+.sidebar a{display:block;padding:12px;border-radius:8px;color:#26354d;margin:3px 0}
+.sidebar a:hover{background:#edf3ff}
+main{min-width:0}
+.welcome{background:linear-gradient(120deg,#1558dc,#4787ff);color:#fff;margin-bottom:20px}
+.welcome p{line-height:1.6}
+h1{font-size:25px;margin:0 0 10px}
+h2{font-size:20px;margin-top:0}
+h3{font-size:17px}
+.muted{color:#64748b;font-size:14px;line-height:1.6}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #e5eaf2;border-radius:12px;padding:18px}
+.card p{color:#64748b;line-height:1.6}
+.profile-row{display:flex;align-items:center;gap:15px;margin-bottom:18px}
+.profile-icon{height:76px;width:76px;flex:0 0 76px;border-radius:50%;background:#e1ebff;color:#1558dc;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:bold;overflow:hidden}
+.profile-icon img{width:100%;height:100%;object-fit:cover;display:none}
+.field{display:block;margin:14px 0}
+.field span{display:block;font-size:14px;font-weight:bold;margin-bottom:7px}
+.field input,.chat-input{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:12px;background:#fff;color:#172033}
+#notice,#profileStatus,#assistantStatus{font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+#notice,#profileStatus{color:#1558dc}
+.assistant{border:1px solid #dbe6ff;overflow:hidden}
+.assistant-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.bot-icon{height:48px;width:48px;flex:0 0 48px;border-radius:50%;background:#1664ff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px}
+.online{font-size:12px;color:#087443}
+.chat-greeting{background:#edf4ff;border-radius:10px;padding:15px;line-height:1.7;margin:14px 0}
+#chatMessages{display:flex;flex-direction:column;gap:12px;margin:15px 0}
+.message{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;padding:13px;border-radius:10px;max-width:100%}
+.message.user{background:#e7efff;align-self:flex-end}
+.message.assistant{background:#f1f5f9;align-self:stretch;border:0}
+.chat-input{min-height:85px;resize:vertical}
+.chat-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+footer{text-align:center;color:#64748b;padding:25px;font-size:13px}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr;padding:12px}
+ .sidebar{padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
+ .sidebar h3{grid-column:1/-1}
+ .cards{grid-template-columns:1fr}
+ .topbar{padding:13px}
+ h1{font-size:22px}
+}
+</style>
 </head>
 
 <body>
-  <main class="container">
-    <h1>GlobalDev Hub AI Assistant</h1>
+<header class="topbar">
+  <a class="brand" href="index.html">G GlobalDev Hub</a>
+  <div class="top-actions">
+    <span id="headerName">Member</span>
+    <button class="btn secondary" id="logoutButton" type="button">Log Out</button>
+  </div>
+</header>
 
-    <p>
-      Ask a question and our AI assistant will try to help.
-    </p>
+<div class="layout" id="dashboard" hidden>
+  <aside class="sidebar">
+    <h3>Member menu</h3>
+    <a href="#overview">🏠 Overview</a>
+    <a href="#profile">👤 My Profile</a>
+    <a href="#ai-assistant">🤖 AI Assistant</a>
+    <a href="guides.html">📚 Learning Guides</a>
+    <a href="tools.html">🧰 Digital Tools</a>
+    <a href="resources.html">🌍 Opportunities</a>
+    <a href="careers.html">💼 Careers</a>
+    <a href="#settings">⚙️ Account Settings</a>
+    <a href="index.html">↗ Main Website</a>
+  </aside>
 
-    <textarea
-      id="question"
-      placeholder="Type your message here..."
-      aria-label="Your message"
-    ></textarea>
+  <main id="overview">
+    <section class="welcome">
+      <p><strong>GLOBALDEV HUB · MEMBER AREA</strong></p>
+      <h1>Hello, <span id="welcomeName">Member</span>! 👋</h1>
+      <p>Your space to learn digital skills, explore useful resources, discover online opportunities, and get help from your AI assistant.</p>
+    </section>
 
-    <div>
-      <button id="askButton" type="button">
-        Ask Assistant
-      </button>
+    <section class="panel" id="profile">
+      <h2>My Profile</h2>
+      <div class="profile-row">
+        <div class="profile-icon" id="avatar">
+          <span id="avatarInitial">M</span>
+          <img id="avatarImage" alt="Your profile picture">
+        </div>
+        <div>
+          <strong id="memberEmail">Loading account...</strong>
+          <p class="muted">Manage your profile information and picture.</p>
+        </div>
+      </div>
 
-      <button id="clearButton" type="button">
-        Clear
-      </button>
-    </div>
+      <form id="profileForm">
+        <label class="field">
+          <span>Display name</span>
+          <input id="displayName" maxlength="80" required>
+        </label>
+        <button class="btn" id="saveProfile" type="submit">Save Profile</button>
+      </form>
 
-    <p id="status" role="status" aria-live="polite">
-      Ready. Ask me anything.
-    </p>
+      <hr>
+      <label class="field">
+        <span>Choose a profile picture (JPG, PNG or WebP; maximum 2 MB)</span>
+        <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp">
+      </label>
+      <div class="chat-actions">
+        <button class="btn" id="uploadAvatar" type="button">Upload Picture</button>
+        <button class="btn secondary" id="removeAvatar" type="button">Remove Picture</button>
+      </div>
+      <p id="profileStatus" role="status" aria-live="polite"></p>
+    </section>
 
-    <div id="response" aria-live="polite">
-      The assistant's answer will appear here.
-    </div>
+    <section class="panel assistant" id="ai-assistant" style="margin-top:20px">
+      <div class="assistant-head">
+        <div class="bot-icon" aria-hidden="true">🤖</div>
+        <div>
+          <h2 style="margin:0">GlobalDev Hub AI Assistant</h2>
+          <div class="online">● Ready to help</div>
+        </div>
+      </div>
+
+      <div class="chat-greeting">
+        <strong>Hello, <span id="assistantName">Member</span>! 👋</strong><br>
+        How may I help you today? Ask me about digital skills, learning resources, useful tools, online opportunities, or using GlobalDev Hub.
+      </div>
+
+      <div id="chatMessages" aria-live="polite">
+        <div class="message assistant">Welcome! Type your question below to start chatting with the GlobalDev Hub AI Assistant.</div>
+      </div>
+
+      <label class="field">
+        <span>Your message</span>
+        <textarea class="chat-input" id="question" placeholder="How may I help you today?" aria-label="Your message"></textarea>
+      </label>
+
+      <div class="chat-actions">
+        <button class="btn" id="askButton" type="button">Send Message</button>
+        <button class="btn secondary" id="clearButton" type="button">Clear Chat</button>
+      </div>
+      <p id="assistantStatus" role="status" aria-live="polite">Ready when you are.</p>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Your resources</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>📚 Learning Guides</h3>
+          <p>Explore educational guides and learn useful digital skills.</p>
+          <a href="guides.html">Open Learning Guides →</a>
+        </article>
+        <article class="card">
+          <h3>🧰 Digital Tools</h3>
+          <p>Discover resources to help you work and learn online.</p>
+          <a href="tools.html">Explore Digital Tools →</a>
+        </article>
+        <article class="card">
+          <h3>🌍 Opportunities</h3>
+          <p>Explore online opportunities and helpful resources.</p>
+          <a href="resources.html">View Opportunities →</a>
+        </article>
+        <article class="card">
+          <h3>💼 Careers</h3>
+          <p>Find career information and explore work-related resources.</p>
+          <a href="careers.html">Explore Careers →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="settings">
+      <h2>Account Settings</h2>
+      <p class="muted">Manage your profile above. Use the password recovery option on the login page if you need to reset your password.</p>
+      <button class="btn danger" id="settingsLogout" type="button">Log Out</button>
+    </section>
+
+    <p id="notice" role="status" aria-live="polite"></p>
   </main>
+</div>
 
-  <script>
-    const workerUrl =
-      "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
+<footer>© <span id="currentYear"></span> GlobalDev Hub · Learn, grow and discover.</footer>
 
-    const storageKey = "globaldevHubAssistantHistory";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
 
-    const questionBox = document.getElementById("question");
-    const askButton = document.getElementById("askButton");
-    const clearButton = document.getElementById("clearButton");
-    const responseBox = document.getElementById("response");
-    const statusBox = document.getElementById("status");
+// Supabase project configuration
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+const BUCKET = "profile-pictures";
 
-    // Restore saved conversation from this browser.
-    function loadHistory() {
-      try {
-        const saved = localStorage.getItem(storageKey);
-        const parsed = saved ? JSON.parse(saved) : [];
+// Your existing AI assistant Cloudflare Worker
+const workerUrl = "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
+const storageKey = "globaldevHubAssistantHistory";
 
-        if (!Array.isArray(parsed)) {
-          return [];
-        }
+const { createClient } = supabase;
+const client = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        return parsed
-          .filter(item =>
-            item &&
-            ["user", "assistant"].includes(item.role) &&
-            typeof item.content === "string"
-          )
-          .slice(-20);
-      } catch (error) {
-        return [];
-      }
-    }
+const el = id => document.getElementById(id);
+el("currentYear").textContent = new Date().getFullYear();
 
-    let conversationHistory = loadHistory();
+let currentUser = null;
+let conversationHistory = loadHistory();
+let sendingMessage = false;
 
-    // Save conversation after each successful answer.
-    function saveHistory() {
-      try {
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify(conversationHistory)
-        );
-        return true;
-      } catch (error) {
-        statusBox.textContent =
-          "Warning: conversation could not be saved in this browser.";
-        return false;
-      }
-    }
+function setProfileStatus(message) {
+  el("profileStatus").textContent = message;
+}
 
-    // Restore the most recent answer when reopening the page.
-    function restoreLastAnswer() {
-      for (let i = conversationHistory.length - 1; i >= 0; i--) {
-        if (conversationHistory[i].role === "assistant") {
-          responseBox.textContent =
-            conversationHistory[i].content;
+function setAssistantStatus(message) {
+  el("assistantStatus").textContent = message;
+}
 
-          statusBox.textContent =
-            "Previous conversation restored.";
+function loadHistory() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(item =>
+      item &&
+      ["user", "assistant"].includes(item.role) &&
+      typeof item.content === "string"
+    ).slice(-20);
+  } catch {
+    return [];
+  }
+}
 
-          return;
-        }
-      }
+function saveHistory() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(conversationHistory));
+  } catch {
+    setAssistantStatus("Your answer is visible, but this browser could not save the conversation.");
+  }
+}
 
-      statusBox.textContent = "Ready. Ask me anything.";
-    }
+function renderHistory() {
+  const box = el("chatMessages");
+  box.replaceChildren();
 
-    restoreLastAnswer();
+  if (!conversationHistory.length) {
+    const welcome = document.createElement("div");
+    welcome.className = "message assistant";
+    welcome.textContent = "Welcome! Type your question below to start chatting with the GlobalDev Hub AI Assistant.";
+    box.appendChild(welcome);
+    return;
+  }
 
-    async function askAssistant() {
-      const question = questionBox.value.trim();
+  conversationHistory.forEach(item => {
+    const message = document.createElement("div");
+    message.className = "message " + item.role;
+    message.textContent = item.content;
+    box.appendChild(message);
+  });
 
-      if (!question) {
-        statusBox.textContent = "Please type a message first.";
-        questionBox.focus();
-        return;
-      }
+  box.scrollTop = box.scrollHeight;
+}
 
-      askButton.disabled = true;
-      statusBox.textContent = "Thinking...";
-      responseBox.textContent = "";
+function addMessage(role, content) {
+  conversationHistory.push({ role, content });
+  conversationHistory = conversationHistory.slice(-20);
+  renderHistory();
+  saveHistory();
+}
 
-      try {
-        // Send saved messages plus the new question.
-        const messagesToSend = [
-          ...conversationHistory,
-          { role: "user", content: question }
-        ].slice(-20);
+function showMember(user) {
+  currentUser = user;
+  const name = user.user_metadata?.full_name?.trim() || "Member";
 
-        const response = await fetch(workerUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            messages: messagesToSend
-          })
-        });
+  el("headerName").textContent = name;
+  el("welcomeName").textContent = name;
+  el("assistantName").textContent = name;
+  el("memberEmail").textContent = user.email || "Email unavailable";
+  el("displayName").value = name === "Member" ? "" : name;
+  el("avatarInitial").textContent = name.charAt(0).toUpperCase();
+  el("dashboard").hidden = false;
 
-        const data = await response.json();
+  displayAvatar(user.user_metadata?.avatar_path || null);
+}
 
-        if (!response.ok) {
-          throw new Error(
-            data.error || "The request failed."
-          );
-        }
+async function displayAvatar(path) {
+  el("avatarImage").style.display = "none";
+  el("avatarImage").removeAttribute("src");
+  el("avatarInitial").style.display = "block";
 
-        const answer =
-          data.reply ||
-          data.response ||
-          data.message ||
-          "The assistant returned no answer.";
+  if (!path) return;
 
-        // Save the new question and answer locally.
-        conversationHistory.push(
-          { role: "user", content: question },
-          { role: "assistant", content: answer }
-        );
+  const { data, error } = await client.storage
+    .from(BUCKET)
+    .createSignedUrl(path, 3600);
 
-        conversationHistory =
-          conversationHistory.slice(-20);
+  if (error || !data?.signedUrl) return;
 
-        responseBox.textContent = answer;
-        questionBox.value = "";
+  el("avatarImage").onload = () => {
+    el("avatarImage").style.display = "block";
+    el("avatarInitial").style.display = "none";
+  };
+  el("avatarImage").onerror = () => {
+    el("avatarImage").style.display = "none";
+    el("avatarInitial").style.display = "block";
+  };
+  el("avatarImage").src = data.signedUrl;
+}
 
-        saveHistory();
+async function checkSession() {
+  const { data, error } = await client.auth.getSession();
 
-        if (statusBox.textContent !==
-            "Warning: conversation could not be saved in this browser.") {
-          statusBox.textContent = "Answer received.";
-        }
+  if (error || !data.session) {
+    window.location.replace("auth.html");
+    return;
+  }
 
-        questionBox.focus();
+  showMember(data.session.user);
+  renderHistory();
+}
 
-      } catch (error) {
-        responseBox.textContent =
-          "Sorry, I couldn't connect. Please try again.";
+el("profileForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!currentUser) return;
 
-        statusBox.textContent =
-          "Connection error: " + error.message;
+  const name = el("displayName").value.trim();
+  if (!name) {
+    setProfileStatus("Please enter a display name.");
+    return;
+  }
 
-      } finally {
-        askButton.disabled = false;
-      }
-    }
+  el("saveProfile").disabled = true;
+  setProfileStatus("Saving profile...");
 
-    askButton.addEventListener("click", askAssistant);
+  try {
+    const { data, error } = await client.auth.updateUser({
+      data: { full_name: name }
+    });
+    if (error) throw error;
 
-    clearButton.addEventListener("click", () => {
-      conversationHistory = [];
+    showMember(data.user);
+    setProfileStatus("Your profile was updated successfully.");
+  } catch (error) {
+    setProfileStatus("Could not save profile: " + error.message);
+  } finally {
+    el("saveProfile").disabled = false;
+  }
+});
 
-      try {
-        localStorage.removeItem(storageKey);
-      } catch (error) {
-        // Continue clearing the visible conversation.
-      }
+el("uploadAvatar").addEventListener("click", async () => {
+  if (!currentUser) return;
 
-      questionBox.value = "";
+  const file = el("avatarFile").files[0];
+  if (!file) {
+    setProfileStatus("Please choose a picture first.");
+    return;
+  }
 
-      responseBox.textContent =
-        "The assistant's answer will appear here.";
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  if (!allowed.includes(file.type)) {
+    setProfileStatus("Please choose a JPG, PNG, or WebP image.");
+    return;
+  }
 
-      statusBox.textContent = "Conversation cleared.";
-      questionBox.focus();
+  if (file.size > 2 * 1024 * 1024) {
+    setProfileStatus("Your picture must be 2 MB or smaller.");
+    return;
+  }
+
+  const extension = ({
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp"
+  })[file.type];
+
+  const path = currentUser.id + "/avatar." + extension;
+  el("uploadAvatar").disabled = true;
+  setProfileStatus("Uploading picture...");
+
+  try {
+    const { error: uploadError } = await client.storage
+      .from(BUCKET)
+      .upload(path, file, { upsert: true, contentType: file.type });
+
+    if (uploadError) throw uploadError;
+
+    const { data, error } = await client.auth.updateUser({
+      data: { avatar_path: path }
+    });
+    if (error) throw error;
+
+    showMember(data.user);
+    el("avatarFile").value = "";
+    setProfileStatus("Profile picture uploaded successfully.");
+  } catch (error) {
+    setProfileStatus("Picture upload failed: " + error.message);
+  } finally {
+    el("uploadAvatar").disabled = false;
+  }
+});
+
+el("removeAvatar").addEventListener("click", async () => {
+  if (!currentUser) return;
+
+  const path = currentUser.user_metadata?.avatar_path;
+  if (!path) {
+    setProfileStatus("You have no uploaded profile picture to remove.");
+    return;
+  }
+
+  el("removeAvatar").disabled = true;
+  setProfileStatus("Removing picture...");
+
+  try {
+    const { error: deleteError } = await client.storage
+      .from(BUCKET)
+      .remove([path]);
+
+    if (deleteError) throw deleteError;
+
+    const { data, error } = await client.auth.updateUser({
+      data: { avatar_path: null }
+    });
+    if (error) throw error;
+
+    showMember(data.user);
+    setProfileStatus("Profile picture removed.");
+  } catch (error) {
+    setProfileStatus("Could not remove picture: " + error.message);
+  } finally {
+    el("removeAvatar").disabled = false;
+  }
+});
+
+async function logOut() {
+  const { error } = await client.auth.signOut();
+  if (error) {
+    el("notice").textContent = "Could not log out: " + error.message;
+    return;
+  }
+  window.location.replace("auth.html");
+}
+
+el("logoutButton").addEventListener("click", logOut);
+el("settingsLogout").addEventListener("click", logOut);
+
+async function askAssistant() {
+  if (sendingMessage) return;
+
+  const question = el("question").value.trim();
+  if (!question) {
+    setAssistantStatus("Please type a message first.");
+    el("question").focus();
+    return;
+  }
+
+  sendingMessage = true;
+  el("askButton").disabled = true;
+  setAssistantStatus("Thinking...");
+
+  try {
+    const messagesToSend = [
+      ...conversationHistory,
+      { role: "user", content: question }
+    ].slice(-20);
+
+    const response = await fetch(workerUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: messagesToSend })
     });
 
-    questionBox.addEventListener("keydown", event => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        askAssistant();
-      }
-    });
-  </script>
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "The assistant request failed.");
+    }
+
+    const answer = data.reply || data.response || data.message;
+    if (typeof answer !== "string" || !answer.trim()) {
+      throw new Error("The assistant returned no answer.");
+    }
+
+    conversationHistory.push(
+      { role: "user", content: question },
+      { role: "assistant", content: answer }
+    );
+    conversationHistory = conversationHistory.slice(-20);
+
+    el("question").value = "";
+    renderHistory();
+    saveHistory();
+    setAssistantStatus("Answer received.");
+    el("question").focus();
+  } catch (error) {
+    setAssistantStatus("Connection error: " + error.message);
+  } finally {
+    sendingMessage = false;
+    el("askButton").disabled = false;
+  }
+}
+
+el("askButton").addEventListener("click", askAssistant);
+
+el("clearButton").addEventListener("click", () => {
+  conversationHistory = [];
+  try {
+    localStorage.removeItem(storageKey);
+  } catch {}
+  renderHistory();
+  setAssistantStatus("Conversation cleared.");
+  el("question").focus();
+});
+
+el("question").addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    askAssistant();
+  }
+});
+
+client.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_OUT" || !session) {
+    window.location.replace("auth.html");
+    return;
+  }
+
+  if (session.user) showMember(session.user);
+});
+
+checkSession();
+</script>
 </body>
 </html>
