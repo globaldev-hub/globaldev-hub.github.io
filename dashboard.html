@@ -1,106 +1,37 @@
-// Add a message to the AI chat with readable Markdown formatting
-function addChatMessage(speaker, message) {
-  const bubble = document.createElement("div");
-  bubble.className = "chat-bubble " +
-    (speaker === "You" ? "chat-user" : "chat-ai");
+const content = document.createElement("div");
+content.className = "chat-content";
 
-  const title = document.createElement("strong");
-  title.textContent = speaker;
+const lines = String(message)
+  .replace(/\\([*_#])/g, "$1")
+  .split("\n");
 
-  const content = document.createElement("div");
-  content.className = "chat-content";
+for (const line of lines) {
+  const trimmed = line.trim();
+  if (!trimmed) continue;
 
-  // Remove unnecessary escape characters from Markdown
-  const cleaned = String(message)
-    .replace(/\\([*_#`[\]()])/g, "$1")
-    .replace(/&#91;/g, "[")
-    .replace(/&#93;/g, "]");
+  const paragraph = document.createElement("p");
+  paragraph.style.whiteSpace = "pre-wrap";
 
-  // Build formatted elements safely without inserting raw HTML
-  function addInlineText(parent, text) {
-    const pattern = /(\*\*[^*]+\*\*|__[^_]+__|\*[^*]+\*|_[^_]+_)/g;
-    let last = 0;
-    let match;
+  // Display bold text safely
+  const parts = trimmed.split(/(\*\*.*?\*\*)/g);
 
-    while ((match = pattern.exec(text)) !== null) {
-      parent.appendChild(
-        document.createTextNode(text.slice(last, match.index))
-      );
-
-      const token = match[0];
-      const element = document.createElement(
-        token.startsWith("**") || token.startsWith("__")
-          ? "strong"
-          : "em"
-      );
-
-      element.textContent = token.slice(
-        token.startsWith("**") || token.startsWith("__") ? 2 : 1,
-        token.startsWith("**") || token.startsWith("__") ? -2 : -1
-      );
-
-      parent.appendChild(element);
-      last = pattern.lastIndex;
-    }
-
-    parent.appendChild(document.createTextNode(text.slice(last)));
-  }
-
-  const lines = cleaned.split("\n");
-  let list = null;
-  let listType = null;
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    if (!trimmed) {
-      list = null;
-      listType = null;
-      continue;
-    }
-
-    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
-    const bullet = trimmed.match(/^[-*+]\s+(.+)$/);
-    const numbered = trimmed.match(/^\d+[.)]\s+(.+)$/);
-
-    if (heading) {
-      list = null;
-      listType = null;
-
-      const element = document.createElement(
-        heading[1].length === 1 ? "h3" :
-        heading[1].length === 2 ? "h4" : "h5"
-      );
-
-      addInlineText(element, heading[2]);
-      content.appendChild(element);
-    } else if (bullet || numbered) {
-      const type = bullet ? "ul" : "ol";
-
-      if (!list || listType !== type) {
-        list = document.createElement(type);
-        content.appendChild(list);
-        listType = type;
-      }
-
-      const item = document.createElement("li");
-      addInlineText(item, (bullet || numbered)[1]);
-      list.appendChild(item);
+  for (const part of parts) {
+    if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
+      const bold = document.createElement("strong");
+      bold.textContent = part.slice(2, -2);
+      paragraph.appendChild(bold);
     } else {
-      list = null;
-      listType = null;
-
-      const paragraph = document.createElement("p");
-      addInlineText(paragraph, trimmed);
-      content.appendChild(paragraph);
+      paragraph.appendChild(document.createTextNode(part));
     }
   }
 
-  bubble.append(title, content);
-  chatMessages.appendChild(bubble);
-
-  bubble.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
-  });
+  content.appendChild(paragraph);
 }
+
+bubble.append(title, content);
+chatMessages.appendChild(bubble);
+
+bubble.scrollIntoView({
+  behavior: "smooth",
+  block: "nearest"
+});
