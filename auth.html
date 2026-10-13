@@ -4,130 +4,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1664ff">
-  <title>Sign In or Sign Up | GlobalDev Hub</title>
+  <meta name="theme-color" content="#0b55db">
+  <title>Sign Up or Log In | GlobalDev Hub</title>
+  <meta name="description" content="Create an account or sign in to GlobalDev Hub.">
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 24px;
+      padding: 24px 16px;
       display: grid;
       place-items: center;
-      background: #f3f6fb;
-      color: #172033;
       font-family: Arial, sans-serif;
+      color: #172033;
+      background: #f3f6fc;
     }
-
     .card {
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
       padding: 28px;
-      background: white;
       border-radius: 18px;
-      box-shadow: 0 12px 40px #15284a12;
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(20, 45, 90, .10);
     }
-
     .brand {
       text-align: center;
-      color: #1664ff;
-      font-size: 25px;
+      color: #0b55db;
+      font-size: 27px;
       font-weight: 800;
     }
-
-    h1 { text-align: center; font-size: 25px; }
-
-    .intro {
-      text-align: center;
-      color: #667085;
-      line-height: 1.5;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin: 24px 0;
-    }
-
-    button, input { font: inherit; }
-
+    h1 { text-align: center; font-size: 25px; margin-bottom: 8px; }
+    .intro { text-align: center; color: #667085; line-height: 1.6; }
+    .tabs { display: flex; gap: 8px; margin: 24px 0; }
     .tabs button {
       flex: 1;
       padding: 12px;
-      border: 1px solid #dbe2ee;
+      border: 1px solid #d8dfeb;
       border-radius: 9px;
-      background: white;
-      cursor: pointer;
-    }
-
-    .tabs button.active {
-      background: #1664ff;
-      border-color: #1664ff;
-      color: white;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 7px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ccd4e0;
-      border-radius: 9px;
-    }
-
-    input:focus {
-      outline: 2px solid #b7ceff;
-      border-color: #1664ff;
-    }
-
-    .submit {
-      width: 100%;
-      padding: 14px;
-      margin-top: 22px;
-      border: 0;
-      border-radius: 9px;
-      background: #1664ff;
-      color: white;
+      background: #fff;
       font-weight: 700;
       cursor: pointer;
     }
-
-    .submit:disabled { opacity: .6; cursor: wait; }
-
+    .tabs button.active { background: #0b55db; color: #fff; border-color: #0b55db; }
+    label { display: block; margin: 15px 0 7px; font-weight: 700; }
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+    input:focus { outline: 2px solid #9dbdff; border-color: #0b55db; }
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      background: #0b55db;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .submit:disabled { opacity: .65; cursor: wait; }
     #message {
       margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
       line-height: 1.5;
       overflow-wrap: anywhere;
     }
-
-    .back {
-      display: block;
-      margin-top: 22px;
-      text-align: center;
-      color: #1664ff;
-      text-decoration: none;
-    }
-
-    .note {
-      margin-top: 20px;
-      color: #667085;
-      font-size: 12px;
-      line-height: 1.5;
-      text-align: center;
-    }
+    #message:empty { display: none; }
+    .back { display: block; text-align: center; margin-top: 22px; color: #0b55db; }
+    .note { font-size: 13px; color: #667085; line-height: 1.5; margin-top: 18px; }
   </style>
 </head>
 <body>
   <main class="card">
     <div class="brand">G GlobalDev Hub</div>
     <h1 id="heading">Create your account</h1>
-    <p class="intro">Join GlobalDev Hub to explore digital knowledge and opportunities.</p>
+    <p class="intro">Join GlobalDev Hub to explore digital knowledge and resources.</p>
 
     <div class="tabs">
       <button type="button" id="signupTab" class="active">Sign Up</button>
@@ -135,8 +92,8 @@
     </div>
 
     <form id="authForm">
-      <div id="nameField">
-        <label for="fullName">Your name</label>
+      <div id="nameGroup">
+        <label for="fullName">Full name</label>
         <input id="fullName" type="text" autocomplete="name"
                placeholder="Enter your name" required>
       </div>
@@ -147,17 +104,17 @@
 
       <label for="password">Password</label>
       <input id="password" type="password" autocomplete="new-password"
-             minlength="8" placeholder="At least 8 characters" required>
+             placeholder="At least 6 characters" minlength="6" required>
 
-      <button class="submit" id="submitButton" type="submit">
-        Create Account
-      </button>
+      <button class="submit" id="submitButton" type="submit">Create Account</button>
+      <div id="message" role="status" aria-live="polite"></div>
     </form>
 
-    <p id="message" role="status" aria-live="polite"></p>
-
+    <p class="note">
+      Keep your password private. GlobalDev Hub will never ask you to send it to another person.
+      Creating an account does not guarantee earnings.
+    </p>
     <a class="back" href="index.html">← Back to GlobalDev Hub</a>
-    <p class="note">Never share your password with anyone. GlobalDev Hub will never ask you to send it by chat.</p>
   </main>
 
   <script type="module">
@@ -165,33 +122,37 @@
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
     const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
 
-    // Replace this placeholder with your Supabase PUBLISHABLE key.
-    const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-    const heading = document.getElementById("heading");
     const form = document.getElementById("authForm");
-    const nameField = document.getElementById("nameField");
+    const nameGroup = document.getElementById("nameGroup");
     const fullName = document.getElementById("fullName");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
-    const message = document.getElementById("message");
+    const heading = document.getElementById("heading");
     const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
     const signupTab = document.getElementById("signupTab");
     const loginTab = document.getElementById("loginTab");
 
     let mode = "signup";
-    let supabase = null;
+
+    function showMessage(text, isError = false) {
+      message.textContent = text;
+      message.style.background = isError ? "#fff0f0" : "#eef6ff";
+      message.style.color = isError ? "#a32121" : "#174a8b";
+    }
 
     function setMode(nextMode) {
       mode = nextMode;
       const signingUp = mode === "signup";
 
-      heading.textContent = signingUp ? "Create your account" : "Welcome back";
-      nameField.hidden = !signingUp;
+      nameGroup.hidden = !signingUp;
       fullName.required = signingUp;
       password.autocomplete = signingUp ? "new-password" : "current-password";
-      password.value = "";
+      heading.textContent = signingUp ? "Create your account" : "Welcome back";
       submitButton.textContent = signingUp ? "Create Account" : "Log In";
       signupTab.classList.toggle("active", signingUp);
       loginTab.classList.toggle("active", !signingUp);
@@ -201,57 +162,43 @@
     signupTab.addEventListener("click", () => setMode("signup"));
     loginTab.addEventListener("click", () => setMode("login"));
 
-    try {
-      if (SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE") {
-        message.textContent =
-          "Setup needed: add your Supabase publishable key to connect this page.";
-        submitButton.disabled = true;
-      } else {
-        supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-      }
-    } catch (error) {
-      message.textContent = "Unable to initialize the account service. Please try again later.";
-      submitButton.disabled = true;
-    }
-
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!supabase) return;
-
-      message.textContent = "";
       submitButton.disabled = true;
+      showMessage("Please wait…");
 
       try {
+        const userEmail = email.value.trim();
+        const userPassword = password.value;
+
         if (mode === "signup") {
           const { data, error } = await supabase.auth.signUp({
-            email: email.value.trim(),
-            password: password.value,
+            email: userEmail,
+            password: userPassword,
             options: {
               data: { full_name: fullName.value.trim() },
-              emailRedirectTo: window.location.origin + "/auth.html"
+              emailRedirectTo: "https://globaldev-hub.github.io/auth.html"
             }
           });
 
           if (error) throw error;
 
-          message.textContent = data.session
-            ? "Account created. You are signed in."
-            : "Account request received. Check your email for a confirmation link before signing in.";
-          form.reset();
+          if (data.session) {
+            showMessage("Your account was created successfully. You are signed in.");
+          } else {
+            showMessage("Registration started! Check your email for a confirmation link before signing in.");
+          }
         } else {
           const { error } = await supabase.auth.signInWithPassword({
-            email: email.value.trim(),
-            password: password.value
+            email: userEmail,
+            password: userPassword
           });
 
           if (error) throw error;
-
-          message.textContent = "You are signed in successfully!";
-          password.value = "";
+          showMessage("You are signed in successfully! You can now return to the homepage.");
         }
       } catch (error) {
-        message.textContent = error.message ||
-          "Something went wrong. Please try again.";
+        showMessage(error.message || "Something went wrong. Please try again.", true);
       } finally {
         submitButton.disabled = false;
       }
