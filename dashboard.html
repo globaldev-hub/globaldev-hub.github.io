@@ -62,16 +62,8 @@
       display: inline-block;
     }
 
-    .primary {
-      background: var(--blue);
-      color: white;
-    }
-
-    .secondary {
-      background: #eaf0fb;
-      color: var(--dark);
-    }
-
+    .primary { background: var(--blue); color: white; }
+    .secondary { background: #eaf0fb; color: var(--dark); }
     button:disabled { opacity: .6; cursor: wait; }
 
     .layout {
@@ -89,10 +81,7 @@
       border-radius: 15px;
     }
 
-    aside {
-      padding: 17px;
-      align-self: start;
-    }
+    aside { padding: 17px; align-self: start; }
 
     .nav-title {
       margin: 5px 8px 12px;
@@ -135,18 +124,12 @@
     .welcome h1 {
       margin: 0 0 10px;
       font-size: clamp(25px, 4vw, 34px);
+      overflow-wrap: anywhere;
     }
 
-    .welcome p {
-      margin: 0;
-      line-height: 1.7;
-      max-width: 650px;
-    }
+    .welcome p { margin: 0; line-height: 1.7; max-width: 650px; }
 
-    .section-heading {
-      margin: 27px 0 13px;
-      font-size: 21px;
-    }
+    .section-heading { margin: 27px 0 13px; font-size: 21px; }
 
     .cards {
       display: grid;
@@ -155,7 +138,6 @@
     }
 
     .panel { padding: 20px; }
-
     .panel h3 { margin: 0 0 10px; font-size: 18px; }
 
     .panel p {
@@ -166,23 +148,27 @@
     }
 
     .profile-icon {
-      width: 54px;
-      height: 54px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
+      overflow: hidden;
       display: grid;
       place-items: center;
       background: #eaf1ff;
       color: var(--blue);
-      font-size: 25px;
+      font-size: 32px;
       font-weight: 800;
       margin-bottom: 13px;
     }
 
-    label {
-      display: block;
-      font-weight: 700;
-      margin: 14px 0 7px;
+    .profile-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
+
+    label { display: block; font-weight: 700; margin: 14px 0 7px; }
 
     input {
       width: 100%;
@@ -192,29 +178,13 @@
       font-size: 16px;
     }
 
-    input:focus {
-      outline: 2px solid #a9c7ff;
-      border-color: var(--blue);
-    }
+    input:focus { outline: 2px solid #a9c7ff; border-color: var(--blue); }
 
-    .email {
-      overflow-wrap: anywhere;
-      font-weight: 600;
-      color: var(--dark) !important;
-    }
+    .email { overflow-wrap: anywhere; font-weight: 600; color: var(--dark) !important; }
 
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-top: 10px;
-    }
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 10px; }
 
-    #status {
-      padding: 35px 10px;
-      text-align: center;
-      color: var(--muted);
-    }
+    #status { padding: 35px 10px; text-align: center; color: var(--muted); }
 
     #notice {
       padding: 12px;
@@ -226,13 +196,7 @@
 
     #notice:empty { display: none; }
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 20px;
-      font-size: 13px;
-    }
-
+    footer { text-align: center; color: var(--muted); padding: 20px; font-size: 13px; }
     [hidden] { display: none !important; }
 
     @media (max-width: 700px) {
@@ -276,39 +240,43 @@
       <section class="welcome" id="overview">
         <p class="eyebrow">GLOBALDEV HUB · MEMBER AREA</p>
         <h1>Welcome, <span id="welcomeName">Member</span>! 👋</h1>
-        <p>
-          Your space to learn digital skills, explore useful resources
-          and discover online opportunities.
-        </p>
+        <p>Your space to learn digital skills, explore useful resources and discover online opportunities.</p>
       </section>
 
       <h2 class="section-heading">Your member area</h2>
 
       <div class="cards">
         <section class="panel" id="profile">
-          <div class="profile-icon" id="avatar">M</div>
+          <div class="profile-icon" id="avatar">
+            <span id="avatarInitial">M</span>
+            <img id="avatarImage" alt="Your profile picture" hidden>
+          </div>
+
           <h3>My Profile</h3>
           <p>Your account email</p>
           <p class="email" id="memberEmail"></p>
 
           <form id="profileForm">
             <label for="displayName">Display name</label>
-            <input
-              id="displayName"
-              type="text"
-              maxlength="80"
-              autocomplete="name"
-              required
-              placeholder="Enter your name"
-            >
-            <button class="primary" id="saveProfile" type="submit">
-              Save Name
-            </button>
+            <input id="displayName" type="text" maxlength="80"
+              autocomplete="name" required placeholder="Enter your name">
+            <button class="primary" id="saveProfile" type="submit">Save Name</button>
           </form>
-          <p class="hint">
-            This updates your display name in your account. It does not
-            change your email address.
-          </p>
+
+          <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+          <h3>Profile Picture</h3>
+          <p>Choose a picture for your member profile. Maximum size: 2 MB.</p>
+
+          <label for="avatarFile">Choose picture</label>
+          <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp">
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+            <button class="primary" id="uploadAvatar" type="button">Upload Picture</button>
+            <button class="secondary" id="removeAvatar" type="button">Remove Picture</button>
+          </div>
+
+          <p class="hint">Accepted formats: JPG, PNG and WebP. Your picture is stored in your private account folder.</p>
         </section>
 
         <section class="panel" id="learning">
@@ -344,13 +312,8 @@
         <section class="panel" id="settings">
           <h3>⚙️ Account Settings</h3>
           <p>Keep your login details private. You can sign out from this device.</p>
-          <button class="secondary" id="settingsLogout" type="button">
-            Log Out
-          </button>
-          <p class="hint">
-            Password changes and account deletion require additional
-            secure account-management steps.
-          </p>
+          <button class="secondary" id="settingsLogout" type="button">Log Out</button>
+          <p class="hint">Password changes and account deletion require additional secure account-management steps.</p>
         </section>
       </div>
 
@@ -358,9 +321,7 @@
     </main>
   </div>
 
-  <footer>
-    © <span id="year"></span> GlobalDev Hub · Learn, grow and build.
-  </footer>
+  <footer>© <span id="year"></span> GlobalDev Hub · Learn, grow and build.</footer>
 
   <script type="module">
     import { createClient } from
@@ -371,6 +332,7 @@
       "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_"
     );
 
+    const BUCKET = "profile-pictures";
     const status = document.getElementById("status");
     const dashboard = document.getElementById("dashboard");
     const logoutButton = document.getElementById("logoutButton");
@@ -378,38 +340,76 @@
     const profileForm = document.getElementById("profileForm");
     const displayName = document.getElementById("displayName");
     const saveProfile = document.getElementById("saveProfile");
+    const avatarFile = document.getElementById("avatarFile");
+    const uploadAvatar = document.getElementById("uploadAvatar");
+    const removeAvatar = document.getElementById("removeAvatar");
+    const avatarImage = document.getElementById("avatarImage");
+    const avatarInitial = document.getElementById("avatarInitial");
     const notice = document.getElementById("notice");
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    let currentUserId = null;
+    let currentUser = null;
+    let currentAvatarPath = null;
 
-    function showNotice(text, isError = false) {
-      notice.textContent = text;
+    function showNotice(message, isError = false) {
+      notice.textContent = message;
       notice.style.background = isError ? "#fff0f0" : "#edf8f0";
       notice.style.color = isError ? "#a32121" : "#176b36";
     }
 
-    function showMember(user) {
-      currentUserId = user.id;
+    function setAvatarInitial(name) {
+      avatarInitial.textContent = name.trim().charAt(0).toUpperCase() || "M";
+    }
 
-      const name =
-        user.user_metadata?.full_name ||
-        user.email?.split("@")[0] ||
-        "Member";
+    async function displayAvatar(path) {
+      currentAvatarPath = path || null;
+      avatarImage.hidden = true;
+      avatarImage.removeAttribute("src");
+      avatarInitial.hidden = false;
+
+      if (!path || !currentUser) return;
+
+      const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .createSignedUrl(path, 3600);
+
+      if (error) {
+        console.warn("Could not load profile picture:", error.message);
+        return;
+      }
+
+      avatarImage.onload = () => {
+        avatarImage.hidden = false;
+        avatarInitial.hidden = true;
+      };
+
+      avatarImage.onerror = () => {
+        avatarImage.hidden = true;
+        avatarInitial.hidden = false;
+      };
+
+      avatarImage.src = data.signedUrl;
+    }
+
+    async function showMember(user) {
+      currentUser = user;
+
+      const name = user.user_metadata?.full_name ||
+        user.email?.split("@")[0] || "Member";
 
       document.getElementById("welcomeName").textContent = name;
       document.getElementById("memberEmail").textContent =
         user.email || "Email unavailable";
-      document.getElementById("avatar").textContent =
-        name.trim().charAt(0).toUpperCase() || "M";
-
       displayName.value = name;
+      setAvatarInitial(name);
 
       status.hidden = true;
       dashboard.hidden = false;
       logoutButton.hidden = false;
+
+      const savedPath = user.user_metadata?.avatar_path;
+      await displayAvatar(savedPath);
     }
 
     async function checkSession() {
@@ -420,13 +420,13 @@
         return;
       }
 
-      showMember(data.session.user);
+      await showMember(data.session.user);
     }
 
     profileForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if (!currentUserId) {
+      if (!currentUser) {
         showNotice("Your session is unavailable. Please sign in again.", true);
         return;
       }
@@ -447,21 +447,123 @@
         });
 
         if (error) throw error;
-
-        if (!data.user || data.user.id !== currentUserId) {
+        if (!data.user || data.user.id !== currentUser.id) {
           throw new Error("We could not verify the updated account.");
         }
 
-        showMember(data.user);
+        await showMember(data.user);
         showNotice("Your display name has been updated successfully.");
       } catch (error) {
-        showNotice(
-          error.message || "Could not update your name. Please try again.",
-          true
-        );
+        showNotice(error.message || "Could not update your name.", true);
       } finally {
         saveProfile.disabled = false;
         saveProfile.textContent = "Save Name";
+      }
+    });
+
+    uploadAvatar.addEventListener("click", async () => {
+      if (!currentUser) {
+        showNotice("Please sign in again before uploading.", true);
+        return;
+      }
+
+      const file = avatarFile.files?.[0];
+
+      if (!file) {
+        showNotice("Please choose a picture first.", true);
+        return;
+      }
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+      if (!allowedTypes.includes(file.type)) {
+        showNotice("Please choose a JPG, PNG or WebP image.", true);
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        showNotice("Your picture must be 2 MB or smaller.", true);
+        return;
+      }
+
+      const extension = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp"
+      }[file.type];
+
+      const path = `${currentUser.id}/avatar.${extension}`;
+
+      uploadAvatar.disabled = true;
+      uploadAvatar.textContent = "Uploading…";
+
+      try {
+        const { error: uploadError } = await supabase.storage
+          .from(BUCKET)
+          .upload(path, file, {
+            upsert: true,
+            contentType: file.type,
+            cacheControl: "3600"
+          });
+
+        if (uploadError) throw uploadError;
+
+        const { data, error: updateError } = await supabase.auth.updateUser({
+          data: { avatar_path: path }
+        });
+
+        if (updateError) throw updateError;
+        currentUser = data.user;
+
+        await displayAvatar(path);
+        avatarFile.value = "";
+        showNotice("Your profile picture was uploaded successfully.");
+      } catch (error) {
+        showNotice(
+          error.message || "Upload failed. Check your storage permissions.",
+          true
+        );
+      } finally {
+        uploadAvatar.disabled = false;
+        uploadAvatar.textContent = "Upload Picture";
+      }
+    });
+
+    removeAvatar.addEventListener("click", async () => {
+      if (!currentUser) return;
+
+      if (!currentAvatarPath) {
+        showNotice("You do not have a saved profile picture to remove.", true);
+        return;
+      }
+
+      removeAvatar.disabled = true;
+      removeAvatar.textContent = "Removing…";
+
+      try {
+        const { error: deleteError } = await supabase.storage
+          .from(BUCKET)
+          .remove([currentAvatarPath]);
+
+        if (deleteError) throw deleteError;
+
+        const { data, error: updateError } = await supabase.auth.updateUser({
+          data: { avatar_path: null }
+        });
+
+        if (updateError) throw updateError;
+
+        currentUser = data.user;
+        await displayAvatar(null);
+        showNotice("Your profile picture has been removed.");
+      } catch (error) {
+        showNotice(
+          error.message || "Could not remove the picture. Check storage permissions.",
+          true
+        );
+      } finally {
+        removeAvatar.disabled = false;
+        removeAvatar.textContent = "Remove Picture";
       }
     });
 
