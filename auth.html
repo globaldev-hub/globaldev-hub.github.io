@@ -7,136 +7,57 @@
   <meta name="theme-color" content="#0b55db">
   <meta name="description" content="Create an account or sign in to GlobalDev Hub.">
   <title>Sign Up or Log In | GlobalDev Hub</title>
-
   <style>
     * { box-sizing: border-box; }
-
     body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 24px 16px;
-      display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      color: #172033;
+      margin: 0; min-height: 100vh; padding: 24px 16px;
+      display: grid; place-items: center;
+      font-family: Arial, sans-serif; color: #172033;
       background: #f3f6fc;
     }
-
     .card {
-      width: 100%;
-      max-width: 440px;
-      padding: 28px;
-      border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 12px 40px rgba(20, 45, 90, .10);
+      width: 100%; max-width: 440px; padding: 28px;
+      border-radius: 18px; background: white;
+      box-shadow: 0 12px 40px rgba(20,45,90,.10);
     }
-
-    .brand {
-      text-align: center;
-      color: #0b55db;
-      font-size: 25px;
-      font-weight: 800;
-    }
-
+    .brand { text-align: center; color: #0b55db; font-size: 25px; font-weight: 800; }
     h1 { text-align: center; font-size: 25px; }
-
-    .intro {
-      text-align: center;
-      color: #667085;
-      line-height: 1.6;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin: 24px 0;
-    }
-
+    .intro { text-align: center; color: #667085; line-height: 1.6; }
+    .tabs { display: flex; gap: 8px; margin: 24px 0; }
     .tabs button {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #d8dfeb;
-      border-radius: 9px;
-      background: white;
-      font-weight: 700;
-      cursor: pointer;
+      flex: 1; padding: 12px; border: 1px solid #d8dfeb;
+      border-radius: 9px; background: white; font-weight: 700; cursor: pointer;
     }
-
-    .tabs button.active {
-      background: #0b55db;
-      color: white;
-      border-color: #0b55db;
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 7px;
-      font-weight: 700;
-    }
-
+    .tabs button.active { background: #0b55db; color: white; border-color: #0b55db; }
+    label { display: block; margin: 15px 0 7px; font-weight: 700; }
     input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      font-size: 16px;
+      width: 100%; padding: 13px; border: 1px solid #cbd5e1;
+      border-radius: 9px; font-size: 16px;
     }
-
-    input:focus {
-      outline: 2px solid #9dbdff;
-      border-color: #0b55db;
-    }
-
+    input:focus { outline: 2px solid #9dbdff; border-color: #0b55db; }
     .submit {
-      width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      border: 0;
-      border-radius: 9px;
-      background: #0b55db;
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
+      width: 100%; margin-top: 22px; padding: 14px; border: 0;
+      border-radius: 9px; background: #0b55db; color: white;
+      font-size: 16px; font-weight: 700; cursor: pointer;
     }
-
-    .submit:disabled { opacity: .65; }
-
+    .submit:disabled { opacity: .65; cursor: wait; }
     #message {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
+      margin-top: 16px; padding: 12px; border-radius: 8px;
+      line-height: 1.5; overflow-wrap: anywhere;
     }
-
     #message:empty { display: none; }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 22px;
-      color: #0b55db;
-    }
-
-    .note {
-      font-size: 13px;
-      color: #667085;
-      line-height: 1.5;
-      margin-top: 18px;
-    }
+    .back { display: block; text-align: center; margin-top: 22px; color: #0b55db; }
+    .note { font-size: 13px; color: #667085; line-height: 1.5; margin-top: 18px; }
+    .forgot { text-align: center; margin-top: 17px; }
+    a { color: #0b55db; }
+    [hidden] { display: none !important; }
   </style>
 </head>
-
 <body>
   <main class="card">
     <div class="brand">G GlobalDev Hub</div>
-
     <h1 id="heading">Create your account</h1>
-
-    <p class="intro">
-      Join GlobalDev Hub to explore digital knowledge and resources.
-    </p>
+    <p class="intro">Join GlobalDev Hub to explore digital knowledge and resources.</p>
 
     <div class="tabs">
       <button type="button" id="signupTab" class="active">Sign Up</button>
@@ -146,46 +67,31 @@
     <form id="authForm">
       <div id="nameGroup">
         <label for="fullName">Full name</label>
-        <input
-          id="fullName"
-          type="text"
-          autocomplete="name"
-          placeholder="Enter your name"
-          required
-        >
+        <input id="fullName" type="text" autocomplete="name"
+          placeholder="Enter your name" required>
       </div>
 
       <label for="email">Email address</label>
-      <input
-        id="email"
-        type="email"
-        autocomplete="email"
-        placeholder="you@example.com"
-        required
-      >
+      <input id="email" type="email" autocomplete="email"
+        placeholder="you@example.com" required>
 
       <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        autocomplete="new-password"
-        placeholder="At least 6 characters"
-        minlength="6"
-        required
-      >
+      <input id="password" type="password" autocomplete="new-password"
+        placeholder="At least 6 characters" minlength="6" required>
 
-      <button class="submit" id="submitButton" type="submit">
-        Create Account
-      </button>
+      <button class="submit" id="submitButton" type="submit">Create Account</button>
+
+      <p class="forgot" id="forgotRow" hidden>
+        <a href="#" id="forgotLink">Forgot your password?</a>
+      </p>
 
       <div id="message" role="status" aria-live="polite"></div>
     </form>
 
     <p class="note">
-      Keep your password private. Creating an account does not guarantee
-      earnings. GlobalDev Hub is being developed.
+      Keep your password private. Creating an account does not guarantee earnings.
+      GlobalDev Hub is being developed.
     </p>
-
     <a class="back" href="index.html">← Back to GlobalDev Hub</a>
   </main>
 
@@ -193,27 +99,24 @@
     import { createClient } from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const SUPABASE_URL =
-      "https://fkaunvoidromujlhoxow.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
-
     const supabase = createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
+      "https://fkaunvoidromujlhoxow.supabase.co",
+      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_"
     );
 
-    const form = document.getElementById("authForm");
-    const nameGroup = document.getElementById("nameGroup");
-    const fullName = document.getElementById("fullName");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const heading = document.getElementById("heading");
-    const submitButton = document.getElementById("submitButton");
-    const message = document.getElementById("message");
-    const signupTab = document.getElementById("signupTab");
-    const loginTab = document.getElementById("loginTab");
+    const $ = id => document.getElementById(id);
+    const form = $("authForm");
+    const nameGroup = $("nameGroup");
+    const fullName = $("fullName");
+    const email = $("email");
+    const password = $("password");
+    const heading = $("heading");
+    const submitButton = $("submitButton");
+    const message = $("message");
+    const signupTab = $("signupTab");
+    const loginTab = $("loginTab");
+    const forgotRow = $("forgotRow");
+    const forgotLink = $("forgotLink");
 
     let mode = "signup";
 
@@ -229,22 +132,13 @@
 
       nameGroup.hidden = !signingUp;
       fullName.required = signingUp;
-
-      password.autocomplete = signingUp
-        ? "new-password"
-        : "current-password";
-
+      password.autocomplete = signingUp ? "new-password" : "current-password";
       password.value = "";
-      heading.textContent = signingUp
-        ? "Create your account"
-        : "Welcome back";
-
-      submitButton.textContent = signingUp
-        ? "Create Account"
-        : "Log In";
-
+      heading.textContent = signingUp ? "Create your account" : "Welcome back";
+      submitButton.textContent = signingUp ? "Create Account" : "Log In";
       signupTab.classList.toggle("active", signingUp);
       loginTab.classList.toggle("active", !signingUp);
+      forgotRow.hidden = signingUp;
       message.textContent = "";
     }
 
@@ -253,17 +147,14 @@
 
     async function redirectIfSignedIn() {
       const { data, error } = await supabase.auth.getSession();
-
       if (!error && data.session) {
         window.location.replace("dashboard.html");
       }
     }
-
     redirectIfSignedIn();
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", async event => {
       event.preventDefault();
-
       submitButton.disabled = true;
       showMessage("Please wait…");
 
@@ -276,42 +167,58 @@
             email: userEmail,
             password: userPassword,
             options: {
-              data: {
-                full_name: fullName.value.trim()
-              },
-              emailRedirectTo:
-                "https://globaldev-hub.github.io/auth.html"
+              data: { full_name: fullName.value.trim() },
+              emailRedirectTo: "https://globaldev-hub.github.io/auth.html"
             }
           });
-
           if (error) throw error;
 
           if (data.session) {
-            showMessage("Account created successfully. Opening your dashboard…");
+            showMessage("Account created. Opening your dashboard…");
             window.location.replace("dashboard.html");
           } else {
-            showMessage(
-              "Registration started! Check your email and confirm your account. Then return here and log in."
-            );
+            showMessage("Registration started! Check your email to confirm your account, then log in.");
           }
         } else {
           const { error } = await supabase.auth.signInWithPassword({
             email: userEmail,
             password: userPassword
           });
-
           if (error) throw error;
-
           showMessage("Login successful. Opening your dashboard…");
           window.location.replace("dashboard.html");
         }
       } catch (error) {
-        showMessage(
-          error.message || "Something went wrong. Please try again.",
-          true
-        );
+        showMessage(error.message || "Something went wrong. Please try again.", true);
       } finally {
         submitButton.disabled = false;
+      }
+    });
+
+    forgotLink.addEventListener("click", async event => {
+      event.preventDefault();
+      const userEmail = email.value.trim();
+
+      if (!userEmail) {
+        showMessage("Enter your email address above first, then tap Forgot your password.", true);
+        email.focus();
+        return;
+      }
+
+      forgotLink.style.pointerEvents = "none";
+      showMessage("Sending password recovery email…");
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(userEmail, {
+          redirectTo: "https://globaldev-hub.github.io/reset-password.html"
+        });
+        if (error) throw error;
+
+        showMessage("If an account exists for that email, a recovery link will be sent. Check your inbox and spam folder.");
+      } catch (error) {
+        showMessage(error.message || "Could not request password recovery. Please try again.", true);
+      } finally {
+        forgotLink.style.pointerEvents = "";
       }
     });
   </script>
