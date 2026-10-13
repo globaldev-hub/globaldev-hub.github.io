@@ -1,861 +1,106 @@
+// Add a message to the AI chat with readable Markdown formatting
+function addChatMessage(speaker, message) {
+  const bubble = document.createElement("div");
+  bubble.className = "chat-bubble " +
+    (speaker === "You" ? "chat-user" : "chat-ai");
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b55db">
-  <meta name="description" content="Your GlobalDev Hub member dashboard.">
-  <title>My Dashboard | GlobalDev Hub</title>
+  const title = document.createElement("strong");
+  title.textContent = speaker;
 
-  <style>
-    * { box-sizing: border-box; }
+  const content = document.createElement("div");
+  content.className = "chat-content";
 
-    :root {
-      --blue: #0b55db;
-      --dark: #172033;
-      --muted: #667085;
-      --border: #e2e8f0;
-      --background: #f4f7fc;
+  // Remove unnecessary escape characters from Markdown
+  const cleaned = String(message)
+    .replace(/\\([*_#`[\]()])/g, "$1")
+    .replace(/&#91;/g, "[")
+    .replace(/&#93;/g, "]");
+
+  // Build formatted elements safely without inserting raw HTML
+  function addInlineText(parent, text) {
+    const pattern = /(\*\*[^*]+\*\*|__[^_]+__|\*[^*]+\*|_[^_]+_)/g;
+    let last = 0;
+    let match;
+
+    while ((match = pattern.exec(text)) !== null) {
+      parent.appendChild(
+        document.createTextNode(text.slice(last, match.index))
+      );
+
+      const token = match[0];
+      const element = document.createElement(
+        token.startsWith("**") || token.startsWith("__")
+          ? "strong"
+          : "em"
+      );
+
+      element.textContent = token.slice(
+        token.startsWith("**") || token.startsWith("__") ? 2 : 1,
+        token.startsWith("**") || token.startsWith("__") ? -2 : -1
+      );
+
+      parent.appendChild(element);
+      last = pattern.lastIndex;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--dark);
-      background: var(--background);
+    parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  const lines = cleaned.split("\n");
+  let list = null;
+  let listType = null;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      list = null;
+      listType = null;
+      continue;
     }
 
-    header {
-      background: white;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 5;
-    }
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+    const bullet = trimmed.match(/^[-*+]\s+(.+)$/);
+    const numbered = trimmed.match(/^\d+[.)]\s+(.+)$/);
 
-    .topbar {
-      max-width: 1120px;
-      margin: auto;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
+    if (heading) {
+      list = null;
+      listType = null;
 
-    .brand {
-      color: var(--blue);
-      font-size: 21px;
-      font-weight: 800;
-      text-decoration: none;
-    }
+      const element = document.createElement(
+        heading[1].length === 1 ? "h3" :
+        heading[1].length === 2 ? "h4" : "h5"
+      );
 
-    button, .button {
-      border: 0;
-      border-radius: 9px;
-      padding: 11px 15px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
+      addInlineText(element, heading[2]);
+      content.appendChild(element);
+    } else if (bullet || numbered) {
+      const type = bullet ? "ul" : "ol";
 
-    .primary { background: var(--blue); color: white; }
-    .secondary { background: #eaf0fb; color: var(--dark); }
-    button:disabled { opacity: .6; cursor: wait; }
-
-    .layout {
-      max-width: 1120px;
-      margin: 26px auto;
-      padding: 0 18px 35px;
-      display: grid;
-      grid-template-columns: 220px minmax(0, 1fr);
-      gap: 22px;
-    }
-
-    aside, .panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-    }
-
-    aside { padding: 17px; align-self: start; }
-
-    .nav-title {
-      margin: 5px 8px 12px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--muted);
-    }
-
-    .nav-link {
-      display: block;
-      padding: 12px;
-      margin: 4px 0;
-      border-radius: 8px;
-      color: #344054;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .nav-link:hover, .nav-link.active {
-      background: #edf3ff;
-      color: var(--blue);
-    }
-
-    main { min-width: 0; }
-
-    .welcome {
-      padding: 27px;
-      border-radius: 16px;
-      color: white;
-      background: linear-gradient(125deg, #0b55db, #347cf3);
-    }
-
-    .welcome .eyebrow {
-      margin: 0 0 8px;
-      opacity: .9;
-      font-size: 13px;
-    }
-
-    .welcome h1 {
-      margin: 0 0 10px;
-      font-size: clamp(25px, 4vw, 34px);
-      overflow-wrap: anywhere;
-    }
-
-    .welcome p {
-      margin: 0;
-      line-height: 1.7;
-      max-width: 650px;
-    }
-
-    .section-heading {
-      margin: 27px 0 13px;
-      font-size: 21px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-    }
-
-    .panel { padding: 20px; }
-    .panel h3 { margin: 0 0 10px; font-size: 18px; }
-
-    .panel p {
-      color: var(--muted);
-      line-height: 1.65;
-      margin: 0 0 15px;
-      overflow-wrap: anywhere;
-    }
-
-    .profile-icon {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      background: #eaf1ff;
-      color: var(--blue);
-      font-size: 32px;
-      font-weight: 800;
-      margin-bottom: 13px;
-    }
-
-    .profile-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      margin: 14px 0 7px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 16px;
-      font-family: Arial, sans-serif;
-    }
-
-    input:focus, textarea:focus {
-      outline: 2px solid #a9c7ff;
-      border-color: var(--blue);
-    }
-
-    .email {
-      overflow-wrap: anywhere;
-      font-weight: 600;
-      color: var(--dark) !important;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-top: 10px;
-    }
-
-    #status {
-      padding: 35px 10px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    #notice {
-      padding: 12px;
-      border-radius: 8px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-      margin: 15px 0;
-    }
-
-    #notice:empty { display: none; }
-
-    #chatMessages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .chat-bubble {
-      padding: 14px;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .chat-user { background: #f1f5f9; }
-    .chat-ai { background: #edf3ff; }
-
-    .chat-bubble p {
-      margin: 6px 0 0;
-      color: #344054;
-      white-space: pre-wrap;
-    }
-
-    #question {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 20px;
-      font-size: 13px;
-    }
-
-    [hidden] { display: none !important; }
-
-    @media (max-width: 700px) {
-      .layout {
-        grid-template-columns: 1fr;
-        margin-top: 16px;
+      if (!list || listType !== type) {
+        list = document.createElement(type);
+        content.appendChild(list);
+        listType = type;
       }
 
-      aside {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-      }
+      const item = document.createElement("li");
+      addInlineText(item, (bullet || numbered)[1]);
+      list.appendChild(item);
+    } else {
+      list = null;
+      listType = null;
 
-      .nav-title { width: 100%; }
-      .nav-link { padding: 10px; font-size: 14px; }
-      .cards { grid-template-columns: 1fr; }
-      .welcome { padding: 22px; }
-      .topbar { padding: 13px 15px; }
-      .brand { font-size: 18px; }
+      const paragraph = document.createElement("p");
+      addInlineText(paragraph, trimmed);
+      content.appendChild(paragraph);
     }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="topbar">
-      <a class="brand" href="index.html">G GlobalDev Hub</a>
-      <button class="secondary" id="logoutButton" type="button" hidden>
-        Log Out
-      </button>
-    </div>
-  </header>
-
-  <div id="status">Checking your account…</div>
-
-  <div class="layout" id="dashboard" hidden>
-    <aside>
-      <p class="nav-title">Member menu</p>
-      <a class="nav-link active" href="#overview">🏠 Overview</a>
-      <a class="nav-link" href="#profile">👤 My Profile</a>
-      <a class="nav-link" href="#ai-assistant">🤖 AI Assistant</a>
-      <a class="nav-link" href="#learning">📚 Learning Guides</a>
-      <a class="nav-link" href="#tools">🧰 Digital Tools</a>
-      <a class="nav-link" href="#opportunities">🌍 Opportunities</a>
-      <a class="nav-link" href="#careers">💼 Careers</a>
-      <a class="nav-link" href="#settings">⚙️ Account Settings</a>
-      <a class="nav-link" href="index.html">↗ Main Website</a>
-    </aside>
-
-    <main>
-      <section class="welcome" id="overview">
-        <p class="eyebrow">GLOBALDEV HUB · MEMBER AREA</p>
-        <h1>Welcome, <span id="welcomeName">Member</span>! 👋</h1>
-        <p>Your space to learn digital skills, explore useful resources and discover online opportunities.</p>
-      </section>
-
-      <h2 class="section-heading">Your member area</h2>
-
-      <div class="cards">
-        <section class="panel" id="profile">
-          <div class="profile-icon" id="avatar">
-            <span id="avatarInitial">M</span>
-            <img id="avatarImage" alt="Your profile picture" hidden>
-          </div>
-
-          <h3>My Profile</h3>
-          <p>Your account email</p>
-          <p class="email" id="memberEmail"></p>
-
-          <form id="profileForm">
-            <label for="displayName">Display name</label>
-            <input id="displayName" type="text" maxlength="80"
-              autocomplete="name" required placeholder="Enter your name">
-            <button class="primary" id="saveProfile" type="submit">Save Name</button>
-          </form>
-
-          <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
-
-          <h3>Profile Picture</h3>
-          <p>Choose a picture for your member profile. Maximum size: 2 MB.</p>
-
-          <label for="avatarFile">Choose picture</label>
-          <input id="avatarFile" type="file"
-            accept="image/jpeg,image/png,image/webp">
-
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-            <button class="primary" id="uploadAvatar" type="button">Upload Picture</button>
-            <button class="secondary" id="removeAvatar" type="button">Remove Picture</button>
-          </div>
-
-          <p class="hint">Accepted formats: JPG, PNG and WebP. Your picture is stored in your private account folder.</p>
-        </section>
-
-        <!-- AI ASSISTANT -->
-        <section class="panel" id="ai-assistant" style="grid-column:1 / -1;">
-          <h3>🤖 GlobalDev Hub AI Assistant</h3>
-
-          <p id="aiGreeting">
-            Hello! 👋 How may I help you today?
-          </p>
-
-          <div id="chatMessages" aria-live="polite">
-            <div class="chat-bubble chat-ai">
-              <strong>AI Assistant</strong>
-              <p>Welcome! Ask me about digital skills, website building, online opportunities, or using GlobalDev Hub.</p>
-            </div>
-          </div>
-
-          <label for="question">Your question</label>
-          <textarea id="question" maxlength="3000"
-            placeholder="Type your question here..."></textarea>
-
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-            <button class="primary" id="askButton" type="button">
-              Ask AI Assistant
-            </button>
-            <button class="secondary" id="clearButton" type="button">
-              Clear Chat
-            </button>
-          </div>
-
-          <p id="assistantStatus" class="hint" role="status" aria-live="polite">
-            Ready to help.
-          </p>
-        </section>
-
-        <section class="panel" id="learning">
-          <h3>📚 Learning Guides</h3>
-          <p>Learn website building, technology basics and digital skills.</p>
-          <a class="button primary" href="guides.html">Explore Guides</a>
-        </section>
-
-        <section class="panel" id="tools">
-          <h3>🧰 Digital Tools</h3>
-          <p>Explore useful tools for learning and online work.</p>
-          <a class="button primary" href="tools.html">Explore Tools</a>
-        </section>
-
-        <section class="panel" id="opportunities">
-          <h3>🌍 Online Opportunities</h3>
-          <p>Explore resources and learn how to recognize suspicious offers.</p>
-          <a class="button primary" href="resources.html">View Resources</a>
-        </section>
-
-        <section class="panel" id="careers">
-          <h3>💼 Careers</h3>
-          <p>Explore career information and remote-work resources.</p>
-          <a class="button primary" href="careers.html">Explore Careers</a>
-        </section>
-
-        <section class="panel">
-          <h3>🏠 Main Website</h3>
-          <p>Visit the public GlobalDev Hub homepage.</p>
-          <a class="button primary" href="index.html">Visit Homepage</a>
-        </section>
-
-        <section class="panel" id="settings">
-          <h3>⚙️ Account Settings</h3>
-          <p>Keep your login details private. You can sign out from this device.</p>
-          <button class="secondary" id="settingsLogout" type="button">Log Out</button>
-          <p class="hint">Password changes and account deletion require additional secure account-management steps.</p>
-        </section>
-      </div>
-
-      <div id="notice" role="status" aria-live="polite"></div>
-    </main>
-  </div>
-
-  <footer>© <span id="year"></span> GlobalDev Hub · Learn, grow and build.</footer>
-
-  <script type="module">
-    import { createClient } from
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    const supabase = createClient(
-      "https://fkaunvoidromujlhoxow.supabase.co",
-      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_"
-    );
-
-    const BUCKET = "profile-pictures";
-
-    // AI service address
-    const AI_ENDPOINT =
-      "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
-
-    const status = document.getElementById("status");
-    const dashboard = document.getElementById("dashboard");
-    const logoutButton = document.getElementById("logoutButton");
-    const settingsLogout = document.getElementById("settingsLogout");
-    const profileForm = document.getElementById("profileForm");
-    const displayName = document.getElementById("displayName");
-    const saveProfile = document.getElementById("saveProfile");
-    const avatarFile = document.getElementById("avatarFile");
-    const uploadAvatar = document.getElementById("uploadAvatar");
-    const removeAvatar = document.getElementById("removeAvatar");
-    const avatarImage = document.getElementById("avatarImage");
-    const avatarInitial = document.getElementById("avatarInitial");
-    const notice = document.getElementById("notice");
-
-    const aiGreeting = document.getElementById("aiGreeting");
-    const questionInput = document.getElementById("question");
-    const askButton = document.getElementById("askButton");
-    const clearButton = document.getElementById("clearButton");
-    const chatMessages = document.getElementById("chatMessages");
-    const assistantStatus = document.getElementById("assistantStatus");
-
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-
-    let currentUser = null;
-    let currentAvatarPath = null;
-    let assistantHistory = [];
-
-    function showNotice(message, isError = false) {
-      notice.textContent = message;
-      notice.style.background = isError ? "#fff0f0" : "#edf8f0";
-      notice.style.color = isError ? "#a32121" : "#176b36";
-    }
-
-    function setAvatarInitial(name) {
-      avatarInitial.textContent =
-        name.trim().charAt(0).toUpperCase() || "M";
-    }
-
-    async function displayAvatar(path) {
-      currentAvatarPath = path || null;
-      avatarImage.hidden = true;
-      avatarImage.removeAttribute("src");
-      avatarInitial.hidden = false;
-
-      if (!path || !currentUser) return;
-
-      const { data, error } = await supabase.storage
-        .from(BUCKET)
-        .createSignedUrl(path, 3600);
-
-      if (error) {
-        console.warn("Could not load profile picture:", error.message);
-        return;
-      }
-
-      avatarImage.onload = () => {
-        avatarImage.hidden = false;
-        avatarInitial.hidden = true;
-      };
-
-      avatarImage.onerror = () => {
-        avatarImage.hidden = true;
-        avatarInitial.hidden = false;
-      };
-
-      avatarImage.src = data.signedUrl;
-    }
-
-    async function showMember(user) {
-      currentUser = user;
-
-      const name = user.user_metadata?.full_name ||
-        user.email?.split("@")[0] || "Member";
-
-      document.getElementById("welcomeName").textContent = name;
-      document.getElementById("memberEmail").textContent =
-        user.email || "Email unavailable";
-
-      displayName.value = name;
-      setAvatarInitial(name);
-
-      // Personalised AI greeting appears after login
-      aiGreeting.textContent =
-        `Hello, ${name}! 👋 How may I help you today?`;
-
-      status.hidden = true;
-      dashboard.hidden = false;
-      logoutButton.hidden = false;
-
-      await displayAvatar(user.user_metadata?.avatar_path);
-    }
-
-    async function checkSession() {
-      const { data, error } = await supabase.auth.getSession();
-
-      if (error || !data.session) {
-        window.location.replace("auth.html");
-        return;
-      }
-
-      await showMember(data.session.user);
-    }
-
-    // Save display name
-    profileForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      if (!currentUser) {
-        showNotice("Your session is unavailable. Please sign in again.", true);
-        return;
-      }
-
-      const name = displayName.value.trim();
-
-      if (!name) {
-        showNotice("Please enter your display name.", true);
-        return;
-      }
-
-      saveProfile.disabled = true;
-      saveProfile.textContent = "Saving…";
-
-      try {
-        const { data, error } = await supabase.auth.updateUser({
-          data: { full_name: name }
-        });
-
-        if (error) throw error;
-
-        if (!data.user || data.user.id !== currentUser.id) {
-          throw new Error("We could not verify the updated account.");
-        }
-
-        await showMember(data.user);
-        showNotice("Your display name has been updated successfully.");
-      } catch (error) {
-        showNotice(error.message || "Could not update your name.", true);
-      } finally {
-        saveProfile.disabled = false;
-        saveProfile.textContent = "Save Name";
-      }
-    });
-
-    // Upload profile picture
-    uploadAvatar.addEventListener("click", async () => {
-      if (!currentUser) {
-        showNotice("Please sign in again before uploading.", true);
-        return;
-      }
-
-      const file = avatarFile.files?.[0];
-
-      if (!file) {
-        showNotice("Please choose a picture first.", true);
-        return;
-      }
-
-      const allowedTypes = [
-        "image/jpeg", "image/png", "image/webp"
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
-        showNotice("Please choose a JPG, PNG or WebP image.", true);
-        return;
-      }
-
-      if (file.size > 2 * 1024 * 1024) {
-        showNotice("Your picture must be 2 MB or smaller.", true);
-        return;
-      }
-
-      const extension = {
-        "image/jpeg": "jpg",
-        "image/png": "png",
-        "image/webp": "webp"
-      }[file.type];
-
-      const path = `${currentUser.id}/avatar.${extension}`;
-
-      uploadAvatar.disabled = true;
-      uploadAvatar.textContent = "Uploading…";
-
-      try {
-        const { error: uploadError } = await supabase.storage
-          .from(BUCKET)
-          .upload(path, file, {
-            upsert: true,
-            contentType: file.type,
-            cacheControl: "3600"
-          });
-
-        if (uploadError) throw uploadError;
-
-        const { data, error: updateError } =
-          await supabase.auth.updateUser({
-            data: { avatar_path: path }
-          });
-
-        if (updateError) throw updateError;
-
-        currentUser = data.user;
-        await displayAvatar(path);
-        avatarFile.value = "";
-
-        showNotice("Your profile picture was uploaded successfully.");
-      } catch (error) {
-        showNotice(
-          error.message ||
-          "Upload failed. Check your storage permissions.",
-          true
-        );
-      } finally {
-        uploadAvatar.disabled = false;
-        uploadAvatar.textContent = "Upload Picture";
-      }
-    });
-
-    // Remove profile picture
-    removeAvatar.addEventListener("click", async () => {
-      if (!currentUser) return;
-
-      if (!currentAvatarPath) {
-        showNotice("You do not have a saved profile picture to remove.", true);
-        return;
-      }
-
-      removeAvatar.disabled = true;
-      removeAvatar.textContent = "Removing…";
-
-      try {
-        const { error: deleteError } = await supabase.storage
-          .from(BUCKET)
-          .remove([currentAvatarPath]);
-
-        if (deleteError) throw deleteError;
-
-        const { data, error: updateError } =
-          await supabase.auth.updateUser({
-            data: { avatar_path: null }
-          });
-
-        if (updateError) throw updateError;
-
-        currentUser = data.user;
-        await displayAvatar(null);
-        showNotice("Your profile picture has been removed.");
-      } catch (error) {
-        showNotice(
-          error.message ||
-          "Could not remove the picture. Check storage permissions.",
-          true
-        );
-      } finally {
-        removeAvatar.disabled = false;
-        removeAvatar.textContent = "Remove Picture";
-      }
-    });
-
-    // Add a message to the AI chat
-    function addChatMessage(speaker, message) {
-      const bubble = document.createElement("div");
-      bubble.className = "chat-bubble " +
-        (speaker === "You" ? "chat-user" : "chat-ai");
-
-      const title = document.createElement("strong");
-      title.textContent = speaker;
-
-      const content = document.createElement("p");
-      content.textContent = message;
-
-      bubble.append(title, content);
-      chatMessages.appendChild(bubble);
-      bubble.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
-    }
-
-    // Ask the AI Assistant
-    askButton.addEventListener("click", async () => {
-      const question = questionInput.value.trim();
-
-      if (!question) {
-        assistantStatus.textContent = "Please type a question first.";
-        questionInput.focus();
-        return;
-      }
-
-      if (!currentUser) {
-        assistantStatus.textContent =
-          "Please sign in again to use the assistant.";
-        return;
-      }
-
-      askButton.disabled = true;
-      clearButton.disabled = true;
-      askButton.textContent = "Thinking…";
-      assistantStatus.textContent = "Connecting to your AI Assistant…";
-
-      addChatMessage("You", question);
-      questionInput.value = "";
-
-      const messagesToSend = [
-        ...assistantHistory,
-        { role: "user", content: question }
-      ];
-
-      try {
-        const response = await fetch(AI_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: messagesToSend })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.error || data.message ||
-            `Request failed (${response.status}).`
-          );
-        }
-
-        const reply = data.reply || data.response || data.message;
-
-        if (typeof reply !== "string" || !reply.trim()) {
-          throw new Error(
-            "The AI service returned no reply. Please try again."
-          );
-        }
-
-        assistantHistory.push(
-          { role: "user", content: question },
-          { role: "assistant", content: reply }
-        );
-
-        addChatMessage("AI Assistant", reply);
-        assistantStatus.textContent = "Reply received.";
-      } catch (error) {
-        console.error("AI Assistant error:", error);
-
-        assistantStatus.textContent =
-          "The assistant could not connect: " +
-          (error.message || "Please try again later.");
-      } finally {
-        askButton.disabled = false;
-        clearButton.disabled = false;
-        askButton.textContent = "Ask AI Assistant";
-      }
-    });
-
-    // Enter sends; Shift + Enter starts a new line
-    questionInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        askButton.click();
-      }
-    });
-
-    // Clear the current conversation
-    clearButton.addEventListener("click", () => {
-      assistantHistory = [];
-      chatMessages.replaceChildren();
-
-      const welcome = document.createElement("div");
-      welcome.className = "chat-bubble chat-ai";
-
-      const title = document.createElement("strong");
-      title.textContent = "AI Assistant";
-
-      const message = document.createElement("p");
-      message.textContent =
-        "Chat cleared. What would you like help with?";
-
-      welcome.append(title, message);
-      chatMessages.appendChild(welcome);
-
-      assistantStatus.textContent = "Chat cleared.";
-      questionInput.value = "";
-    });
-
-    // Log out
-    async function logOut() {
-      logoutButton.disabled = true;
-      settingsLogout.disabled = true;
-      logoutButton.textContent = "Logging out…";
-
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-        showNotice("Could not log out. Please try again.", true);
-        logoutButton.disabled = false;
-        settingsLogout.disabled = false;
-        logoutButton.textContent = "Log Out";
-        return;
-      }
-
-      window.location.replace("auth.html");
-    }
-
-    logoutButton.addEventListener("click", logOut);
-    settingsLogout.addEventListener("click", logOut);
-
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
-        window.location.replace("auth.html");
-      }
-    });
-
-    checkSession();
-  </script>
-</body>
-</html>
+  }
+
+  bubble.append(title, content);
+  chatMessages.appendChild(bubble);
+
+  bubble.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
