@@ -5,128 +5,362 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b55db">
-  <title>Member Dashboard | GlobalDev Hub</title>
+  <meta name="description" content="Your GlobalDev Hub member dashboard.">
+  <title>My Dashboard | GlobalDev Hub</title>
+
   <style>
     * { box-sizing: border-box; }
+
+    :root {
+      --blue: #0b55db;
+      --dark: #172033;
+      --muted: #667085;
+      --border: #e2e8f0;
+      --background: #f4f7fc;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f3f6fc;
-      color: #172033;
+      color: var(--dark);
+      background: var(--background);
     }
+
     header {
-      background: #fff;
-      border-bottom: 1px solid #e1e7f0;
-      padding: 16px 20px;
-    }
-    .top {
-      max-width: 1050px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .brand { color: #0b55db; font-size: 21px; font-weight: 800; }
-    .wrap { max-width: 1050px; margin: 30px auto; padding: 0 18px 35px; }
-    .welcome {
-      background: #0b55db;
-      color: white;
-      padding: 28px;
-      border-radius: 16px;
-    }
-    .welcome h1 { margin-top: 0; font-size: 28px; }
-    .welcome p { line-height: 1.6; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-top: 22px;
-    }
-    .card {
       background: white;
-      padding: 22px;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 5;
     }
-    .card h2 { font-size: 19px; margin-top: 0; }
-    .card p { color: #596579; line-height: 1.6; }
-    a.link, button {
-      display: inline-block;
-      padding: 11px 15px;
-      border: 0;
-      border-radius: 8px;
-      background: #0b55db;
-      color: white;
+
+    .topbar {
+      max-width: 1120px;
+      margin: auto;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      color: var(--blue);
+      font-size: 21px;
+      font-weight: 800;
       text-decoration: none;
+    }
+
+    button, .button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 15px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
     }
-    button.logout { background: #e9eef7; color: #172033; }
-    .email { overflow-wrap: anywhere; }
-    #status { padding: 18px; text-align: center; }
-    footer { text-align: center; color: #667085; padding: 20px; }
+
+    .primary {
+      background: var(--blue);
+      color: white;
+    }
+
+    .secondary {
+      background: #eaf0fb;
+      color: var(--dark);
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .layout {
+      max-width: 1120px;
+      margin: 26px auto;
+      padding: 0 18px 35px;
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    aside, .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+    }
+
+    aside {
+      padding: 17px;
+      align-self: start;
+    }
+
+    .nav-title {
+      margin: 5px 8px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    .nav-link {
+      display: block;
+      padding: 12px;
+      margin: 4px 0;
+      border-radius: 8px;
+      color: #344054;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: #edf3ff;
+      color: var(--blue);
+    }
+
+    main { min-width: 0; }
+
+    .welcome {
+      padding: 27px;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(125deg, #0b55db, #347cf3);
+    }
+
+    .welcome .eyebrow {
+      margin: 0 0 8px;
+      opacity: .9;
+      font-size: 13px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 10px;
+      font-size: clamp(25px, 4vw, 34px);
+    }
+
+    .welcome p {
+      margin: 0;
+      line-height: 1.7;
+      max-width: 650px;
+    }
+
+    .section-heading {
+      margin: 27px 0 13px;
+      font-size: 21px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .panel { padding: 20px; }
+
+    .panel h3 { margin: 0 0 10px; font-size: 18px; }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #eaf1ff;
+      color: var(--blue);
+      font-size: 25px;
+      font-weight: 800;
+      margin-bottom: 13px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 14px 0 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: 2px solid #a9c7ff;
+      border-color: var(--blue);
+    }
+
+    .email {
+      overflow-wrap: anywhere;
+      font-weight: 600;
+      color: var(--dark) !important;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    #status {
+      padding: 35px 10px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    #notice {
+      padding: 12px;
+      border-radius: 8px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      margin: 15px 0;
+    }
+
+    #notice:empty { display: none; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 20px;
+      font-size: 13px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: 1fr; margin-top: 16px; }
+      aside { display: flex; flex-wrap: wrap; gap: 4px; }
+      .nav-title { width: 100%; }
+      .nav-link { padding: 10px; font-size: 14px; }
+      .cards { grid-template-columns: 1fr; }
+      .welcome { padding: 22px; }
+      .topbar { padding: 13px 15px; }
+      .brand { font-size: 18px; }
+    }
   </style>
 </head>
+
 <body>
   <header>
-    <div class="top">
-      <div class="brand">G GlobalDev Hub</div>
-      <button class="logout" id="logoutButton" hidden>Log Out</button>
+    <div class="topbar">
+      <a class="brand" href="index.html">G GlobalDev Hub</a>
+      <button class="secondary" id="logoutButton" type="button" hidden>
+        Log Out
+      </button>
     </div>
   </header>
 
-  <main class="wrap">
-    <div id="status">Checking your account…</div>
+  <div id="status">Checking your account…</div>
 
-    <section id="memberArea" hidden>
-      <div class="welcome">
-        <h1>Welcome, <span id="memberName">Member</span>! 👋</h1>
-        <p>You are inside your GlobalDev Hub member area. Explore resources, learn digital skills and discover opportunities.</p>
-      </div>
+  <div class="layout" id="dashboard" hidden>
+    <aside>
+      <p class="nav-title">Member menu</p>
+      <a class="nav-link active" href="#overview">🏠 Overview</a>
+      <a class="nav-link" href="#profile">👤 My Profile</a>
+      <a class="nav-link" href="#learning">📚 Learning Guides</a>
+      <a class="nav-link" href="#tools">🧰 Digital Tools</a>
+      <a class="nav-link" href="#opportunities">🌍 Opportunities</a>
+      <a class="nav-link" href="#settings">⚙️ Account Settings</a>
+      <a class="nav-link" href="index.html">↗ Main Website</a>
+    </aside>
 
-      <div class="grid">
-        <article class="card">
-          <h2>👤 My Profile</h2>
-          <p>Your account email:</p>
+    <main>
+      <section class="welcome" id="overview">
+        <p class="eyebrow">GLOBALDEV HUB · MEMBER AREA</p>
+        <h1>Welcome, <span id="welcomeName">Member</span>! 👋</h1>
+        <p>
+          Your space to learn digital skills, explore useful resources
+          and discover online opportunities.
+        </p>
+      </section>
+
+      <h2 class="section-heading">Your member area</h2>
+
+      <div class="cards">
+        <section class="panel" id="profile">
+          <div class="profile-icon" id="avatar">M</div>
+          <h3>My Profile</h3>
+          <p>Your account email</p>
           <p class="email" id="memberEmail"></p>
-        </article>
 
-        <article class="card">
-          <h2>📚 Learning Guides</h2>
-          <p>Learn website building and useful digital skills.</p>
-          <a class="link" href="guides.html">Explore Guides</a>
-        </article>
+          <form id="profileForm">
+            <label for="displayName">Display name</label>
+            <input
+              id="displayName"
+              type="text"
+              maxlength="80"
+              autocomplete="name"
+              required
+              placeholder="Enter your name"
+            >
+            <button class="primary" id="saveProfile" type="submit">
+              Save Name
+            </button>
+          </form>
+          <p class="hint">
+            This updates your display name in your account. It does not
+            change your email address.
+          </p>
+        </section>
 
-        <article class="card">
-          <h2>🧰 Digital Tools</h2>
-          <p>Explore tools that can help with your online work.</p>
-          <a class="link" href="tools.html">Explore Tools</a>
-        </article>
+        <section class="panel" id="learning">
+          <h3>📚 Learning Guides</h3>
+          <p>Learn website building, technology basics and digital skills.</p>
+          <a class="button primary" href="guides.html">Explore Guides</a>
+        </section>
 
-        <article class="card">
-          <h2>🌍 Online Opportunities</h2>
-          <p>Explore opportunities and learn how to identify scams.</p>
-          <a class="link" href="resources.html">View Resources</a>
-        </article>
+        <section class="panel" id="tools">
+          <h3>🧰 Digital Tools</h3>
+          <p>Explore useful tools for learning and online work.</p>
+          <a class="button primary" href="tools.html">Explore Tools</a>
+        </section>
 
-        <article class="card">
-          <h2>💼 Careers</h2>
-          <p>Explore career and remote-work resources.</p>
-          <a class="link" href="careers.html">Explore Careers</a>
-        </article>
+        <section class="panel" id="opportunities">
+          <h3>🌍 Online Opportunities</h3>
+          <p>Explore resources and learn how to recognize suspicious offers.</p>
+          <a class="button primary" href="resources.html">View Resources</a>
+        </section>
 
-        <article class="card">
-          <h2>🏠 Main Website</h2>
-          <p>Return to the public GlobalDev Hub homepage.</p>
-          <a class="link" href="index.html">Visit Homepage</a>
-        </article>
+        <section class="panel">
+          <h3>💼 Careers</h3>
+          <p>Explore career information and remote-work resources.</p>
+          <a class="button primary" href="careers.html">Explore Careers</a>
+        </section>
+
+        <section class="panel">
+          <h3>🏠 Main Website</h3>
+          <p>Visit the public GlobalDev Hub homepage.</p>
+          <a class="button primary" href="index.html">Visit Homepage</a>
+        </section>
+
+        <section class="panel" id="settings">
+          <h3>⚙️ Account Settings</h3>
+          <p>Keep your login details private. You can sign out from this device.</p>
+          <button class="secondary" id="settingsLogout" type="button">
+            Log Out
+          </button>
+          <p class="hint">
+            Password changes and account deletion require additional
+            secure account-management steps.
+          </p>
+        </section>
       </div>
-    </section>
-  </main>
 
-  <footer>© <span id="year"></span> GlobalDev Hub</footer>
+      <div id="notice" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <footer>
+    © <span id="year"></span> GlobalDev Hub · Learn, grow and build.
+  </footer>
 
   <script type="module">
     import { createClient } from
@@ -138,12 +372,47 @@
     );
 
     const status = document.getElementById("status");
-    const memberArea = document.getElementById("memberArea");
+    const dashboard = document.getElementById("dashboard");
     const logoutButton = document.getElementById("logoutButton");
+    const settingsLogout = document.getElementById("settingsLogout");
+    const profileForm = document.getElementById("profileForm");
+    const displayName = document.getElementById("displayName");
+    const saveProfile = document.getElementById("saveProfile");
+    const notice = document.getElementById("notice");
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
-    async function checkMember() {
+    let currentUserId = null;
+
+    function showNotice(text, isError = false) {
+      notice.textContent = text;
+      notice.style.background = isError ? "#fff0f0" : "#edf8f0";
+      notice.style.color = isError ? "#a32121" : "#176b36";
+    }
+
+    function showMember(user) {
+      currentUserId = user.id;
+
+      const name =
+        user.user_metadata?.full_name ||
+        user.email?.split("@")[0] ||
+        "Member";
+
+      document.getElementById("welcomeName").textContent = name;
+      document.getElementById("memberEmail").textContent =
+        user.email || "Email unavailable";
+      document.getElementById("avatar").textContent =
+        name.trim().charAt(0).toUpperCase() || "M";
+
+      displayName.value = name;
+
+      status.hidden = true;
+      dashboard.hidden = false;
+      logoutButton.hidden = false;
+    }
+
+    async function checkSession() {
       const { data, error } = await supabase.auth.getSession();
 
       if (error || !data.session) {
@@ -151,34 +420,79 @@
         return;
       }
 
-      const user = data.session.user;
-      const name = user.user_metadata?.full_name || user.email?.split("@")[0] || "Member";
-
-      document.getElementById("memberName").textContent = name;
-      document.getElementById("memberEmail").textContent = user.email || "";
-      status.hidden = true;
-      memberArea.hidden = false;
-      logoutButton.hidden = false;
+      showMember(data.session.user);
     }
 
-    logoutButton.addEventListener("click", async () => {
+    profileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!currentUserId) {
+        showNotice("Your session is unavailable. Please sign in again.", true);
+        return;
+      }
+
+      const name = displayName.value.trim();
+
+      if (!name) {
+        showNotice("Please enter your display name.", true);
+        return;
+      }
+
+      saveProfile.disabled = true;
+      saveProfile.textContent = "Saving…";
+
+      try {
+        const { data, error } = await supabase.auth.updateUser({
+          data: { full_name: name }
+        });
+
+        if (error) throw error;
+
+        if (!data.user || data.user.id !== currentUserId) {
+          throw new Error("We could not verify the updated account.");
+        }
+
+        showMember(data.user);
+        showNotice("Your display name has been updated successfully.");
+      } catch (error) {
+        showNotice(
+          error.message || "Could not update your name. Please try again.",
+          true
+        );
+      } finally {
+        saveProfile.disabled = false;
+        saveProfile.textContent = "Save Name";
+      }
+    });
+
+    async function logOut() {
       logoutButton.disabled = true;
+      settingsLogout.disabled = true;
       logoutButton.textContent = "Logging out…";
 
       const { error } = await supabase.auth.signOut();
 
       if (error) {
-        status.hidden = false;
-        status.textContent = "Unable to log out. Please try again.";
+        showNotice("Could not log out. Please try again.", true);
         logoutButton.disabled = false;
+        settingsLogout.disabled = false;
         logoutButton.textContent = "Log Out";
         return;
       }
 
       window.location.replace("auth.html");
+    }
+
+    logoutButton.addEventListener("click", logOut);
+    settingsLogout.addEventListener("click", logOut);
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        window.location.replace("auth.html");
+      }
     });
 
-    checkMember();
+    checkSession();
   </script>
 </body>
 </html>
