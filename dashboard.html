@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b55db">
+  <title>Member Dashboard | GlobalDev Hub</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fc;
+      color: #172033;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e1e7f0;
+      padding: 16px 20px;
+    }
+    .top {
+      max-width: 1050px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand { color: #0b55db; font-size: 21px; font-weight: 800; }
+    .wrap { max-width: 1050px; margin: 30px auto; padding: 0 18px 35px; }
+    .welcome {
+      background: #0b55db;
+      color: white;
+      padding: 28px;
+      border-radius: 16px;
+    }
+    .welcome h1 { margin-top: 0; font-size: 28px; }
+    .welcome p { line-height: 1.6; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .card {
+      background: white;
+      padding: 22px;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+    }
+    .card h2 { font-size: 19px; margin-top: 0; }
+    .card p { color: #596579; line-height: 1.6; }
+    a.link, button {
+      display: inline-block;
+      padding: 11px 15px;
+      border: 0;
+      border-radius: 8px;
+      background: #0b55db;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.logout { background: #e9eef7; color: #172033; }
+    .email { overflow-wrap: anywhere; }
+    #status { padding: 18px; text-align: center; }
+    footer { text-align: center; color: #667085; padding: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div class="brand">G GlobalDev Hub</div>
+      <button class="logout" id="logoutButton" hidden>Log Out</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="status">Checking your account…</div>
+
+    <section id="memberArea" hidden>
+      <div class="welcome">
+        <h1>Welcome, <span id="memberName">Member</span>! 👋</h1>
+        <p>You are inside your GlobalDev Hub member area. Explore resources, learn digital skills and discover opportunities.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h2>👤 My Profile</h2>
+          <p>Your account email:</p>
+          <p class="email" id="memberEmail"></p>
+        </article>
+
+        <article class="card">
+          <h2>📚 Learning Guides</h2>
+          <p>Learn website building and useful digital skills.</p>
+          <a class="link" href="guides.html">Explore Guides</a>
+        </article>
+
+        <article class="card">
+          <h2>🧰 Digital Tools</h2>
+          <p>Explore tools that can help with your online work.</p>
+          <a class="link" href="tools.html">Explore Tools</a>
+        </article>
+
+        <article class="card">
+          <h2>🌍 Online Opportunities</h2>
+          <p>Explore opportunities and learn how to identify scams.</p>
+          <a class="link" href="resources.html">View Resources</a>
+        </article>
+
+        <article class="card">
+          <h2>💼 Careers</h2>
+          <p>Explore career and remote-work resources.</p>
+          <a class="link" href="careers.html">Explore Careers</a>
+        </article>
+
+        <article class="card">
+          <h2>🏠 Main Website</h2>
+          <p>Return to the public GlobalDev Hub homepage.</p>
+          <a class="link" href="index.html">Visit Homepage</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> GlobalDev Hub</footer>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const supabase = createClient(
+      "https://fkaunvoidromujlhoxow.supabase.co",
+      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_"
+    );
+
+    const status = document.getElementById("status");
+    const memberArea = document.getElementById("memberArea");
+    const logoutButton = document.getElementById("logoutButton");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    async function checkMember() {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error || !data.session) {
+        window.location.replace("auth.html");
+        return;
+      }
+
+      const user = data.session.user;
+      const name = user.user_metadata?.full_name || user.email?.split("@")[0] || "Member";
+
+      document.getElementById("memberName").textContent = name;
+      document.getElementById("memberEmail").textContent = user.email || "";
+      status.hidden = true;
+      memberArea.hidden = false;
+      logoutButton.hidden = false;
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      logoutButton.textContent = "Logging out…";
+
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        status.hidden = false;
+        status.textContent = "Unable to log out. Please try again.";
+        logoutButton.disabled = false;
+        logoutButton.textContent = "Log Out";
+        return;
+      }
+
+      window.location.replace("auth.html");
+    });
+
+    checkMember();
+  </script>
+</body>
+</html>
