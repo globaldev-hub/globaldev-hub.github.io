@@ -3,12 +3,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b55db">
-  <title>Sign Up or Log In | GlobalDev Hub</title>
   <meta name="description" content="Create an account or sign in to GlobalDev Hub.">
+  <title>Sign Up or Log In | GlobalDev Hub</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -19,6 +21,7 @@
       color: #172033;
       background: #f3f6fc;
     }
+
     .card {
       width: 100%;
       max-width: 440px;
@@ -27,26 +30,50 @@
       background: #fff;
       box-shadow: 0 12px 40px rgba(20, 45, 90, .10);
     }
+
     .brand {
       text-align: center;
       color: #0b55db;
-      font-size: 27px;
+      font-size: 25px;
       font-weight: 800;
     }
-    h1 { text-align: center; font-size: 25px; margin-bottom: 8px; }
-    .intro { text-align: center; color: #667085; line-height: 1.6; }
-    .tabs { display: flex; gap: 8px; margin: 24px 0; }
+
+    h1 { text-align: center; font-size: 25px; }
+
+    .intro {
+      text-align: center;
+      color: #667085;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 24px 0;
+    }
+
     .tabs button {
       flex: 1;
       padding: 12px;
       border: 1px solid #d8dfeb;
       border-radius: 9px;
-      background: #fff;
+      background: white;
       font-weight: 700;
       cursor: pointer;
     }
-    .tabs button.active { background: #0b55db; color: #fff; border-color: #0b55db; }
-    label { display: block; margin: 15px 0 7px; font-weight: 700; }
+
+    .tabs button.active {
+      background: #0b55db;
+      color: white;
+      border-color: #0b55db;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: 700;
+    }
+
     input {
       width: 100%;
       padding: 13px;
@@ -54,7 +81,12 @@
       border-radius: 9px;
       font-size: 16px;
     }
-    input:focus { outline: 2px solid #9dbdff; border-color: #0b55db; }
+
+    input:focus {
+      outline: 2px solid #9dbdff;
+      border-color: #0b55db;
+    }
+
     .submit {
       width: 100%;
       margin-top: 22px;
@@ -62,12 +94,14 @@
       border: 0;
       border-radius: 9px;
       background: #0b55db;
-      color: #fff;
+      color: white;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
     }
-    .submit:disabled { opacity: .65; cursor: wait; }
+
+    .submit:disabled { opacity: .65; }
+
     #message {
       margin-top: 16px;
       padding: 12px;
@@ -75,16 +109,34 @@
       line-height: 1.5;
       overflow-wrap: anywhere;
     }
+
     #message:empty { display: none; }
-    .back { display: block; text-align: center; margin-top: 22px; color: #0b55db; }
-    .note { font-size: 13px; color: #667085; line-height: 1.5; margin-top: 18px; }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #0b55db;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #667085;
+      line-height: 1.5;
+      margin-top: 18px;
+    }
   </style>
 </head>
+
 <body>
   <main class="card">
     <div class="brand">G GlobalDev Hub</div>
+
     <h1 id="heading">Create your account</h1>
-    <p class="intro">Join GlobalDev Hub to explore digital knowledge and resources.</p>
+
+    <p class="intro">
+      Join GlobalDev Hub to explore digital knowledge and resources.
+    </p>
 
     <div class="tabs">
       <button type="button" id="signupTab" class="active">Sign Up</button>
@@ -94,26 +146,46 @@
     <form id="authForm">
       <div id="nameGroup">
         <label for="fullName">Full name</label>
-        <input id="fullName" type="text" autocomplete="name"
-               placeholder="Enter your name" required>
+        <input
+          id="fullName"
+          type="text"
+          autocomplete="name"
+          placeholder="Enter your name"
+          required
+        >
       </div>
 
       <label for="email">Email address</label>
-      <input id="email" type="email" autocomplete="email"
-             placeholder="you@example.com" required>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="you@example.com"
+        required
+      >
 
       <label for="password">Password</label>
-      <input id="password" type="password" autocomplete="new-password"
-             placeholder="At least 6 characters" minlength="6" required>
+      <input
+        id="password"
+        type="password"
+        autocomplete="new-password"
+        placeholder="At least 6 characters"
+        minlength="6"
+        required
+      >
 
-      <button class="submit" id="submitButton" type="submit">Create Account</button>
+      <button class="submit" id="submitButton" type="submit">
+        Create Account
+      </button>
+
       <div id="message" role="status" aria-live="polite"></div>
     </form>
 
     <p class="note">
-      Keep your password private. GlobalDev Hub will never ask you to send it to another person.
-      Creating an account does not guarantee earnings.
+      Keep your password private. Creating an account does not guarantee
+      earnings. GlobalDev Hub is being developed.
     </p>
+
     <a class="back" href="index.html">← Back to GlobalDev Hub</a>
   </main>
 
@@ -121,10 +193,16 @@
     import { createClient } from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+    const SUPABASE_URL =
+      "https://fkaunvoidromujlhoxow.supabase.co";
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 
     const form = document.getElementById("authForm");
     const nameGroup = document.getElementById("nameGroup");
@@ -151,9 +229,20 @@
 
       nameGroup.hidden = !signingUp;
       fullName.required = signingUp;
-      password.autocomplete = signingUp ? "new-password" : "current-password";
-      heading.textContent = signingUp ? "Create your account" : "Welcome back";
-      submitButton.textContent = signingUp ? "Create Account" : "Log In";
+
+      password.autocomplete = signingUp
+        ? "new-password"
+        : "current-password";
+
+      password.value = "";
+      heading.textContent = signingUp
+        ? "Create your account"
+        : "Welcome back";
+
+      submitButton.textContent = signingUp
+        ? "Create Account"
+        : "Log In";
+
       signupTab.classList.toggle("active", signingUp);
       loginTab.classList.toggle("active", !signingUp);
       message.textContent = "";
@@ -162,8 +251,19 @@
     signupTab.addEventListener("click", () => setMode("signup"));
     loginTab.addEventListener("click", () => setMode("login"));
 
+    async function redirectIfSignedIn() {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (!error && data.session) {
+        window.location.replace("dashboard.html");
+      }
+    }
+
+    redirectIfSignedIn();
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+
       submitButton.disabled = true;
       showMessage("Please wait…");
 
@@ -176,17 +276,23 @@
             email: userEmail,
             password: userPassword,
             options: {
-              data: { full_name: fullName.value.trim() },
-              emailRedirectTo: "https://globaldev-hub.github.io/auth.html"
+              data: {
+                full_name: fullName.value.trim()
+              },
+              emailRedirectTo:
+                "https://globaldev-hub.github.io/auth.html"
             }
           });
 
           if (error) throw error;
 
           if (data.session) {
-            showMessage("Your account was created successfully. You are signed in.");
+            showMessage("Account created successfully. Opening your dashboard…");
+            window.location.replace("dashboard.html");
           } else {
-            showMessage("Registration started! Check your email for a confirmation link before signing in.");
+            showMessage(
+              "Registration started! Check your email and confirm your account. Then return here and log in."
+            );
           }
         } else {
           const { error } = await supabase.auth.signInWithPassword({
@@ -195,10 +301,15 @@
           });
 
           if (error) throw error;
-          showMessage("You are signed in successfully! You can now return to the homepage.");
+
+          showMessage("Login successful. Opening your dashboard…");
+          window.location.replace("dashboard.html");
         }
       } catch (error) {
-        showMessage(error.message || "Something went wrong. Please try again.", true);
+        showMessage(
+          error.message || "Something went wrong. Please try again.",
+          true
+        );
       } finally {
         submitButton.disabled = false;
       }
