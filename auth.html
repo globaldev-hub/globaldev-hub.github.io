@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1664ff">
+  <title>Sign In or Sign Up | GlobalDev Hub</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background: #f3f6fb;
+      color: #172033;
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 28px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 40px #15284a12;
+    }
+
+    .brand {
+      text-align: center;
+      color: #1664ff;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    h1 { text-align: center; font-size: 25px; }
+
+    .intro {
+      text-align: center;
+      color: #667085;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 24px 0;
+    }
+
+    button, input { font: inherit; }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #dbe2ee;
+      border-radius: 9px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .tabs button.active {
+      background: #1664ff;
+      border-color: #1664ff;
+      color: white;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccd4e0;
+      border-radius: 9px;
+    }
+
+    input:focus {
+      outline: 2px solid #b7ceff;
+      border-color: #1664ff;
+    }
+
+    .submit {
+      width: 100%;
+      padding: 14px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 9px;
+      background: #1664ff;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submit:disabled { opacity: .6; cursor: wait; }
+
+    #message {
+      margin-top: 16px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .back {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: #1664ff;
+      text-decoration: none;
+    }
+
+    .note {
+      margin-top: 20px;
+      color: #667085;
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">G GlobalDev Hub</div>
+    <h1 id="heading">Create your account</h1>
+    <p class="intro">Join GlobalDev Hub to explore digital knowledge and opportunities.</p>
+
+    <div class="tabs">
+      <button type="button" id="signupTab" class="active">Sign Up</button>
+      <button type="button" id="loginTab">Log In</button>
+    </div>
+
+    <form id="authForm">
+      <div id="nameField">
+        <label for="fullName">Your name</label>
+        <input id="fullName" type="text" autocomplete="name"
+               placeholder="Enter your name" required>
+      </div>
+
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="email"
+             placeholder="you@example.com" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="new-password"
+             minlength="8" placeholder="At least 8 characters" required>
+
+      <button class="submit" id="submitButton" type="submit">
+        Create Account
+      </button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <a class="back" href="index.html">← Back to GlobalDev Hub</a>
+    <p class="note">Never share your password with anyone. GlobalDev Hub will never ask you to send it by chat.</p>
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+
+    // Replace this placeholder with your Supabase PUBLISHABLE key.
+    const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE";
+
+    const heading = document.getElementById("heading");
+    const form = document.getElementById("authForm");
+    const nameField = document.getElementById("nameField");
+    const fullName = document.getElementById("fullName");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+    const signupTab = document.getElementById("signupTab");
+    const loginTab = document.getElementById("loginTab");
+
+    let mode = "signup";
+    let supabase = null;
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signingUp = mode === "signup";
+
+      heading.textContent = signingUp ? "Create your account" : "Welcome back";
+      nameField.hidden = !signingUp;
+      fullName.required = signingUp;
+      password.autocomplete = signingUp ? "new-password" : "current-password";
+      password.value = "";
+      submitButton.textContent = signingUp ? "Create Account" : "Log In";
+      signupTab.classList.toggle("active", signingUp);
+      loginTab.classList.toggle("active", !signingUp);
+      message.textContent = "";
+    }
+
+    signupTab.addEventListener("click", () => setMode("signup"));
+    loginTab.addEventListener("click", () => setMode("login"));
+
+    try {
+      if (SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE") {
+        message.textContent =
+          "Setup needed: add your Supabase publishable key to connect this page.";
+        submitButton.disabled = true;
+      } else {
+        supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      }
+    } catch (error) {
+      message.textContent = "Unable to initialize the account service. Please try again later.";
+      submitButton.disabled = true;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!supabase) return;
+
+      message.textContent = "";
+      submitButton.disabled = true;
+
+      try {
+        if (mode === "signup") {
+          const { data, error } = await supabase.auth.signUp({
+            email: email.value.trim(),
+            password: password.value,
+            options: {
+              data: { full_name: fullName.value.trim() },
+              emailRedirectTo: window.location.origin + "/auth.html"
+            }
+          });
+
+          if (error) throw error;
+
+          message.textContent = data.session
+            ? "Account created. You are signed in."
+            : "Account request received. Check your email for a confirmation link before signing in.";
+          form.reset();
+        } else {
+          const { error } = await supabase.auth.signInWithPassword({
+            email: email.value.trim(),
+            password: password.value
+          });
+
+          if (error) throw error;
+
+          message.textContent = "You are signed in successfully!";
+          password.value = "";
+        }
+      } catch (error) {
+        message.textContent = error.message ||
+          "Something went wrong. Please try again.";
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
