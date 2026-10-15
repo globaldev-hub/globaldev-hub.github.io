@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -354,7 +355,6 @@
 
         <section class="panel" id="ai-assistant" style="grid-column:1 / -1;">
           <h3>🤖 GlobalDev Hub AI Assistant</h3>
-
           <p id="aiGreeting">Hello! 👋 How may I help you today?</p>
 
           <div id="chatMessages" aria-live="polite">
@@ -424,14 +424,23 @@
     import { createClient } from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
+    const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+
+    // This must be your complete Supabase publishable key,
+    // or your legacy anon public key. Never use a service_role key here.
+    const SUPABASE_PUBLIC_KEY =
+      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
     const supabase = createClient(
-      "https://fkaunvoidromujlhoxow.supabase.co",
-      "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_"
+      SUPABASE_URL,
+      SUPABASE_PUBLIC_KEY
     );
 
     const BUCKET = "profile-pictures";
+
+    // Correct Cloudflare Worker address.
     const AI_ENDPOINT =
-      "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
+      "https://globaldev-memory-chat.yakubusamuel966.workers.dev/";
 
     const status = document.getElementById("status");
     const dashboard = document.getElementById("dashboard");
@@ -454,13 +463,13 @@
     const chatMessages = document.getElementById("chatMessages");
     const assistantStatus = document.getElementById("assistantStatus");
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
     let currentUser = null;
     let currentAvatarPath = null;
     let assistantHistory = [];
 
-    // Keep each member's chat separate in this browser.
     function getAssistantStorageKey() {
       return currentUser
         ? `globaldev_ai_history_v1_${currentUser.id}`
@@ -475,8 +484,6 @@
         localStorage.setItem(key, JSON.stringify(assistantHistory));
       } catch (error) {
         console.warn("Could not save AI chat history:", error);
-        assistantStatus.textContent =
-          "Chat is available, but this browser could not save its history.";
       }
     }
 
@@ -487,7 +494,8 @@
     }
 
     function setAvatarInitial(name) {
-      avatarInitial.textContent = name.trim().charAt(0).toUpperCase() || "M";
+      avatarInitial.textContent =
+        name.trim().charAt(0).toUpperCase() || "M";
     }
 
     function addChatMessage(speaker, message) {
@@ -503,7 +511,6 @@
 
       bubble.append(title, content);
       chatMessages.appendChild(bubble);
-
       bubble.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
@@ -549,7 +556,8 @@
         );
       }
 
-      assistantStatus.textContent = "Your saved conversation has been restored.";
+      assistantStatus.textContent =
+        "Your saved conversation has been restored.";
     }
 
     async function displayAvatar(path) {
@@ -607,17 +615,23 @@
     }
 
     async function checkSession() {
-      const { data, error } = await supabase.auth.getSession();
+      try {
+        const { data, error } = await supabase.auth.getSession();
 
-      if (error || !data.session) {
-        window.location.replace("auth.html");
-        return;
+        if (error || !data.session) {
+          window.location.replace("auth.html");
+          return;
+        }
+
+        await showMember(data.session.user);
+      } catch (error) {
+        console.error("Session check failed:", error);
+        status.textContent =
+          "Could not check your login. Refresh the page and try again.";
       }
-
-      await showMember(data.session.user);
     }
 
-    // Update the member's display name.
+    // Update display name.
     profileForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
@@ -767,7 +781,7 @@
       }
     });
 
-    // Ask the AI assistant and retain successful exchanges.
+    // Send a question to the authenticated AI service.
     askButton.addEventListener("click", async () => {
       const question = questionInput.value.trim();
 
@@ -797,13 +811,26 @@
       ];
 
       try {
+        const { data: sessionData, error: sessionError } =
+          await supabase.auth.getSession();
+
+        if (sessionError || !sessionData.session?.access_token) {
+          throw new Error(
+            "Your login session has expired. Please sign out and sign in again."
+          );
+        }
+
         const response = await fetch(AI_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":
+              `Bearer ${sessionData.session.access_token}`
+          },
           body: JSON.stringify({ messages: messagesToSend })
         });
 
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
           throw new Error(
@@ -825,7 +852,6 @@
           { role: "assistant", content: reply }
         );
 
-        // Prevent unlimited local growth.
         assistantHistory = assistantHistory.slice(-100);
         saveAssistantHistory();
 
@@ -851,7 +877,7 @@
       }
     });
 
-    // Clear the visible chat and the saved conversation.
+    // Clear the visible chat and saved conversation.
     clearButton.addEventListener("click", () => {
       assistantHistory = [];
 
@@ -882,17 +908,18 @@
       settingsLogout.disabled = true;
       logoutButton.textContent = "Logging out…";
 
-      const { error } = await supabase.auth.signOut();
+      try {
+        const { error } = await supabase.auth.signOut();
 
-      if (error) {
-        showNotice("Could not log out. Please try again.", true);
+        if (error) throw error;
+
+        window.location.replace("auth.html");
+      } catch (error) {
+        showNotice(error.message || "Could not log out. Please try again.", true);
         logoutButton.disabled = false;
         settingsLogout.disabled = false;
         logoutButton.textContent = "Log Out";
-        return;
       }
-
-      window.location.replace("auth.html");
     }
 
     logoutButton.addEventListener("click", logOut);
