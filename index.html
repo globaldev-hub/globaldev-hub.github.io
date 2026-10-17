@@ -2,98 +2,299 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GlobalDev Hub - Digital Knowledge & Resources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0755e9">
+  <meta name="description" content="Discover practical technology guides, free digital tools, learning resources and online opportunities at GlobalDev Hub.">
+  <title>GlobalDev Hub | Digital Knowledge &amp; Resources</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand">
-        <div class="brand-mark">G</div>
-        <div class="brand-copy">
-          <strong>GlobalDev Hub</strong>
-          <small>Digital Knowledge & Resources</small>
-        </div>
-      </a>
-      <nav class="main-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="tools.html">Tools</a>
-        <a href="guides.html">Guides</a>
-        <a href="careers.html">Careers</a>
-        <a href="resources.html">Resources</a>
-        <a href="blog.html">Blog</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="header-actions">
-        <a href="contact.html" class="button button-primary button-small">Give Feedback</a>
-      </div>
-    </div>
-  </header>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">G</span>
+      <span class="brand-copy">
+        <strong>GlobalDev Hub</strong>
+        <small>Digital Knowledge &amp; Resources</small>
+      </span>
+    </a>
 
-  <!-- HERO SECTION -->
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html" class="active">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social-toolkit.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="auth.html" class="button button-outline button-small">Log In</a>
+      <a href="auth.html" class="button button-primary button-small">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main>
   <section class="hero">
     <div class="hero-shade"></div>
     <div class="container hero-content">
       <span class="eyebrow hero-eyebrow">Welcome to GlobalDev Hub</span>
-      <h1>Digital Knowledge & <span>Real Opportunities</span></h1>
-      <p class="hero-description">Discover practical technology guides, free digital tools, learning resources and online opportunity information. Learn, grow and build your digital future with GlobalDev Hub.</p>
+      <h1>Digital Knowledge &amp; <span>Real Opportunities</span></h1>
+      <p class="hero-description">
+        Discover practical technology guides, free digital tools, learning
+        resources and online opportunity information. Learn, grow and build
+        your digital future with GlobalDev Hub.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px">
+        <a href="guides.html" class="button button-primary">Explore Guides</a>
+        <a href="auth.html" class="button button-light">Get Started</a>
+      </div>
+
+      <form class="search-form" id="site-search" role="search">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="search-query" type="search"
+          placeholder="Search guides, tools, articles or resources..."
+          aria-label="Search website" required>
+        <button class="button button-primary" type="submit">Search</button>
+      </form>
+      <p id="search-message" class="search-message" aria-live="polite"></p>
+
+      <div class="popular-topics">
+        <strong>Start learning today:</strong>
+        <a href="article-website-basics.html">Website basics</a>
+        <a href="guides.html">Digital skills</a>
+        <a href="tools.html">Free tools</a>
+        <a href="careers.html">Career guidance</a>
+      </div>
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
-  <main class="section-space">
+  <section class="quick-links">
+    <div class="container quick-grid">
+      <a class="quick-item" href="guides.html">
+        <span class="quick-icon">🧭</span>
+        <strong>Beginner Guides</strong>
+        <small>Learn step by step</small>
+      </a>
+      <a class="quick-item" href="tools.html">
+        <span class="quick-icon">🧰</span>
+        <strong>Digital Tools</strong>
+        <small>Discover useful resources</small>
+      </a>
+      <a class="quick-item" href="careers.html">
+        <span class="quick-icon">💼</span>
+        <strong>Career Resources</strong>
+        <small>Explore opportunities</small>
+      </a>
+      <a class="quick-item" href="article-first-website.html">
+        <span class="quick-icon">🌐</span>
+        <strong>Build a Website</strong>
+        <small>Start creating online</small>
+      </a>
+      <a class="quick-item" href="resources.html">
+        <span class="quick-icon">📚</span>
+        <strong>Learning Resources</strong>
+        <small>Grow your knowledge</small>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-space latest-section">
     <div class="container">
       <div class="section-heading">
         <div>
-          <h2>Start Learning Today</h2>
-          <p>Explore practical guides and tools to support your digital journey.</p>
+          <span class="eyebrow">Explore our platform</span>
+          <h2>Useful Resources for Your Next Step</h2>
+          <p>Build your knowledge, discover useful tools and grow your digital skills.</p>
         </div>
       </div>
 
       <div class="service-grid">
-        <div class="service-card">
-          <div class="service-icon">🧭</div>
-          <div>
+        <a class="service-card" href="guides.html">
+          <span class="service-icon">🧭</span>
+          <span>
             <strong>Guides for Beginners</strong>
-            <small>Understand technology through step-by-step guides.</small>
-          </div>
+            <small>Understand technology through clear, step-by-step guides.</small>
+          </span>
           <span class="service-arrow">→</span>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🧰</div>
-          <div>
-            <strong>Digital Tools</strong>
-            <small>Discover helpful tools for getting work done.</small>
-          </div>
-          <span class="service-arrow">→</span>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">💼</div>
-          <div>
-            <strong>Careers & Opportunities</strong>
-            <small>Explore career resources and remote-work guidance.</small>
-          </div>
-          <span class="service-arrow">→</span>
-        </div>
-      </div>
-    </div>
-  </main>
+        </a>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <p>&copy; 2026 GlobalDev Hub. All rights reserved.</p>
-        <div>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms & Conditions</a>
-        </div>
+        <a class="service-card" href="tools.html">
+          <span class="service-icon">🧰</span>
+          <span>
+            <strong>Digital Tools</strong>
+            <small>Discover helpful tools for learning and getting work done.</small>
+          </span>
+          <span class="service-arrow">→</span>
+        </a>
+
+        <a class="service-card" href="careers.html">
+          <span class="service-icon">💼</span>
+          <span>
+            <strong>Careers &amp; Opportunities</strong>
+            <small>Explore career resources and remote-work guidance.</small>
+          </span>
+          <span class="service-arrow">→</span>
+        </a>
+
+        <a class="service-card" href="article-first-website.html">
+          <span class="service-icon">🌐</span>
+          <span>
+            <strong>Build Your First Website</strong>
+            <small>Learn website basics and how to publish online.</small>
+          </span>
+          <span class="service-arrow">→</span>
+        </a>
+
+        <a class="service-card" href="assistant.html">
+          <span class="service-icon">🤖</span>
+          <span>
+            <strong>AI Assistant</strong>
+            <small>Get help with digital skills and website building.</small>
+          </span>
+          <span class="service-arrow">→</span>
+        </a>
+
+        <a class="service-card" href="resources.html">
+          <span class="service-icon">📚</span>
+          <span>
+            <strong>Learning Resources</strong>
+            <small>Find practical articles and learning materials.</small>
+          </span>
+          <span class="service-arrow">→</span>
+        </a>
       </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="section-space about-services" id="about">
+    <div class="container about-services-grid">
+      <div class="about-copy">
+        <span class="eyebrow">About GlobalDev Hub</span>
+        <h2>A Practical Starting Point for Your Digital Journey</h2>
+        <p>
+          GlobalDev Hub brings together digital knowledge, technology
+          resources, educational guides and information about online
+          opportunities. Our goal is to make learning easier, explain
+          technology clearly and help people discover useful resources.
+        </p>
+        <ul class="check-list">
+          <li>Beginner-friendly technology guides</li>
+          <li>Useful digital tools and learning resources</li>
+          <li>Website-building and publishing guidance</li>
+          <li>Career and online opportunity information</li>
+        </ul>
+        <a href="contact.html" class="button button-primary">Learn More</a>
+      </div>
+
+      <div class="about-copy">
+        <span class="eyebrow">Learn at your own pace</span>
+        <h2>Take Your Next Step</h2>
+        <p>
+          Explore website basics, beginner-friendly digital skills, free
+          tools and career information. Choose the resources that fit
+          your goals and learn one step at a time.
+        </p>
+        <ul class="check-list">
+          <li><a href="article-website-basics.html">Website basics →</a></li>
+          <li><a href="guides.html">Digital skills →</a></li>
+          <li><a href="article-github-pages.html">Publishing with GitHub Pages →</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="container newsletter">
+      <div class="newsletter-copy">
+        <span class="newsletter-icon">💬</span>
+        <div>
+          <h2>Help Us Improve GlobalDev Hub</h2>
+          <p>
+            Tell us what you want to learn and how we can make the platform
+            more useful. You can share feedback without logging in.
+          </p>
+        </div>
+      </div>
+      <a href="contact.html" class="button button-light">Give Feedback</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <a href="index.html" class="brand footer-brand">
+        <span class="brand-mark">G</span>
+        <span class="brand-copy">
+          <strong>GlobalDev Hub</strong>
+          <small>Digital Knowledge &amp; Resources</small>
+        </span>
+      </a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="guides.html">Guides</a>
+        <a href="tools.html">Tools</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Give Feedback</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 GlobalDev Hub. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const form = document.getElementById("site-search");
+  const input = document.getElementById("search-query");
+  const message = document.getElementById("search-message");
+
+  const pages = [
+    { name: "Guides for Beginners", terms: "guides beginner digital skills learn technology", url: "guides.html" },
+    { name: "Digital Tools", terms: "tools free digital resources", url: "tools.html" },
+    { name: "Careers & Opportunities", terms: "careers jobs remote work opportunities", url: "careers.html" },
+    { name: "Learning Resources", terms: "resources articles learning", url: "resources.html" },
+    { name: "Build Your First Website", terms: "website web development github pages", url: "article-first-website.html" },
+    { name: "AI Assistant", terms: "ai assistant help digital skills", url: "assistant.html" },
+    { name: "Contact & Feedback", terms: "contact feedback help", url: "contact.html" }
+  ];
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const query = input.value.trim().toLowerCase();
+
+    if (!query) {
+      message.textContent = "Enter a topic to search.";
+      return;
+    }
+
+    const matches = pages.filter(function (page) {
+      return (page.name + " " + page.terms).toLowerCase().includes(query);
+    });
+
+    if (matches.length === 1) {
+      window.location.href = matches[0].url;
+    } else if (matches.length > 1) {
+      message.textContent = "Matching pages: " + matches.map(function (page) {
+        return page.name;
+      }).join(", ") + ". Try a more specific search.";
+    } else {
+      message.textContent = "No exact match found. Try Guides, Tools, Careers, Website, or Resources.";
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
