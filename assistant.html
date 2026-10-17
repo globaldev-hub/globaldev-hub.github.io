@@ -1,543 +1,332 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#1664ff">
-<title>Member Dashboard | GlobalDev Hub</title>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-a{color:#165be8;text-decoration:none}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.topbar{background:#fff;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 10px #17203310}
-.brand{font-size:19px;font-weight:bold;color:#1558dc}
-.top-actions{display:flex;align-items:center;gap:10px}
-.btn{border:0;border-radius:8px;padding:11px 15px;background:#1664ff;color:white;font-weight:bold}
-.btn.secondary{background:#e7edf7;color:#24344f}
-.btn.danger{background:#b42318}
-button:disabled{opacity:.6;cursor:not-allowed}
-.layout{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1200px;margin:auto;gap:22px;padding:22px}
-.sidebar,.panel,.welcome{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 20px #17203308}
-.sidebar a{display:block;padding:12px;border-radius:8px;color:#26354d;margin:3px 0}
-.sidebar a:hover{background:#edf3ff}
-main{min-width:0}
-.welcome{background:linear-gradient(120deg,#1558dc,#4787ff);color:#fff;margin-bottom:20px}
-.welcome p{line-height:1.6}
-h1{font-size:25px;margin:0 0 10px}
-h2{font-size:20px;margin-top:0}
-h3{font-size:17px}
-.muted{color:#64748b;font-size:14px;line-height:1.6}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-bottom:20px}
-.card{background:#fff;border:1px solid #e5eaf2;border-radius:12px;padding:18px}
-.card p{color:#64748b;line-height:1.6}
-.profile-row{display:flex;align-items:center;gap:15px;margin-bottom:18px}
-.profile-icon{height:76px;width:76px;flex:0 0 76px;border-radius:50%;background:#e1ebff;color:#1558dc;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:bold;overflow:hidden}
-.profile-icon img{width:100%;height:100%;object-fit:cover;display:none}
-.field{display:block;margin:14px 0}
-.field span{display:block;font-size:14px;font-weight:bold;margin-bottom:7px}
-.field input,.chat-input{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:12px;background:#fff;color:#172033}
-#notice,#profileStatus,#assistantStatus{font-size:14px;line-height:1.5;overflow-wrap:anywhere}
-#notice,#profileStatus{color:#1558dc}
-.assistant{border:1px solid #dbe6ff;overflow:hidden}
-.assistant-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
-.bot-icon{height:48px;width:48px;flex:0 0 48px;border-radius:50%;background:#1664ff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px}
-.online{font-size:12px;color:#087443}
-.chat-greeting{background:#edf4ff;border-radius:10px;padding:15px;line-height:1.7;margin:14px 0}
-#chatMessages{display:flex;flex-direction:column;gap:12px;margin:15px 0}
-.message{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;padding:13px;border-radius:10px;max-width:100%}
-.message.user{background:#e7efff;align-self:flex-end}
-.message.assistant{background:#f1f5f9;align-self:stretch;border:0}
-.chat-input{min-height:85px;resize:vertical}
-.chat-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-footer{text-align:center;color:#64748b;padding:25px;font-size:13px}
-@media(max-width:760px){
- .layout{grid-template-columns:1fr;padding:12px}
- .sidebar{padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
- .sidebar h3{grid-column:1/-1}
- .cards{grid-template-columns:1fr}
- .topbar{padding:13px}
- h1{font-size:22px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b55db">
+  <meta name="description" content="Discover practical technology guides, free digital tools, digital skills and online opportunity resources at GlobalDev Hub.">
+  <title>GlobalDev Hub | Digital Knowledge &amp; Resources</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <style>
+    .account-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .account-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 17px;
+      border: 1px solid #0b55db;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .account-login {
+      color: #0b55db;
+      background: #fff;
+    }
+    .account-signup {
+      color: #fff;
+      background: #0b55db;
+    }
+    .account-actions a:hover {
+      opacity: .86;
+    }
+    @media (max-width: 850px) {
+      .account-actions {
+        margin: 12px 0;
+      }
+    }
+  </style>
 </head>
-
 <body>
-<header class="topbar">
-  <a class="brand" href="index.html">G GlobalDev Hub</a>
-  <div class="top-actions">
-    <span id="headerName">Member</span>
-    <button class="btn secondary" id="logoutButton" type="button">Log Out</button>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="GlobalDev Hub home">
+        <span class="brand-mark">G</span>
+        <span class="brand-copy">
+          <strong>GlobalDev Hub</strong>
+          <small>Digital Knowledge &amp; Resources</small>
+        </span>
+      </a>
 
-<div class="layout" id="dashboard" hidden>
-  <aside class="sidebar">
-    <h3>Member menu</h3>
-    <a href="#overview">🏠 Overview</a>
-    <a href="#profile">👤 My Profile</a>
-    <a href="#ai-assistant">🤖 AI Assistant</a>
-    <a href="guides.html">📚 Learning Guides</a>
-    <a href="tools.html">🧰 Digital Tools</a>
-    <a href="resources.html">🌍 Opportunities</a>
-    <a href="careers.html">💼 Careers</a>
-    <a href="#settings">⚙️ Account Settings</a>
-    <a href="index.html">↗ Main Website</a>
-  </aside>
+      <button class="menu-toggle" id="menuToggle"
+        aria-label="Open navigation" aria-expanded="false"
+        aria-controls="mainNav">☰</button>
 
-  <main id="overview">
-    <section class="welcome">
-      <p><strong>GLOBALDEV HUB · MEMBER AREA</strong></p>
-      <h1>Hello, <span id="welcomeName">Member</span>! 👋</h1>
-      <p>Your space to learn digital skills, explore useful resources, discover online opportunities, and get help from your AI assistant.</p>
-    </section>
+      <nav class="main-nav" id="mainNav">
+        <a class="active" href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="guides.html">Guides</a>
+        <a href="social.html">Social Toolkit</a>
+        <a href="careers.html">Careers</a>
+        <a href="resources.html">Resources</a>
+        <a href="#latest">Blog</a>
+        <a class="mobile-contact" href="contact.html">Contact</a>
+      </nav>
 
-    <section class="panel" id="profile">
-      <h2>My Profile</h2>
-      <div class="profile-row">
-        <div class="profile-icon" id="avatar">
-          <span id="avatarInitial">M</span>
-          <img id="avatarImage" alt="Your profile picture">
+      <div class="header-actions">
+        <a class="button button-outline button-small" href="contact.html">Contact</a>
+        <a class="button button-primary button-small" href="guides.html">Get Started</a>
+      </div>
+    </div>
+
+    <div class="container account-actions" aria-label="Member account">
+      <a class="account-login" href="auth.html">Log In</a>
+      <a class="account-signup" href="auth.html?mode=signup">Sign Up</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-shade"></div>
+      <div class="container hero-content">
+        <span class="eyebrow hero-eyebrow">WELCOME TO GLOBALDEV HUB</span>
+        <h1>Digital Knowledge<br>&amp; <span>Real Opportunities</span></h1>
+        <p class="hero-description">
+          Discover practical technology guides, free digital tools,
+          learning resources and online opportunity information.
+          Learn, grow and build your digital future with GlobalDev Hub.
+        </p>
+
+        <form class="search-form" id="siteSearch" role="search">
+          <label class="sr-only" for="searchInput">Search the website</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search"
+            placeholder="Search guides, tools, articles or resources..."
+            autocomplete="off">
+          <button class="button button-primary" type="submit">Search</button>
+        </form>
+        <p id="searchMessage" class="search-message" aria-live="polite"></p>
+
+        <div class="popular-topics">
+          <strong>Popular:</strong>
+          <a href="guides.html">Web Development</a>
+          <a href="resources.html">Online Opportunities</a>
+          <a href="article-digital-skills.html">Digital Skills</a>
+          <a href="careers.html">Remote Careers</a>
+          <a href="tools.html">Tech Tools</a>
         </div>
-        <div>
-          <strong id="memberEmail">Loading account...</strong>
-          <p class="muted">Manage your profile information and picture.</p>
+
+        <div class="hero-location">
+          <span class="location-script">Lagos</span>
+          <span>⌖ Nigeria</span>
         </div>
       </div>
-
-      <form id="profileForm">
-        <label class="field">
-          <span>Display name</span>
-          <input id="displayName" maxlength="80" required>
-        </label>
-        <button class="btn" id="saveProfile" type="submit">Save Profile</button>
-      </form>
-
-      <hr>
-      <label class="field">
-        <span>Choose a profile picture (JPG, PNG or WebP; maximum 2 MB)</span>
-        <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp">
-      </label>
-      <div class="chat-actions">
-        <button class="btn" id="uploadAvatar" type="button">Upload Picture</button>
-        <button class="btn secondary" id="removeAvatar" type="button">Remove Picture</button>
-      </div>
-      <p id="profileStatus" role="status" aria-live="polite"></p>
     </section>
 
-    <section class="panel assistant" id="ai-assistant" style="margin-top:20px">
-      <div class="assistant-head">
-        <div class="bot-icon" aria-hidden="true">🤖</div>
-        <div>
-          <h2 style="margin:0">GlobalDev Hub AI Assistant</h2>
-          <div class="online">● Ready to help</div>
+    <section class="quick-links" aria-label="Explore GlobalDev Hub">
+      <div class="container quick-grid">
+        <a class="quick-item" href="guides.html">
+          <span class="quick-icon">▤</span>
+          <strong>Learn</strong>
+          <small>Step-by-step guides<br>and tutorials</small>
+        </a>
+        <a class="quick-item" href="tools.html">
+          <span class="quick-icon">⚒</span>
+          <strong>Get Tools</strong>
+          <small>Useful online tools<br>and resources</small>
+        </a>
+        <a class="quick-item" href="careers.html">
+          <span class="quick-icon">▣</span>
+          <strong>Find Opportunities</strong>
+          <small>Career resources and<br>online work information</small>
+        </a>
+        <a class="quick-item" href="social.html">
+          <span class="quick-icon">♧</span>
+          <strong>Social Toolkit</strong>
+          <small>Connect, create and<br>share online</small>
+        </a>
+        <a class="quick-item" href="article-digital-skills.html">
+          <span class="quick-icon">◇</span>
+          <strong>Grow Your Skills</strong>
+          <small>Build digital skills<br>for the future</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="about-services section-space">
+      <div class="container about-services-grid">
+        <div class="about-copy">
+          <span class="eyebrow">ABOUT GLOBALDEV HUB</span>
+          <h2>Knowledge that helps you move forward.</h2>
+          <p>
+            Welcome to GlobalDev Hub! This platform brings together
+            practical digital knowledge, technology resources,
+            educational guides and information about online opportunities.
+          </p>
+          <p>
+            Our goal is to make learning easier, explain technology clearly
+            and help people discover useful resources for their digital journey.
+          </p>
+          <ul class="check-list">
+            <li>Friendly and easy-to-understand guides</li>
+            <li>Practical learning resources</li>
+            <li>Honest information about opportunities</li>
+            <li>Continuous learning and improvement</li>
+          </ul>
+          <a class="button button-primary" href="about.html">Learn More →</a>
+        </div>
+
+        <div class="feature-photo">
+          <img
+            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+            alt="Laptop and workspace for learning digital skills"
+            loading="lazy">
+          <div class="photo-caption">
+            <strong>Learn. Build. Grow.</strong>
+            <span>Your digital journey starts here.</span>
+          </div>
+        </div>
+
+        <div class="services">
+          <span class="eyebrow">EXPLORE OUR PLATFORM</span>
+          <h2>What You'll Find</h2>
+          <div class="service-grid">
+            <a class="service-card" href="resources.html">
+              <span class="service-icon">₦</span>
+              <span><strong>Online Opportunities</strong><small>Assess opportunities and learn to avoid scams.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+            <a class="service-card" href="guides.html">
+              <span class="service-icon">&lt;/&gt;</span>
+              <span><strong>Technology Guides</strong><small>Clear tutorials for beginners.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+            <a class="service-card" href="article-digital-skills.html">
+              <span class="service-icon">◇</span>
+              <span><strong>Digital Skills</strong><small>Build knowledge step by step.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+            <a class="service-card" href="tools.html">
+              <span class="service-icon">⚙</span>
+              <span><strong>Tools &amp; Resources</strong><small>Explore useful digital resources.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+            <a class="service-card" href="careers.html">
+              <span class="service-icon">▣</span>
+              <span><strong>Career Information</strong><small>Explore jobs and career advice.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+            <a class="service-card" href="#latest">
+              <span class="service-icon">▤</span>
+              <span><strong>Blog &amp; Updates</strong><small>Read practical articles and tips.</small></span>
+              <span class="service-arrow">›</span>
+            </a>
+          </div>
         </div>
       </div>
-
-      <div class="chat-greeting">
-        <strong>Hello, <span id="assistantName">Member</span>! 👋</strong><br>
-        How may I help you today? Ask me about digital skills, learning resources, useful tools, online opportunities, or using GlobalDev Hub.
-      </div>
-
-      <div id="chatMessages" aria-live="polite">
-        <div class="message assistant">Welcome! Type your question below to start chatting with the GlobalDev Hub AI Assistant.</div>
-      </div>
-
-      <label class="field">
-        <span>Your message</span>
-        <textarea class="chat-input" id="question" placeholder="How may I help you today?" aria-label="Your message"></textarea>
-      </label>
-
-      <div class="chat-actions">
-        <button class="btn" id="askButton" type="button">Send Message</button>
-        <button class="btn secondary" id="clearButton" type="button">Clear Chat</button>
-      </div>
-      <p id="assistantStatus" role="status" aria-live="polite">Ready when you are.</p>
     </section>
 
-    <section style="margin-top:20px">
-      <h2>Your resources</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>📚 Learning Guides</h3>
-          <p>Explore educational guides and learn useful digital skills.</p>
-          <a href="guides.html">Open Learning Guides →</a>
-        </article>
-        <article class="card">
-          <h3>🧰 Digital Tools</h3>
-          <p>Discover resources to help you work and learn online.</p>
-          <a href="tools.html">Explore Digital Tools →</a>
-        </article>
-        <article class="card">
-          <h3>🌍 Opportunities</h3>
-          <p>Explore online opportunities and helpful resources.</p>
-          <a href="resources.html">View Opportunities →</a>
-        </article>
-        <article class="card">
-          <h3>💼 Careers</h3>
-          <p>Find career information and explore work-related resources.</p>
-          <a href="careers.html">Explore Careers →</a>
-        </article>
+    <section class="latest-section section-space" id="latest">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">LEARN SOMETHING NEW</span>
+            <h2>From Our Guides &amp; Articles</h2>
+            <p>Practical knowledge to help you take your next step.</p>
+          </div>
+          <a class="text-link" href="guides.html">Explore All Guides →</a>
+        </div>
+
+        <div class="article-grid">
+          <article class="article-card" data-search="website build first website web development">
+            <a href="article-first-website.html" class="article-image">
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="People working together on technology" loading="lazy">
+              <span class="article-tag tag-blue">GUIDES</span>
+            </a>
+            <div class="article-body">
+              <h3><a href="article-first-website.html">How to Build Your First Website</a></h3>
+              <p>A beginner-friendly starting point for your web journey.</p>
+              <div class="article-meta"><span>Beginner guide</span><a href="article-first-website.html">Read More →</a></div>
+            </div>
+          </article>
+
+          <article class="article-card" data-search="github pages hosting publish website html css">
+            <a href="article-github-pages.html" class="article-image">
+              <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Code displayed on a computer screen" loading="lazy">
+              <span class="article-tag tag-green">WEB SKILLS</span>
+            </a>
+            <div class="article-body">
+              <h3><a href="article-github-pages.html">Publish a Website with GitHub Pages</a></h3>
+              <p>Understand the basics of publishing a website online.</p>
+              <div class="article-meta"><span>Web development</span><a href="article-github-pages.html">Read More →</a></div>
+            </div>
+          </article>
+
+          <article class="article-card" data-search="digital skills online learning career remote work">
+            <a href="article-digital-skills.html" class="article-image">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Person learning with a laptop" loading="lazy">
+              <span class="article-tag tag-purple">DIGITAL SKILLS</span>
+            </a>
+            <div class="article-body">
+              <h3><a href="article-digital-skills.html">Essential Digital Skills for Beginners</a></h3>
+              <p>Explore skills you can develop through consistent practice.</p>
+              <div class="article-meta"><span>Learning</span><a href="article-digital-skills.html">Read More →</a></div>
+            </div>
+          </article>
+
+          <article class="article-card" data-search="website basics free tools resources technology">
+            <a href="article-website-basics.html" class="article-image">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Laptop on a developer workspace" loading="lazy">
+              <span class="article-tag tag-orange">TECHNOLOGY</span>
+            </a>
+            <div class="article-body">
+              <h3><a href="article-website-basics.html">Website Basics Everyone Can Learn</a></h3>
+              <p>Get familiar with the building blocks of a website.</p>
+              <div class="article-meta"><span>Technology</span><a href="article-website-basics.html">Read More →</a></div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="panel" id="settings">
-      <h2>Account Settings</h2>
-      <p class="muted">Manage your profile above. Use the password recovery option on the login page if you need to reset your password.</p>
-      <button class="btn danger" id="settingsLogout" type="button">Log Out</button>
+    <section class="newsletter-section">
+      <div class="container newsletter">
+        <div class="newsletter-copy">
+          <span class="newsletter-icon">↗</span>
+          <div>
+            <h2>Ready to Build Your Digital Future?</h2>
+            <p>Explore new guides, tools and learning resources from GlobalDev Hub.</p>
+          </div>
+        </div>
+        <a class="button button-light" href="resources.html">Explore Resources →</a>
+      </div>
     </section>
-
-    <p id="notice" role="status" aria-live="polite"></p>
   </main>
-</div>
 
-<footer>© <span id="currentYear"></span> GlobalDev Hub · Learn, grow and discover.</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-"use strict";
-
-// Supabase project configuration
-const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
-const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
-const BUCKET = "profile-pictures";
-
-// Your existing AI assistant Cloudflare Worker
-const workerUrl = "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
-const storageKey = "globaldevHubAssistantHistory";
-
-const { createClient } = supabase;
-const client = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const el = id => document.getElementById(id);
-el("currentYear").textContent = new Date().getFullYear();
-
-let currentUser = null;
-let conversationHistory = loadHistory();
-let sendingMessage = false;
-
-function setProfileStatus(message) {
-  el("profileStatus").textContent = message;
-}
-
-function setAssistantStatus(message) {
-  el("assistantStatus").textContent = message;
-}
-
-function loadHistory() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter(item =>
-      item &&
-      ["user", "assistant"].includes(item.role) &&
-      typeof item.content === "string"
-    ).slice(-20);
-  } catch {
-    return [];
-  }
-}
-
-function saveHistory() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(conversationHistory));
-  } catch {
-    setAssistantStatus("Your answer is visible, but this browser could not save the conversation.");
-  }
-}
-
-function renderHistory() {
-  const box = el("chatMessages");
-  box.replaceChildren();
-
-  if (!conversationHistory.length) {
-    const welcome = document.createElement("div");
-    welcome.className = "message assistant";
-    welcome.textContent = "Welcome! Type your question below to start chatting with the GlobalDev Hub AI Assistant.";
-    box.appendChild(welcome);
-    return;
-  }
-
-  conversationHistory.forEach(item => {
-    const message = document.createElement("div");
-    message.className = "message " + item.role;
-    message.textContent = item.content;
-    box.appendChild(message);
-  });
-
-  box.scrollTop = box.scrollHeight;
-}
-
-function addMessage(role, content) {
-  conversationHistory.push({ role, content });
-  conversationHistory = conversationHistory.slice(-20);
-  renderHistory();
-  saveHistory();
-}
-
-function showMember(user) {
-  currentUser = user;
-  const name = user.user_metadata?.full_name?.trim() || "Member";
-
-  el("headerName").textContent = name;
-  el("welcomeName").textContent = name;
-  el("assistantName").textContent = name;
-  el("memberEmail").textContent = user.email || "Email unavailable";
-  el("displayName").value = name === "Member" ? "" : name;
-  el("avatarInitial").textContent = name.charAt(0).toUpperCase();
-  el("dashboard").hidden = false;
-
-  displayAvatar(user.user_metadata?.avatar_path || null);
-}
-
-async function displayAvatar(path) {
-  el("avatarImage").style.display = "none";
-  el("avatarImage").removeAttribute("src");
-  el("avatarInitial").style.display = "block";
-
-  if (!path) return;
-
-  const { data, error } = await client.storage
-    .from(BUCKET)
-    .createSignedUrl(path, 3600);
-
-  if (error || !data?.signedUrl) return;
-
-  el("avatarImage").onload = () => {
-    el("avatarImage").style.display = "block";
-    el("avatarInitial").style.display = "none";
-  };
-  el("avatarImage").onerror = () => {
-    el("avatarImage").style.display = "none";
-    el("avatarInitial").style.display = "block";
-  };
-  el("avatarImage").src = data.signedUrl;
-}
-
-async function checkSession() {
-  const { data, error } = await client.auth.getSession();
-
-  if (error || !data.session) {
-    window.location.replace("auth.html");
-    return;
-  }
-
-  showMember(data.session.user);
-  renderHistory();
-}
-
-el("profileForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!currentUser) return;
-
-  const name = el("displayName").value.trim();
-  if (!name) {
-    setProfileStatus("Please enter a display name.");
-    return;
-  }
-
-  el("saveProfile").disabled = true;
-  setProfileStatus("Saving profile...");
-
-  try {
-    const { data, error } = await client.auth.updateUser({
-      data: { full_name: name }
-    });
-    if (error) throw error;
-
-    showMember(data.user);
-    setProfileStatus("Your profile was updated successfully.");
-  } catch (error) {
-    setProfileStatus("Could not save profile: " + error.message);
-  } finally {
-    el("saveProfile").disabled = false;
-  }
-});
-
-el("uploadAvatar").addEventListener("click", async () => {
-  if (!currentUser) return;
-
-  const file = el("avatarFile").files[0];
-  if (!file) {
-    setProfileStatus("Please choose a picture first.");
-    return;
-  }
-
-  const allowed = ["image/jpeg", "image/png", "image/webp"];
-  if (!allowed.includes(file.type)) {
-    setProfileStatus("Please choose a JPG, PNG, or WebP image.");
-    return;
-  }
-
-  if (file.size > 2 * 1024 * 1024) {
-    setProfileStatus("Your picture must be 2 MB or smaller.");
-    return;
-  }
-
-  const extension = ({
-    "image/jpeg": "jpg",
-    "image/png": "png",
-    "image/webp": "webp"
-  })[file.type];
-
-  const path = currentUser.id + "/avatar." + extension;
-  el("uploadAvatar").disabled = true;
-  setProfileStatus("Uploading picture...");
-
-  try {
-    const { error: uploadError } = await client.storage
-      .from(BUCKET)
-      .upload(path, file, { upsert: true, contentType: file.type });
-
-    if (uploadError) throw uploadError;
-
-    const { data, error } = await client.auth.updateUser({
-      data: { avatar_path: path }
-    });
-    if (error) throw error;
-
-    showMember(data.user);
-    el("avatarFile").value = "";
-    setProfileStatus("Profile picture uploaded successfully.");
-  } catch (error) {
-    setProfileStatus("Picture upload failed: " + error.message);
-  } finally {
-    el("uploadAvatar").disabled = false;
-  }
-});
-
-el("removeAvatar").addEventListener("click", async () => {
-  if (!currentUser) return;
-
-  const path = currentUser.user_metadata?.avatar_path;
-  if (!path) {
-    setProfileStatus("You have no uploaded profile picture to remove.");
-    return;
-  }
-
-  el("removeAvatar").disabled = true;
-  setProfileStatus("Removing picture...");
-
-  try {
-    const { error: deleteError } = await client.storage
-      .from(BUCKET)
-      .remove([path]);
-
-    if (deleteError) throw deleteError;
-
-    const { data, error } = await client.auth.updateUser({
-      data: { avatar_path: null }
-    });
-    if (error) throw error;
-
-    showMember(data.user);
-    setProfileStatus("Profile picture removed.");
-  } catch (error) {
-    setProfileStatus("Could not remove picture: " + error.message);
-  } finally {
-    el("removeAvatar").disabled = false;
-  }
-});
-
-async function logOut() {
-  const { error } = await client.auth.signOut();
-  if (error) {
-    el("notice").textContent = "Could not log out: " + error.message;
-    return;
-  }
-  window.location.replace("auth.html");
-}
-
-el("logoutButton").addEventListener("click", logOut);
-el("settingsLogout").addEventListener("click", logOut);
-
-async function askAssistant() {
-  if (sendingMessage) return;
-
-  const question = el("question").value.trim();
-  if (!question) {
-    setAssistantStatus("Please type a message first.");
-    el("question").focus();
-    return;
-  }
-
-  sendingMessage = true;
-  el("askButton").disabled = true;
-  setAssistantStatus("Thinking...");
-
-  try {
-    const messagesToSend = [
-      ...conversationHistory,
-      { role: "user", content: question }
-    ].slice(-20);
-
-    const response = await fetch(workerUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: messagesToSend })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "The assistant request failed.");
-    }
-
-    const answer = data.reply || data.response || data.message;
-    if (typeof answer !== "string" || !answer.trim()) {
-      throw new Error("The assistant returned no answer.");
-    }
-
-    conversationHistory.push(
-      { role: "user", content: question },
-      { role: "assistant", content: answer }
-    );
-    conversationHistory = conversationHistory.slice(-20);
-
-    el("question").value = "";
-    renderHistory();
-    saveHistory();
-    setAssistantStatus("Answer received.");
-    el("question").focus();
-  } catch (error) {
-    setAssistantStatus("Connection error: " + error.message);
-  } finally {
-    sendingMessage = false;
-    el("askButton").disabled = false;
-  }
-}
-
-el("askButton").addEventListener("click", askAssistant);
-
-el("clearButton").addEventListener("click", () => {
-  conversationHistory = [];
-  try {
-    localStorage.removeItem(storageKey);
-  } catch {}
-  renderHistory();
-  setAssistantStatus("Conversation cleared.");
-  el("question").focus();
-});
-
-el("question").addEventListener("keydown", event => {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    askAssistant();
-  }
-});
-
-client.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_OUT" || !session) {
-    window.location.replace("auth.html");
-    return;
-  }
-
-  if (session.user) showMember(session.user);
-});
-
-checkSession();
-</script>
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <a class="brand footer-brand" href="index.html">
+        <span class="brand-mark">G</span>
+        <span class="brand-copy"><strong>GlobalDev Hub</strong><small>Digital Knowledge &amp; Resources</small></span>
+      </a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="guides.html">Guides</a>
+        <a href="careers.html">Careers</a>
+        <a href="resources.html">Resources</a>
+        <a href="#latest">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="currentYear">2026</span> GlobalDev Hub. All rights reserved.</span>
+      <div>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
