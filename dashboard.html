@@ -1,8 +1,9 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b55db">
 <meta name="description" content="Your GlobalDev Hub member dashboard.">
 <title>My Dashboard | GlobalDev Hub</title>
@@ -72,21 +73,684 @@ aside{display:flex;flex-wrap:wrap;gap:4px}
   </div>
 </header>
 
-<div id="status">Checking your account…</div>
+<div id="status" role="status" aria-live="polite">Loading account services…</div>
 
 <div class="layout" id="dashboard" hidden>
-  <aside>
-    <p class="nav-title">Member menu</p>
-    <a class="nav-link active" href="#overview">🏠 Overview</a>
-    <a class="nav-link" href="#profile">👤 My Profile</a>
-    <a class="nav-link" href="#ai-assistant">🤖 AI Assistant</a>
-    <a class="nav-link" href="#learning">📚 Learning Guides</a>
-    <a class="nav-link" href="#tools">🧰 Digital Tools</a>
-    <a class="nav-link" href="#opportunities">🌍 Opportunities</a>
-    <a class="nav-link" href="#careers">💼 Careers</a>
-    <a class="nav-link" href="#settings">⚙️ Account Settings</a>
-    <a class="nav-link" href="index.html">↗ Main Website</a>
-  </aside>
+<aside>
+<p class="nav-title">Member menu</p>
+<a class="nav-link active" href="#overview">🏠 Overview</a>
+<a class="nav-link" href="#profile">👤 My Profile</a>
+<a class="nav-link" href="#ai-assistant">🤖 AI Assistant</a>
+<a class="nav-link" href="#learning">📚 Learning Guides</a>
+<a class="nav-link" href="#tools">🧰 Digital Tools</a>
+<a class="nav-link" href="#opportunities">🌍 Opportunities</a>
+<a class="nav-link" href="#careers">💼 Careers</a>
+<a class="nav-link" href="#settings">⚙️ Account Settings</a>
+<a class="nav-link" href="index.html">↗ Main Website</a>
+</aside>
 
-  <main>
-    <section class
+<main>
+<section class="welcome" id="overview">
+<p class="eyebrow">GLOBALDEV HUB · MEMBER AREA</p>
+<h1>Welcome, <span id="welcomeName">Member</span>! 👋</h1>
+<p>Your space to learn digital skills, explore useful resources and discover online opportunities.</p>
+</section>
+
+<h2 class="section-heading">Your member area</h2>
+<div class="cards">
+
+<section class="panel" id="profile">
+<div class="profile-icon">
+<span id="avatarInitial">M</span>
+<img id="avatarImage" alt="Your profile picture" hidden>
+</div>
+<h3>My Profile</h3>
+<p>Your account email</p>
+<p class="email" id="memberEmail"></p>
+<form id="profileForm">
+<label for="displayName">Display name</label>
+<input id="displayName" type="text" maxlength="80" autocomplete="name" required placeholder="Enter your name">
+<button class="primary" id="saveProfile" type="submit">Save Name</button>
+</form>
+<hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+<h3>Profile Picture</h3>
+<p>Choose a picture for your member profile. Maximum size: 2 MB.</p>
+<label for="avatarFile">Choose picture</label>
+<input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+<button class="primary" id="uploadAvatar" type="button">Upload Picture</button>
+<button class="secondary" id="removeAvatar" type="button">Remove Picture</button>
+</div>
+<p class="hint">Accepted formats: JPG, PNG and WebP. Your picture is stored in your account folder.</p>
+</section>
+
+<section class="panel" id="ai-assistant" style="grid-column:1/-1">
+<h3>🤖 GlobalDev Hub AI Assistant</h3>
+<p id="aiGreeting">Hello! 👋 How may I help you today?</p>
+<div id="chatMessages" aria-live="polite"></div>
+<label for="question">Your question</label>
+<textarea id="question" maxlength="3000" placeholder="Ask a question, or choose a picture below..."></textarea>
+<label for="aiImageFile">Add a picture for the AI to analyze</label>
+<input id="aiImageFile" type="file" accept="image/jpeg,image/png,image/webp">
+<div id="aiImagePreviewWrap" hidden style="margin-top:12px;padding:12px;border:1px solid var(--border);border-radius:10px">
+<p id="aiImageName" class="hint">Picture selected</p>
+<img id="aiImagePreview" alt="Preview of picture for AI analysis">
+<button class="secondary" id="removeAIImage" type="button">Remove Picture</button>
+</div>
+<p class="hint">Choose a JPG, PNG or WebP image. Pictures are compressed in your browser before being sent for analysis.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+<button class="primary" id="askButton" type="button">Ask AI Assistant</button>
+<button class="secondary" id="clearButton" type="button">Clear Chat</button>
+</div>
+<p id="assistantStatus" class="hint" role="status" aria-live="polite">Ready to help.</p>
+</section>
+
+<section class="panel" id="learning">
+<h3>📚 Learning Guides</h3>
+<p>Learn website building, technology basics and digital skills.</p>
+<a class="button primary" href="guides.html">Explore Guides</a>
+</section>
+<section class="panel" id="tools">
+<h3>🧰 Digital Tools</h3>
+<p>Explore useful tools for learning and online work.</p>
+<a class="button primary" href="tools.html">Explore Tools</a>
+</section>
+<section class="panel" id="opportunities">
+<h3>🌍 Online Opportunities</h3>
+<p>Explore resources and learn how to recognize suspicious offers.</p>
+<a class="button primary" href="resources.html">View Resources</a>
+</section>
+<section class="panel" id="careers">
+<h3>💼 Careers</h3>
+<p>Explore career information and remote-work resources.</p>
+<a class="button primary" href="careers.html">Explore Careers</a>
+</section>
+<section class="panel">
+<h3>🏠 Main Website</h3>
+<p>Visit the public GlobalDev Hub homepage.</p>
+<a class="button primary" href="index.html">Visit Homepage</a>
+</section>
+<section class="panel" id="settings">
+<h3>⚙️ Account Settings</h3>
+<p>Keep your login details private. You can sign out from this device.</p>
+<button class="secondary" id="settingsLogout" type="button">Log Out</button>
+<p class="hint">Password changes and account deletion require additional secure account-management steps.</p>
+</section>
+</div>
+<div id="notice" role="status" aria-live="polite"></div>
+</main>
+</div>
+<footer>© <span id="year"></span> GlobalDev Hub · Learn, grow and build.</footer>
+
+<!-- Load Supabase as a regular browser script, not an ES module. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"
+onerror="document.getElementById('status').textContent='The account library could not load. Check your internet connection and refresh this page.'"></script>
+
+<script>
+if (!window.supabase || typeof window.supabase.createClient !== "function") {
+  document.getElementById("status").textContent =
+    "The account library could not load. Check your internet connection and refresh this page.";
+  throw new Error("Supabase browser library unavailable");
+}
+
+const { createClient } = window.supabase;
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_PUBLIC_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+const BUCKET = "profile-pictures";
+const AI_ENDPOINT = "https://mute-frost-a9f8.yakubusamuel966.workers.dev/";
+const $ = id => document.getElementById(id);
+
+const status = $("status");
+const dashboard = $("dashboard");
+const logoutButton = $("logoutButton");
+const settingsLogout = $("settingsLogout");
+const profileForm = $("profileForm");
+const displayName = $("displayName");
+const saveProfile = $("saveProfile");
+const avatarFile = $("avatarFile");
+const uploadAvatar = $("uploadAvatar");
+const removeAvatar = $("removeAvatar");
+const avatarImage = $("avatarImage");
+const avatarInitial = $("avatarInitial");
+const notice = $("notice");
+const aiGreeting = $("aiGreeting");
+const questionInput = $("question");
+const askButton = $("askButton");
+const clearButton = $("clearButton");
+const chatMessages = $("chatMessages");
+const assistantStatus = $("assistantStatus");
+const aiImageFile = $("aiImageFile");
+const aiImagePreviewWrap = $("aiImagePreviewWrap");
+const aiImagePreview = $("aiImagePreview");
+const aiImageName = $("aiImageName");
+const removeAIImage = $("removeAIImage");
+
+$("year").textContent = new Date().getFullYear();
+
+let currentUser = null;
+let currentAvatarPath = null;
+let assistantHistory = [];
+let selectedImageData = null;
+
+function storageKey() {
+  return currentUser ? `globaldev_ai_history_v1_${currentUser.id}` : null;
+}
+
+function saveAssistantHistory() {
+  const key = storageKey();
+  if (!key) return;
+  try {
+    localStorage.setItem(key, JSON.stringify(assistantHistory));
+  } catch (error) {
+    console.warn("Could not save chat history", error);
+  }
+}
+
+function showNotice(message, isError = false) {
+  notice.textContent = message;
+  notice.style.background = isError ? "#fff0f0" : "#edf8f0";
+  notice.style.color = isError ? "#a32121" : "#176b36";
+}
+
+function addChatMessage(speaker, message) {
+  const bubble = document.createElement("div");
+  bubble.className = "chat-bubble " + (speaker === "You" ? "chat-user" : "chat-ai");
+  const title = document.createElement("strong");
+  title.textContent = speaker;
+  const content = document.createElement("p");
+  content.textContent = message;
+  bubble.append(title, content);
+  chatMessages.appendChild(bubble);
+  bubble.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function restoreAssistantHistory() {
+  assistantHistory = [];
+  try {
+    const raw = localStorage.getItem(storageKey());
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (Array.isArray(parsed)) {
+      assistantHistory = parsed.filter(item =>
+        item &&
+        ["user", "assistant"].includes(item.role) &&
+        typeof item.content === "string"
+      ).slice(-100);
+    }
+  } catch (error) {
+    console.warn("Could not restore chat history", error);
+  }
+
+  chatMessages.replaceChildren();
+
+  if (!assistantHistory.length) {
+    addChatMessage(
+      "AI Assistant",
+      "Welcome! Ask me about digital skills, website building, online opportunities, or attach a picture for analysis."
+    );
+    assistantStatus.textContent = "Ready to help.";
+    return;
+  }
+
+  for (const item of assistantHistory) {
+    addChatMessage(item.role === "user" ? "You" : "AI Assistant", item.content);
+  }
+  assistantStatus.textContent = "Your saved conversation has been restored.";
+}
+
+function setInitial(name) {
+  avatarInitial.textContent = name.trim().charAt(0).toUpperCase() || "M";
+}
+
+async function displayAvatar(path) {
+  currentAvatarPath = path || null;
+  avatarImage.hidden = true;
+  avatarImage.removeAttribute("src");
+  avatarInitial.hidden = false;
+
+  if (!path || !currentUser) return;
+
+  try {
+    const { data, error } = await supabase.storage
+      .from(BUCKET)
+      .createSignedUrl(path, 3600);
+
+    if (error) throw error;
+
+    avatarImage.onload = () => {
+      avatarImage.hidden = false;
+      avatarInitial.hidden = true;
+    };
+    avatarImage.onerror = () => {
+      avatarImage.hidden = true;
+      avatarInitial.hidden = false;
+    };
+    avatarImage.src = data.signedUrl;
+  } catch (error) {
+    console.warn("Could not load profile picture:", error.message);
+  }
+}
+
+async function showMember(user) {
+  currentUser = user;
+  const name = user.user_metadata?.full_name || user.email?.split("@")[0] || "Member";
+
+  $("welcomeName").textContent = name;
+  $("memberEmail").textContent = user.email || "Email unavailable";
+  displayName.value = name;
+  setInitial(name);
+  aiGreeting.textContent = `Hello, ${name}! 👋 How may I help you today?`;
+
+  status.hidden = true;
+  dashboard.hidden = false;
+  logoutButton.hidden = false;
+
+  restoreAssistantHistory();
+  await displayAvatar(user.user_metadata?.avatar_path);
+}
+
+/* Avoid an endless loading screen if Supabase never responds. */
+async function checkSession() {
+  let timeoutId;
+
+  try {
+    const timeout = new Promise((_, reject) => {
+      timeoutId = setTimeout(() => {
+        reject(new Error(
+          "The account check took too long. Check your connection, then refresh this page."
+        ));
+      }, 12000);
+    });
+
+    const result = await Promise.race([
+      supabase.auth.getSession(),
+      timeout
+    ]);
+
+    clearTimeout(timeoutId);
+
+    if (result.error) throw result.error;
+
+    if (!result.data.session) {
+      status.textContent = "No active login session was found. Redirecting to sign in…";
+      window.location.replace("auth.html");
+      return;
+    }
+
+    await showMember(result.data.session.user);
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error("Session check failed:", error);
+    status.textContent = error.message ||
+      "Could not check your login. Check your connection and refresh.";
+  }
+}
+
+/* Save profile name. */
+profileForm.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!currentUser) {
+    showNotice("Please sign in again.", true);
+    return;
+  }
+
+  const name = displayName.value.trim();
+  if (!name) {
+    showNotice("Please enter your display name.", true);
+    return;
+  }
+
+  saveProfile.disabled = true;
+  saveProfile.textContent = "Saving…";
+
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      data: { full_name: name }
+    });
+
+    if (error) throw error;
+    if (!data.user || data.user.id !== currentUser.id) {
+      throw new Error("Could not verify the updated account.");
+    }
+
+    await showMember(data.user);
+    showNotice("Your display name has been updated.");
+  } catch (error) {
+    showNotice(error.message || "Could not update your name.", true);
+  } finally {
+    saveProfile.disabled = false;
+    saveProfile.textContent = "Save Name";
+  }
+});
+
+/* Upload profile picture. */
+uploadAvatar.addEventListener("click", async () => {
+  if (!currentUser) {
+    showNotice("Please sign in again.", true);
+    return;
+  }
+
+  const file = avatarFile.files?.[0];
+  if (!file) {
+    showNotice("Please choose a picture first.", true);
+    return;
+  }
+
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    showNotice("Choose a JPG, PNG or WebP image.", true);
+    return;
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    showNotice("Your profile picture must be 2 MB or smaller.", true);
+    return;
+  }
+
+  const extension = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp"
+  }[file.type];
+
+  const path = `${currentUser.id}/avatar.${extension}`;
+  uploadAvatar.disabled = true;
+  uploadAvatar.textContent = "Uploading…";
+
+  try {
+    const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
+      upsert: true,
+      contentType: file.type,
+      cacheControl: "3600"
+    });
+
+    if (error) throw error;
+
+    const { data, error: updateError } = await supabase.auth.updateUser({
+      data: { avatar_path: path }
+    });
+
+    if (updateError) throw updateError;
+
+    currentUser = data.user;
+    await displayAvatar(path);
+    avatarFile.value = "";
+    showNotice("Your profile picture was uploaded successfully.");
+  } catch (error) {
+    showNotice(error.message || "Upload failed. Check your storage permissions.", true);
+  } finally {
+    uploadAvatar.disabled = false;
+    uploadAvatar.textContent = "Upload Picture";
+  }
+});
+
+/* Remove profile picture. */
+removeAvatar.addEventListener("click", async () => {
+  if (!currentUser) return;
+
+  if (!currentAvatarPath) {
+    showNotice("You do not have a saved profile picture.", true);
+    return;
+  }
+
+  removeAvatar.disabled = true;
+
+  try {
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .remove([currentAvatarPath]);
+
+    if (error) throw error;
+
+    const { data, error: updateError } = await supabase.auth.updateUser({
+      data: { avatar_path: null }
+    });
+
+    if (updateError) throw updateError;
+
+    currentUser = data.user;
+    await displayAvatar(null);
+    showNotice("Your profile picture has been removed.");
+  } catch (error) {
+    showNotice(error.message || "Could not remove the picture.", true);
+  } finally {
+    removeAvatar.disabled = false;
+  }
+});
+
+function clearAIImage() {
+  selectedImageData = null;
+  aiImageFile.value = "";
+  aiImagePreview.removeAttribute("src");
+  aiImagePreviewWrap.hidden = true;
+  aiImageName.textContent = "";
+}
+
+/* Prepare and compress the picture before sending it to the AI. */
+aiImageFile.addEventListener("change", async () => {
+  const file = aiImageFile.files?.[0];
+  if (!file) return;
+
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    assistantStatus.textContent = "Please choose a JPG, PNG or WebP image.";
+    clearAIImage();
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    assistantStatus.textContent = "Choose a picture smaller than 10 MB.";
+    clearAIImage();
+    return;
+  }
+
+  assistantStatus.textContent = "Preparing your picture…";
+
+  try {
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("Could not read picture."));
+      reader.readAsDataURL(file);
+    });
+
+    const img = await new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error("Could not open picture."));
+      image.src = dataUrl;
+    });
+
+    let side = 1200;
+    let quality = 0.82;
+    let output = "";
+
+    for (let i = 0; i < 6; i++) {
+      const scale = Math.min(1, side / Math.max(img.naturalWidth, img.naturalHeight));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Image processing is unavailable.");
+
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      output = canvas.toDataURL("image/jpeg", quality);
+
+      if (output.length <= 2800000) break;
+
+      side = Math.round(side * 0.8);
+      quality = Math.max(0.42, quality - 0.07);
+    }
+
+    if (!output || output.length > 2900000) {
+      throw new Error("Picture is too large to send. Please choose another.");
+    }
+
+    selectedImageData = output;
+    aiImagePreview.src = output;
+    aiImageName.textContent = file.name + " — ready to send";
+    aiImagePreviewWrap.hidden = false;
+    assistantStatus.textContent = "Picture ready. Type a question or send it for analysis.";
+  } catch (error) {
+    clearAIImage();
+    assistantStatus.textContent = error.message || "Could not prepare picture.";
+  }
+});
+
+removeAIImage.addEventListener("click", () => {
+  clearAIImage();
+  assistantStatus.textContent = "Picture removed.";
+});
+
+/* Send the question and optional picture to the existing Worker. */
+askButton.addEventListener("click", async () => {
+  const question = questionInput.value.trim();
+  const image = selectedImageData;
+  const displayQuestion = question || "Please analyze this image.";
+
+  if (!question && !image) {
+    assistantStatus.textContent = "Please type a question or choose a picture first.";
+    questionInput.focus();
+    return;
+  }
+
+  if (!currentUser) {
+    assistantStatus.textContent = "Please sign in again to use the assistant.";
+    return;
+  }
+
+  askButton.disabled = true;
+  clearButton.disabled = true;
+  askButton.textContent = "Thinking…";
+  assistantStatus.textContent = image
+    ? "Sending your picture for analysis…"
+    : "Connecting to your AI Assistant…";
+
+  addChatMessage("You", displayQuestion + (image ? "\n📷 Image attached" : ""));
+
+  const messagesToSend = [
+    ...assistantHistory,
+    { role: "user", content: displayQuestion }
+  ];
+
+  try {
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.getSession();
+
+    if (sessionError || !sessionData.session?.access_token) {
+      throw new Error("Your login session has expired. Please sign in again.");
+    }
+
+    const response = await fetch(AI_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${sessionData.session.access_token}`
+      },
+      body: JSON.stringify({
+        messages: messagesToSend,
+        image: image || null
+      })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || data.message || `Request failed (${response.status}).`
+      );
+    }
+
+    const reply = data.reply || data.response || data.message;
+
+    if (typeof reply !== "string" || !reply.trim()) {
+      throw new Error("The AI service returned no reply.");
+    }
+
+    assistantHistory.push(
+      {
+        role: "user",
+        content: displayQuestion + (image ? "\n[Image attached]" : "")
+      },
+      { role: "assistant", content: reply }
+    );
+
+    assistantHistory = assistantHistory.slice(-100);
+    saveAssistantHistory();
+    addChatMessage("AI Assistant", reply);
+    questionInput.value = "";
+
+    if (image) clearAIImage();
+
+    assistantStatus.textContent = image
+      ? "Picture analyzed. Reply received."
+      : "Reply received.";
+  } catch (error) {
+    console.error("AI Assistant error", error);
+    assistantStatus.textContent =
+      "The assistant could not complete your request: " +
+      (error.message || "Please try again later.");
+  } finally {
+    askButton.disabled = false;
+    clearButton.disabled = false;
+    askButton.textContent = "Ask AI Assistant";
+  }
+});
+
+questionInput.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    askButton.click();
+  }
+});
+
+clearButton.addEventListener("click", () => {
+  assistantHistory = [];
+  const key = storageKey();
+
+  if (key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  chatMessages.replaceChildren();
+  addChatMessage("AI Assistant", "Chat cleared. What would you like help with?");
+  assistantStatus.textContent = "Chat cleared.";
+  questionInput.value = "";
+  clearAIImage();
+});
+
+async function logOut() {
+  logoutButton.disabled = true;
+  settingsLogout.disabled = true;
+  logoutButton.textContent = "Logging out…";
+
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    window.location.replace("auth.html");
+  } catch (error) {
+    showNotice(error.message || "Could not log out. Try again.", true);
+    logoutButton.disabled = false;
+    settingsLogout.disabled = false;
+    logoutButton.textContent = "Log Out";
+  }
+}
+
+logoutButton.addEventListener("click", logOut);
+settingsLogout.addEventListener("click", logOut);
+
+/* Only redirect for an actual sign-out event. */
+supabase.auth.onAuthStateChange(event => {
+  if (event === "SIGNED_OUT") {
+    window.location.replace("auth.html");
+  }
+});
+
+checkSession();
+</script>
+</body>
+</html>
