@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,8 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Music — GlobalDev Hub</title>
-
-<meta name="description" content="Listen to music online through an authorized music player on GlobalDev Hub.">
+<meta name="description" content="Listen to music from Spotify, YouTube, Apple Music, SoundCloud, Audiomack, Deezer and TIDAL on GlobalDev Hub.">
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
@@ -17,9 +17,7 @@
 
 <header class="site-header">
   <div class="wrap nav">
-
     <a class="brand" href="index.html">GlobalDev Hub</a>
-
     <nav>
       <a href="index.html">Home</a>
       <a href="tools.html">Tools</a>
@@ -28,23 +26,18 @@
       <a href="careers.html">Careers</a>
       <a href="resources.html">Resources</a>
     </nav>
-
   </div>
 </header>
 
 <main>
 
 <section class="hero wrap">
-
   <p class="eyebrow">MUSIC • STREAMING</p>
-
   <h1>Listen to music.</h1>
-
   <p class="lead">
-    Stream music online through an authorized music player.
+    Explore music from your favorite streaming platforms.
     GlobalDev Hub does not host or distribute copyrighted music.
   </p>
-
 </section>
 
 <section class="wrap content-grid">
@@ -52,102 +45,92 @@
   <div>
 
     <article class="card">
-
       <p class="tag">MUSIC PLAYER</p>
-
-      <h2>Spotify streaming</h2>
+      <h2>Multi-platform music player</h2>
 
       <p>
-        Paste a public Spotify track, album, or playlist link below
-        to create an authorized Spotify player.
+        Choose a music platform, paste a public song, album
+        or playlist link, and load its authorized player.
       </p>
 
-      <label for="spotify-url">
-        Spotify link
-      </label>
+      <label for="platform">Choose music platform</label>
+      <select
+        id="platform"
+        style="width:100%;padding:12px;margin-top:8px;margin-bottom:14px;"
+      >
+        <option value="spotify">Spotify</option>
+        <option value="youtube">YouTube</option>
+        <option value="youtube-music">YouTube Music</option>
+        <option value="apple">Apple Music</option>
+        <option value="soundcloud">SoundCloud</option>
+        <option value="audiomack">Audiomack</option>
+        <option value="deezer">Deezer</option>
+        <option value="tidal">TIDAL</option>
+      </select>
 
+      <label for="music-url">Music link</label>
       <input
-        id="spotify-url"
+        id="music-url"
         type="url"
-        placeholder="Paste Spotify link here"
+        placeholder="Paste your music link here"
         style="width:100%;padding:12px;margin-top:8px;margin-bottom:12px;"
       >
 
-      <button
-        id="load-button"
-        type="button"
-      >
+      <button id="load-button" type="button">
         Load music
       </button>
 
-      <p id="status" aria-live="polite">
-        Ready.
+      <p id="status" aria-live="polite">Ready.</p>
+
+      <div id="player" style="margin-top:20px;"></div>
+
+      <p id="open-link" style="display:none;margin-top:12px;">
+        <a id="external-link" href="#" target="_blank" rel="noopener noreferrer">
+          Open this music on its platform
+        </a>
       </p>
-
-      <div
-        id="player"
-        style="margin-top:20px;"
-      ></div>
-
     </article>
 
     <article class="card">
-
       <p class="tag">CREATOR RESPECT</p>
-
       <h2>Listen legally</h2>
-
       <p>
         GlobalDev Hub does not upload, copy, or distribute
         copyrighted songs without the required rights or permission.
       </p>
-
       <p>
         Music is streamed through the authorized music service
         instead of being stored on this website.
       </p>
-
     </article>
 
   </div>
 
   <aside class="sidebar">
-
     <div class="card small">
-
       <h3>About Music</h3>
-
       <p>
-        This is a separate music section of GlobalDev Hub.
-        The main website remains focused on technology,
-        learning, tools, and digital skills.
+        Discover music through popular streaming platforms.
+        The main GlobalDev Hub website remains focused on
+        technology, learning, tools, and digital skills.
       </p>
-
     </div>
 
     <div class="adbox">
-
       <span>ADVERTISEMENT</span>
-
       <p>
         Ad space — connect an approved advertising network only
         after your site meets its requirements.
       </p>
-
     </div>
-
   </aside>
 
 </section>
-
 </main>
 
 <footer>
-
   <div class="wrap footer-inner">
-
     <span>© 2026 GlobalDev Hub</span>
-
     <span>
       <a href="privacy.html">Privacy</a>
       ·
@@ -155,85 +138,278 @@
       ·
       <a href="terms.html">Terms</a>
     </span>
-
   </div>
-
 </footer>
 
 <script>
-const spotifyInput = document.getElementById("spotify-url");
+const platformSelect = document.getElementById("platform");
+const musicInput = document.getElementById("music-url");
 const loadButton = document.getElementById("load-button");
 const player = document.getElementById("player");
-const status = document.getElementById("status");
+const statusText = document.getElementById("status");
+const openLink = document.getElementById("open-link");
+const externalLink = document.getElementById("external-link");
+
+function clearPlayer() {
+  player.replaceChildren();
+  openLink.style.display = "none";
+  externalLink.removeAttribute("href");
+}
+
+function makeFrame(src, title, height = 352) {
+  const frame = document.createElement("iframe");
+  frame.src = src;
+  frame.width = "100%";
+  frame.height = String(height);
+  frame.title = title;
+  frame.loading = "lazy";
+  frame.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+  frame.allowFullscreen = true;
+  frame.style.border = "0";
+  frame.style.borderRadius = "12px";
+  player.replaceChildren(frame);
+}
+
+function showExternalLink(url) {
+  externalLink.href = url;
+  openLink.style.display = "block";
+}
+
+function parseMusicLink(platform, rawUrl) {
+  const url = new URL(rawUrl);
+  const host = url.hostname.toLowerCase().replace(/^www\./, "");
+  const path = url.pathname.split("/").filter(Boolean);
+
+  if (platform === "spotify") {
+    if (host !== "open.spotify.com" && host !== "spotify.link") {
+      throw new Error("Please use a Spotify link.");
+    }
+
+    if (host === "spotify.link") {
+      throw new Error("Please use the full open.spotify.com sharing link.");
+    }
+
+    const allowed = ["track", "album", "playlist", "episode", "show"];
+    if (path.length < 2 || !allowed.includes(path[0])) {
+      throw new Error("Unsupported Spotify link.");
+    }
+
+    return {
+      embed: "https://open.spotify.com/embed/" +
+        path[0] + "/" + encodeURIComponent(path[1]),
+      title: "Spotify music player",
+      height: 352
+    };
+  }
+
+  if (platform === "youtube" || platform === "youtube-music") {
+    const allowedHosts = platform === "youtube"
+      ? ["youtube.com", "m.youtube.com", "youtu.be", "youtube-nocookie.com"]
+      : ["music.youtube.com", "youtube.com", "youtu.be"];
+
+    if (!allowedHosts.includes(host)) {
+      throw new Error("Please use a link from the selected YouTube platform.");
+    }
+
+    let videoId = "";
+    let playlistId = url.searchParams.get("list");
+
+    if (host === "youtu.be") {
+      videoId = path[0] || "";
+    } else if (path[0] === "watch") {
+      videoId = url.searchParams.get("v") || "";
+    } else if (path[0] === "shorts" || path[0] === "embed") {
+      videoId = path[1] || "";
+    }
+
+    if (videoId && /^[a-zA-Z0-9_-]{6,}$/.test(videoId)) {
+      return {
+        embed: "https://www.youtube-nocookie.com/embed/" +
+          encodeURIComponent(videoId),
+        title: "YouTube music player",
+        height: 352
+      };
+    }
+
+    if (playlistId && /^[a-zA-Z0-9_-]+$/.test(playlistId)) {
+      return {
+        embed: "https://www.youtube-nocookie.com/embed/videoseries?list=" +
+          encodeURIComponent(playlistId),
+        title: "YouTube playlist player",
+        height: 352
+      };
+    }
+
+    throw new Error("Could not find a video or playlist in that link.");
+  }
+
+  if (platform === "apple") {
+    if (host !== "music.apple.com") {
+      throw new Error("Please use an Apple Music link.");
+    }
+
+    return {
+      embed: "https://embed.music.apple.com" +
+        url.pathname + url.search,
+      title: "Apple Music player",
+      height: 450
+    };
+  }
+
+  if (platform === "soundcloud") {
+    if (host !== "soundcloud.com" && host !== "on.soundcloud.com") {
+      throw new Error("Please use a SoundCloud link.");
+    }
+
+    if (host === "on.soundcloud.com") {
+      throw new Error("Please use the full SoundCloud track or playlist link.");
+    }
+
+    return {
+      embed: "https://w.soundcloud.com/player/?url=" +
+        encodeURIComponent(url.href) +
+        "&color=%230b55db&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true",
+      title: "SoundCloud music player",
+      height: 450
+    };
+  }
+
+  if (platform === "audiomack") {
+    if (host !== "audiomack.com") {
+      throw new Error("Please use an Audiomack link.");
+    }
+
+    let typeIndex = path.findIndex(item =>
+      item === "song" || item === "album"
+    );
+
+    if (typeIndex < 1 || !path[typeIndex + 1]) {
+      throw new Error("Use a public Audiomack song or album link.");
+    }
+
+    const type = path[typeIndex];
+    const artist = path[typeIndex - 1];
+    const item = path[typeIndex + 1];
+
+    return {
+      embed: "https://www.audiomack.com/embed/" +
+        type + "/" + encodeURIComponent(artist) +
+        "/" + encodeURIComponent(item),
+      title: "Audiomack music player",
+      height: type === "album" ? 400 : 252
+    };
+  }
+
+  if (platform === "deezer") {
+    if (host !== "deezer.com") {
+      throw new Error("Please use a Deezer link.");
+    }
+
+    const index = path.findIndex(item =>
+      ["track", "album", "playlist", "artist"].includes(item)
+    );
+
+    if (index === -1 || !path[index + 1] ||
+        !/^\d+$/.test(path[index + 1])) {
+      throw new Error("Use a public Deezer track, album, playlist or artist link.");
+    }
+
+    return {
+      embed: "https://widget.deezer.com/widget/auto/" +
+        path[index] + "/" + encodeURIComponent(path[index + 1]),
+      title: "Deezer music player",
+      height: 300
+    };
+  }
+
+  if (platform === "tidal") {
+    if (!["tidal.com", "listen.tidal.com"].includes(host)) {
+      throw new Error("Please use a TIDAL link.");
+    }
+
+    const index = path.findIndex(item =>
+      ["track", "album", "playlist"].includes(item)
+    );
+
+    if (index === -1 || !path[index + 1]) {
+      throw new Error("Use a public TIDAL track, album or playlist link.");
+    }
+
+    const types = {
+      track: "t",
+      album: "a",
+      playlist: "p"
+    };
+
+    const type = types[path[index]];
+
+    const container = document.createElement("div");
+    container.className = "tidal-embed";
+    container.dataset.type = type;
+    container.dataset.id = path[index + 1];
+    player.replaceChildren(container);
+
+    const script = document.createElement("script");
+    script.src = "https://embed.tidal.com/tidal-embed.js";
+    script.async = true;
+    player.appendChild(script);
+
+    return {
+      tidal: true,
+      title: "TIDAL music player"
+    };
+  }
+
+  throw new Error("This music platform is not supported.");
+}
 
 loadButton.addEventListener("click", function () {
+  clearPlayer();
 
-  const url = spotifyInput.value.trim();
+  const platform = platformSelect.value;
+  const rawUrl = musicInput.value.trim();
 
-  if (!url) {
-    status.textContent = "Please paste a Spotify link first.";
-    player.innerHTML = "";
+  if (!rawUrl) {
+    statusText.textContent = "Please paste a music link first.";
     return;
   }
 
   try {
+    const parsedUrl = new URL(rawUrl);
 
-    const parsed = new URL(url);
-
-    if (parsed.hostname !== "open.spotify.com") {
-      throw new Error("Not Spotify");
+    if (parsedUrl.protocol !== "https:") {
+      throw new Error("Please use a secure HTTPS music link.");
     }
 
-    const parts = parsed.pathname.split("/").filter(Boolean);
+    const result = parseMusicLink(platform, rawUrl);
 
-    if (parts.length < 2) {
-      throw new Error("Invalid Spotify link");
+    if (result.tidal) {
+      statusText.textContent =
+        "TIDAL player requested. If it does not appear, open the link on TIDAL.";
+    } else {
+      makeFrame(result.embed, result.title, result.height);
+      statusText.textContent = result.title + " loaded.";
     }
 
-    const type = parts[0];
-    const id = parts[1];
-
-    const allowedTypes = [
-      "track",
-      "album",
-      "playlist",
-      "episode",
-      "show"
-    ];
-
-    if (!allowedTypes.includes(type)) {
-      throw new Error("Unsupported Spotify link");
-    }
-
-    const embedUrl =
-      "https://open.spotify.com/embed/" +
-      type +
-      "/" +
-      encodeURIComponent(id);
-
-    player.innerHTML = `
-      <iframe
-        src="${embedUrl}"
-        width="100%"
-        height="352"
-        frameborder="0"
-        allowfullscreen=""
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Spotify music player">
-      </iframe>
-    `;
-
-    status.textContent = "Spotify player loaded.";
+    showExternalLink(parsedUrl.href);
 
   } catch (error) {
-
-    player.innerHTML = "";
-
-    status.textContent =
-      "That does not look like a valid public Spotify link.";
+    clearPlayer();
+    statusText.textContent =
+      error.message || "Please check the link and try again.";
   }
+});
 
+platformSelect.addEventListener("change", function () {
+  musicInput.value = "";
+  clearPlayer();
+  statusText.textContent = "Choose " +
+    platformSelect.options[platformSelect.selectedIndex].text +
+    " and paste its public music link.";
+  musicInput.placeholder =
+    "Paste your " +
+    platformSelect.options[platformSelect.selectedIndex].text +
+    " link here";
 });
 </script>
 
