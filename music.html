@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Music — GlobalDev Hub</title>
-<meta name="description" content="Listen to music from Spotify, YouTube, Apple Music, SoundCloud, Audiomack, Deezer and TIDAL on GlobalDev Hub.">
+<meta name="description" content="Listen to music from Spotify, YouTube, YouTube Music, Apple Music and Audiomack on GlobalDev Hub.">
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
@@ -62,10 +62,7 @@
         <option value="youtube">YouTube</option>
         <option value="youtube-music">YouTube Music</option>
         <option value="apple">Apple Music</option>
-        <option value="soundcloud">SoundCloud</option>
         <option value="audiomack">Audiomack</option>
-        <option value="deezer">Deezer</option>
-        <option value="tidal">TIDAL</option>
       </select>
 
       <label for="music-url">Music link</label>
@@ -190,6 +187,7 @@ function parseMusicLink(platform, rawUrl) {
     }
 
     const allowed = ["track", "album", "playlist", "episode", "show"];
+
     if (path.length < 2 || !allowed.includes(path[0])) {
       throw new Error("Unsupported Spotify link.");
     }
@@ -212,7 +210,7 @@ function parseMusicLink(platform, rawUrl) {
     }
 
     let videoId = "";
-    let playlistId = url.searchParams.get("list");
+    const playlistId = url.searchParams.get("list");
 
     if (host === "youtu.be") {
       videoId = path[0] || "";
@@ -226,7 +224,9 @@ function parseMusicLink(platform, rawUrl) {
       return {
         embed: "https://www.youtube-nocookie.com/embed/" +
           encodeURIComponent(videoId),
-        title: "YouTube music player",
+        title: platform === "youtube-music"
+          ? "YouTube Music player"
+          : "YouTube music player",
         height: 352
       };
     }
@@ -235,7 +235,9 @@ function parseMusicLink(platform, rawUrl) {
       return {
         embed: "https://www.youtube-nocookie.com/embed/videoseries?list=" +
           encodeURIComponent(playlistId),
-        title: "YouTube playlist player",
+        title: platform === "youtube-music"
+          ? "YouTube Music playlist player"
+          : "YouTube playlist player",
         height: 352
       };
     }
@@ -256,30 +258,12 @@ function parseMusicLink(platform, rawUrl) {
     };
   }
 
-  if (platform === "soundcloud") {
-    if (host !== "soundcloud.com" && host !== "on.soundcloud.com") {
-      throw new Error("Please use a SoundCloud link.");
-    }
-
-    if (host === "on.soundcloud.com") {
-      throw new Error("Please use the full SoundCloud track or playlist link.");
-    }
-
-    return {
-      embed: "https://w.soundcloud.com/player/?url=" +
-        encodeURIComponent(url.href) +
-        "&color=%230b55db&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true",
-      title: "SoundCloud music player",
-      height: 450
-    };
-  }
-
   if (platform === "audiomack") {
     if (host !== "audiomack.com") {
       throw new Error("Please use an Audiomack link.");
     }
 
-    let typeIndex = path.findIndex(item =>
+    const typeIndex = path.findIndex(item =>
       item === "song" || item === "album"
     );
 
@@ -297,66 +281,6 @@ function parseMusicLink(platform, rawUrl) {
         "/" + encodeURIComponent(item),
       title: "Audiomack music player",
       height: type === "album" ? 400 : 252
-    };
-  }
-
-  if (platform === "deezer") {
-    if (host !== "deezer.com") {
-      throw new Error("Please use a Deezer link.");
-    }
-
-    const index = path.findIndex(item =>
-      ["track", "album", "playlist", "artist"].includes(item)
-    );
-
-    if (index === -1 || !path[index + 1] ||
-        !/^\d+$/.test(path[index + 1])) {
-      throw new Error("Use a public Deezer track, album, playlist or artist link.");
-    }
-
-    return {
-      embed: "https://widget.deezer.com/widget/auto/" +
-        path[index] + "/" + encodeURIComponent(path[index + 1]),
-      title: "Deezer music player",
-      height: 300
-    };
-  }
-
-  if (platform === "tidal") {
-    if (!["tidal.com", "listen.tidal.com"].includes(host)) {
-      throw new Error("Please use a TIDAL link.");
-    }
-
-    const index = path.findIndex(item =>
-      ["track", "album", "playlist"].includes(item)
-    );
-
-    if (index === -1 || !path[index + 1]) {
-      throw new Error("Use a public TIDAL track, album or playlist link.");
-    }
-
-    const types = {
-      track: "t",
-      album: "a",
-      playlist: "p"
-    };
-
-    const type = types[path[index]];
-
-    const container = document.createElement("div");
-    container.className = "tidal-embed";
-    container.dataset.type = type;
-    container.dataset.id = path[index + 1];
-    player.replaceChildren(container);
-
-    const script = document.createElement("script");
-    script.src = "https://embed.tidal.com/tidal-embed.js";
-    script.async = true;
-    player.appendChild(script);
-
-    return {
-      tidal: true,
-      title: "TIDAL music player"
     };
   }
 
@@ -383,13 +307,8 @@ loadButton.addEventListener("click", function () {
 
     const result = parseMusicLink(platform, rawUrl);
 
-    if (result.tidal) {
-      statusText.textContent =
-        "TIDAL player requested. If it does not appear, open the link on TIDAL.";
-    } else {
-      makeFrame(result.embed, result.title, result.height);
-      statusText.textContent = result.title + " loaded.";
-    }
+    makeFrame(result.embed, result.title, result.height);
+    statusText.textContent = result.title + " loaded.";
 
     showExternalLink(parsedUrl.href);
 
@@ -403,9 +322,11 @@ loadButton.addEventListener("click", function () {
 platformSelect.addEventListener("change", function () {
   musicInput.value = "";
   clearPlayer();
+
   statusText.textContent = "Choose " +
     platformSelect.options[platformSelect.selectedIndex].text +
     " and paste its public music link.";
+
   musicInput.placeholder =
     "Paste your " +
     platformSelect.options[platformSelect.selectedIndex].text +
