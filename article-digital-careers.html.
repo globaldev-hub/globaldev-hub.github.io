@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to prepare for digital careers with practical skills, projects, portfolios and continuous learning.">
+  <title>Preparing for Digital Careers | GlobalDev Hub</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      color: #172033;
+      background: #f4f7fc;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 18px 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      color: #0b55db;
+      font-size: 21px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    nav a {
+      color: #344054;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #0b55db;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .article {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+    }
+
+    .category {
+      color: #0b55db;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.25;
+      margin: 12px 0;
+    }
+
+    .intro {
+      color: #667085;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 28px 0 10px;
+      color: #172033;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 18px;
+    }
+
+    li {
+      margin-bottom: 9px;
+    }
+
+    .tip {
+      background: #eef5ff;
+      border-left: 4px solid #0b55db;
+      padding: 16px;
+      margin: 22px 0;
+      border-radius: 6px;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .links a {
+      display: inline-block;
+      background: #0b55db;
+      color: #ffffff;
+      padding: 11px 17px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .links a.secondary {
+      background: #e8eef8;
+      color: #172033;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #667085;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .article {
+        padding: 23px 18px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .nav {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav">
+      <a class="brand" href="index.html">GlobalDev Hub</a>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="guides.html">Guides</a>
+        <a href="social.html">Social Toolkit</a>
+        <a href="careers.html">Careers</a>
+        <a href="resources.html">Resources</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="article">
+
+      <div class="category">Online Opportunities</div>
+
+      <h1>Preparing for Digital Careers</h1>
+
+      <p class="intro">
+        Discover how to build practical skills, demonstrate your abilities
+        and prepare for opportunities in the digital world.
+      </p>
+
+      <h2>What Is a Digital Career?</h2>
+
+      <p>
+        A digital career involves using technology, online platforms
+        and digital skills to perform professional work. Examples include
+        web development, graphic design, digital marketing, data analysis,
+        content creation and technical support.
+      </p>
+
+      <p>
+        Some digital professionals work for companies, while others
+        freelance, run businesses or work remotely.
+      </p>
+
+      <h2>1. Choose a Skill to Develop</h2>
+
+      <p>
+        Start by choosing a digital skill that interests you and matches
+        the kind of work you want to do.
+      </p>
+
+      <ul>
+        <li>Web development</li>
+        <li>Graphic design</li>
+        <li>Digital marketing</li>
+        <li>Content writing</li>
+        <li>Data analysis</li>
+        <li>Video editing</li>
+      </ul>
+
+      <p>
+        You do not need to learn everything at once. Focus on one area
+        and build a strong foundation before expanding.
+      </p>
+
+      <h2>2. Learn Through Practice</h2>
+
+      <p>
+        Reading and watching tutorials can help you understand a subject,
+        but practical experience is important. Apply what you learn by
+        completing small exercises and projects.
+      </p>
+
+      <ul>
+        <li>Follow beginner-friendly learning guides.</li>
+        <li>Practice regularly.</li>
+        <li>Recreate simple examples.</li>
+        <li>Try solving real problems.</li>
+        <li>Learn from mistakes and improve your work.</li>
+      </ul>
+
+      <h2>3. Build a Portfolio</h2>
+
+      <p>
+        A portfolio is a collection of projects that demonstrates what
+        you can do. It helps employers and potential clients understand
+        your abilities.
+      </p>
+
+      <p>Your portfolio could include:</p>
+
+      <ul>
+        <li>Websites you have created.</li>
+        <li>Design samples and graphics.</li>
+        <li>Writing or content projects.</li>
+        <li>Data analysis exercises.</li>
+        <li>Personal projects that solve practical problems.</li>
+      </ul>
+
+      <div class="tip">
+        <strong>Practical tip:</strong> You can begin with personal
+        projects. You do not need paid clients before you can demonstrate
+        your skills.
+      </div>
+
+      <h2>4. Create a Professional CV</h2>
+
+      <p>
+        Your CV should clearly explain your skills, education, projects
+        and relevant experience. Keep it organized and accurate.
+      </p>
+
+      <p>
+        If you are a beginner without formal work experience, include
+        personal projects, volunteer work, training and practical
+        achievements where relevant.
+      </p>
+
+      <h2>5. Develop Communication Skills</h2>
+
+      <p>
+        Digital work is not only about technical ability. Communication,
+        teamwork, time management and problem-solving are also valuable.
+      </p>
+
+      <p>
+        Practice explaining your projects clearly, asking useful questions
+        and responding professionally.
+      </p>
+
+      <h2>6. Explore Opportunities Carefully</h2>
+
+      <p>
+        You can explore job boards, freelance platforms, professional
+        communities and company career pages.
+      </p>
+
+      <p>
+        Be careful with online offers. Avoid opportunities that demand
+        suspicious upfront payments, promise guaranteed income or request
+        sensitive personal information without a trustworthy reason.
+      </p>
+
+      <h2>7. Keep Learning</h2>
+
+      <p>
+        Technology changes regularly. Continue improving your skills,
+        learning new tools and updating your portfolio as you gain
+        experience.
+      </p>
+
+      <h2>Conclusion</h2>
+
+      <p>
+        Preparing for a digital career takes time, practice and consistency.
+        Choose a skill, build useful projects, document your progress
+        and keep improving. Every completed project is another opportunity
+        to demonstrate what you can do.
+      </p>
+
+      <div class="links">
+        <a href="blog.html">Back to Blog</a>
+        <a href="careers.html" class="secondary">Explore Careers</a>
+      </div>
+
+    </article>
+  </main>
+
+  <footer>
+    © 2026 GlobalDev Hub · Learn, grow and build.
+    <p><a href="index.html">Home</a> · <a href="blog.html">Blog</a></p>
+  </footer>
+
+</body>
+</html>
