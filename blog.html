@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore practical articles on technology, AI, web development, digital skills and online opportunities at GlobalDev Hub.">
+  <meta name="theme-color" content="#0b55db">
+  <title>Blog | GlobalDev Hub</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .blog-hero {
+      padding: 65px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #0b55db, #347cf3);
+      color: white;
+    }
+
+    .blog-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 14px;
+    }
+
+    .blog-hero p {
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    .blog-container {
+      max-width: 1120px;
+      margin: auto;
+      padding: 40px 20px 65px;
+    }
+
+    .blog-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: center;
+      padding: 25px;
+      margin-bottom: 45px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      background: white;
+    }
+
+    .featured-image {
+      min-height: 230px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #dbeafe, #93c5fd);
+      display: grid;
+      place-items: center;
+      font-size: 65px;
+    }
+
+    .blog-label {
+      color: #0b55db;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .blog-featured h2 {
+      margin: 12px 0;
+      font-size: 25px;
+    }
+
+    .blog-featured p,
+    .blog-card p {
+      color: #667085;
+      line-height: 1.7;
+    }
+
+    .blog-button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 11px 19px;
+      border-radius: 8px;
+      background: #0b55db;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .blog-controls {
+      margin-bottom: 30px;
+    }
+
+    .blog-search {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .blog-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .category-btn {
+      padding: 9px 15px;
+      border: 1px solid #dbe3ef;
+      border-radius: 20px;
+      background: white;
+      color: #344054;
+      cursor: pointer;
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      background: #0b55db;
+      color: white;
+      border-color: #0b55db;
+    }
+
+    .blog-section-title {
+      margin-bottom: 22px;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .blog-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      overflow: hidden;
+      background: white;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.07);
+    }
+
+    .blog-card-image {
+      min-height: 145px;
+      display: grid;
+      place-items: center;
+      background: #eff6ff;
+      font-size: 48px;
+    }
+
+    .blog-card-content {
+      padding: 19px;
+    }
+
+    .blog-card h3 {
+      margin: 10px 0;
+      font-size: 19px;
+    }
+
+    .blog-card a {
+      color: #0b55db;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .blog-card[hidden] {
+      display: none;
+    }
+
+    .blog-empty {
+      display: none;
+      text-align: center;
+      padding: 35px;
+      color: #667085;
+    }
+
+    @media(max-width: 750px) {
+      .blog-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width: 520px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-container {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">GlobalDevHub</a>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="guides.html">Guides</a>
+      <a href="social.html">Social Toolkit</a>
+      <a href="careers.html">Careers</a>
+      <a href="resources.html">Resources</a>
+      <a href="blog.html" aria-current="page">Blog</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="blog-hero">
+    <span class="blog-label" style="color:white">GLOBALDEV HUB BLOG</span>
+    <h1>Ideas, Insights & Digital Knowledge.</h1>
+    <p>
+      Discover practical knowledge, useful technology tips,
+      digital skills and opportunities to help you grow.
+    </p>
+  </section>
+
+  <div class="blog-container">
+
+    <section class="blog-featured">
+      <div class="featured-image" aria-hidden="true">💻</div>
+
+      <div>
+        <span class="blog-label">FEATURED ARTICLE</span>
+        <h2>How to Start Your Digital Skills Journey</h2>
+        <p>
+          Discover how to choose a digital skill, find useful
+          learning resources and build practical projects
+          that demonstrate what you can do.
+        </p>
+        <a class="blog-button" href="article-digital-skills.html">
+          Read Article
+        </a>
+      </div>
+    </section>
+
+    <section class="blog-controls">
+      <h2 class="blog-section-title">Explore Articles</h2>
+
+      <input
+        type="search"
+        id="blogSearch"
+        class="blog-search"
+        placeholder="Search articles..."
+        aria-label="Search blog articles"
+      >
+
+      <div class="blog-categories" aria-label="Filter by category">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="technology">Technology</button>
+        <button class="category-btn" data-category="ai">Artificial Intelligence</button>
+        <button class="category-btn" data-category="web">Web Development</button>
+        <button class="category-btn" data-category="opportunities">Online Opportunities</button>
+        <button class="category-btn" data-category="growth">Digital Growth</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="blog-grid" id="blogGrid">
+
+        <article class="blog-card" data-category="web">
+          <div class="blog-card-image">🌐</div>
+          <div class="blog-card-content">
+            <span class="blog-label">WEB DEVELOPMENT</span>
+            <h3>How Websites Work</h3>
+            <p>Understand websites, browsers, hosting and how web pages reach visitors.</p>
+            <a href="article-website-basics.html">Read Article →</a>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="technology">
+          <div class="blog-card-image">💻</div>
+          <div class="blog-card-content">
+            <span class="blog-label">TECHNOLOGY</span>
+            <h3>Build Practical Digital Skills</h3>
+            <p>Learn by practicing, building projects and documenting your progress.</p>
+            <a href="article-digital-skills.html">Read Article →</a>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="web">
+          <div class="blog-card-image">🚀</div>
+          <div class="blog-card-content">
+            <span class="blog-label">WEB DEVELOPMENT</span>
+            <h3>GitHub Pages for Beginners</h3>
+            <p>Learn about repositories, branches and publishing websites with GitHub Pages.</p>
+            <a href="article-github-pages.html">Read Article →</a>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="ai">
+          <div class="blog-card-image">🤖</div>
+          <div class="blog-card-content">
+            <span class="blog-label">ARTIFICIAL INTELLIGENCE</span>
+            <h3>Understanding Artificial Intelligence</h3>
+            <p>Explore what AI can do and how to use it responsibly in everyday work.</p>
+            <a href="resources.html">Explore Resources →</a>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="opportunities">
+          <div class="blog-card-image">🌍</div>
+          <div class="blog-card-content">
+            <span class="blog-label">ONLINE OPPORTUNITIES</span>
+            <h3>Preparing for Digital Careers</h3>
+            <p>Discover ways to demonstrate your abilities through projects and portfolios.</p>
+            <a href="careers.html">Explore Careers →</a>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="growth">
+          <div class="blog-card-image">📈</div>
+          <div class="blog-card-content">
+            <span class="blog-label">DIGITAL GROWTH</span>
+            <h3>Planning Useful Social Content</h3>
+            <p>Build a consistent content plan that provides value to your audience.</p>
+            <a href="social.html">Explore Social Toolkit →</a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="blog-empty" id="blogEmpty">
+        No articles found. Try another search or category.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© <span id="year"></span> GlobalDev Hub · Digital Knowledge & Real Opportunities</p>
+    <p>
+      <a href="index.html">Home</a> ·
+      <a href="guides.html">Guides</a> ·
+      <a href="tools.html">Tools</a> ·
+      <a href="careers.html">Careers</a> ·
+      <a href="resources.html">Resources</a> ·
+      <a href="terms.html">Terms</a> ·
+      <a href="privacy.html">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  const searchInput = document.getElementById("blogSearch");
+  const cards = [...document.querySelectorAll(".blog-card")];
+  const categoryButtons =
+    [...document.querySelectorAll(".category-btn")];
+  const emptyMessage = document.getElementById("blogEmpty");
+
+  let activeCategory = "all";
+
+  function filterArticles() {
+    const search = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const matchesCategory =
+        activeCategory === "all" ||
+        card.dataset.category === activeCategory;
+
+      const matchesSearch =
+        card.textContent.toLowerCase().includes(search);
+
+      const visible = matchesCategory && matchesSearch;
+      card.hidden = !visible;
+
+      if (visible) visibleCount++;
+    });
+
+    emptyMessage.style.display =
+      visibleCount === 0 ? "block" : "none";
+  }
+
+  searchInput.addEventListener("input", filterArticles);
+
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
+
+      categoryButtons.forEach(item =>
+        item.classList.remove("active")
+      );
+
+      button.classList.add("active");
+      filterArticles();
+    });
+  });
+</script>
+
+</body>
+</html>
