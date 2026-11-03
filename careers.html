@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,6 +10,34 @@
 <meta name="description" content="Practical resources for CVs, portfolios and interviews.">
 
 <link rel="stylesheet" href="style.css">
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
+document.documentElement.style.visibility = "hidden";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function protectMemberPage() {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session) {
+      window.location.replace("welcome.html");
+      return;
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (error) {
+    window.location.replace("welcome.html");
+  }
+}
+
+protectMemberPage();
+</script>
 
 <style>
 .career-tool {
@@ -106,7 +135,6 @@
         </ul>
       </article>
 
-
       <article class="card">
         <h3>Portfolio checklist</h3>
 
@@ -118,7 +146,6 @@
           <li>Lessons learned</li>
         </ul>
       </article>
-
 
       <article class="card">
         <h3>Interview checklist</h3>
@@ -133,7 +160,6 @@
       </article>
 
     </div>
-
 
     <div class="career-tool">
 
@@ -160,7 +186,6 @@
   </div>
 </main>
 
-
 <footer>
   <div class="wrap">
     <p>
@@ -170,7 +195,6 @@
     </p>
   </div>
 </footer>
-
 
 <script>
 
