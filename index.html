@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +23,8 @@
     .nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand{font-size:1.12rem;font-weight:800;color:var(--navy);text-decoration:none;white-space:nowrap}
     .brand span{color:var(--blue)}
+    .btn.donate{background:#fff7ed;color:#a34b08;border-color:#f2c28e;white-space:nowrap}
+    .btn.donate:hover{background:#ffedd5}
     .menu-wrap{position:relative;margin-left:auto}
     .menu-button{width:44px;height:44px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);font-size:26px;line-height:1;cursor:pointer}
     .menu-button:hover{background:var(--pale)}
@@ -87,6 +90,7 @@
     <header>
       <div class="wrap nav">
         <a class="brand" href="index.html" aria-label="GlobalDev Hub Home">G <span>GlobalDev Hub</span></a>
+        <a class="btn donate" href="donate.html">❤️ Donate</a>
         <div class="menu-wrap">
           <button class="menu-button" id="menuButton" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">⋮</button>
           <div class="menu-panel" id="menuPanel" hidden>
