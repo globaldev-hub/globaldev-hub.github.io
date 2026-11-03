@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0755e9">
   <meta name="description" content="Your GlobalDev Hub member Home: digital knowledge, technology guides, tools and learning resources.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="GlobalDev Hub">
   <title>Home | GlobalDev Hub</title>
+
   <style>
     :root{--blue:#0755e9;--navy:#071e46;--ink:#17243b;--muted:#5e6c82;--pale:#eef5ff;--line:#dce6f5;--white:#fff}
     *{box-sizing:border-box}
@@ -33,9 +37,10 @@
     h1 span{color:var(--blue)}
     .hero p{font-size:1.1rem;color:var(--muted);max-width:650px;margin:0 0 25px}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--blue);border-radius:9px;padding:10px 15px;text-decoration:none;font-weight:700;font-size:.92rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--blue);border-radius:9px;padding:10px 15px;text-decoration:none;font-weight:700;font-size:.92rem;cursor:pointer}
     .btn.primary{background:var(--blue);color:#fff}
     .btn.secondary{color:var(--blue);background:#fff}
+    .btn:disabled{opacity:.65;cursor:not-allowed}
     .hero-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 18px 50px #123a7010}
     .hero-card h2{margin:0 0 14px;color:var(--navy);font-size:1.2rem}
     .hero-card ul{padding-left:20px;margin:0;color:var(--muted)}
@@ -62,6 +67,7 @@
     .search-box input{min-width:0;flex:1;padding:13px 14px;border:1px solid var(--line);border-radius:9px;font-size:1rem}
     .search-box button{padding:12px 17px;border:0;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
     #search-message{text-align:center;color:var(--muted);min-height:24px;margin-top:10px}
+    #installHelp{color:var(--muted);font-size:.9rem;margin-top:12px;max-width:620px}
     footer{background:#f2f6fc;border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.92rem}
     .footer-row{display:flex;align-items:flex-start;justify-content:space-between;gap:25px;flex-wrap:wrap}
     .footer-links{display:flex;gap:13px;flex-wrap:wrap}
@@ -73,6 +79,7 @@
     @media(max-width:560px){.cards{grid-template-columns:1fr}.feedback{align-items:flex-start;flex-direction:column;padding:25px}.search-box{flex-direction:column}.search-box button{width:100%}section{padding:48px 0}}
   </style>
 </head>
+
 <body>
   <div id="pageStatus" role="status">Checking your member account…</div>
 
@@ -80,10 +87,8 @@
     <header>
       <div class="wrap nav">
         <a class="brand" href="index.html" aria-label="GlobalDev Hub Home">G <span>GlobalDev Hub</span></a>
-
         <div class="menu-wrap">
-          <button class="menu-button" id="menuButton" type="button"
-            aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">⋮</button>
+          <button class="menu-button" id="menuButton" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">⋮</button>
           <div class="menu-panel" id="menuPanel" hidden>
             <a href="index.html">Home</a>
             <a href="dashboard.html">Dashboard &amp; Profile</a>
@@ -110,16 +115,22 @@
             <div class="eyebrow">Welcome to GlobalDev Hub</div>
             <h1>Digital Knowledge <span>&amp; Real Opportunities</span></h1>
             <p>Discover practical technology guides, free digital tools, learning resources and online opportunity information. Learn, grow and build your digital future with GlobalDev Hub.</p>
+
             <div class="hero-actions">
               <a class="btn primary" href="guides.html">Explore Guides</a>
               <a class="btn secondary" href="dashboard.html">My Dashboard</a>
+              <button class="btn secondary" id="installAppButton" type="button">Install GlobalDev Hub</button>
             </div>
+
+            <div id="installHelp" aria-live="polite">Install GlobalDev Hub on your device for quick access.</div>
+
             <form class="search-box" id="site-search">
               <input id="search-query" type="search" placeholder="Search guides, tools, articles or resources..." aria-label="Search website">
               <button type="submit">Search</button>
             </form>
             <div id="search-message" aria-live="polite"></div>
           </div>
+
           <aside class="hero-card">
             <h2>Start learning today</h2>
             <ul>
@@ -140,6 +151,7 @@
             <h2>Useful resources for your next step</h2>
             <p>Build your knowledge, discover useful tools and explore practical ways to grow your digital skills.</p>
           </div>
+
           <div class="cards">
             <article class="card"><div class="symbol">🧭</div><h3>Guides for Beginners</h3><p>Understand technology and learn new skills through clear, step-by-step guides.</p><a href="guides.html">Explore guides →</a></article>
             <article class="card"><div class="symbol">🧰</div><h3>Digital Tools</h3><p>Discover helpful digital tools and resources for learning and getting work done.</p><a href="tools.html">Explore tools →</a></article>
@@ -159,6 +171,7 @@
             <p>GlobalDev Hub brings together digital knowledge, technology resources, educational guides and information about online opportunities. Our goal is to make learning easier, explain technology clearly and help people discover useful resources for their digital journey.</p>
             <a class="btn primary" href="about.html">Learn more</a>
           </div>
+
           <div class="card" id="resources">
             <h3>Learn at your own pace</h3>
             <p>Explore website basics, beginner-friendly digital skills, free tools and career information. Take one step at a time and use the resources that fit your goals.</p>
@@ -264,13 +277,16 @@
 
         pageStatus.hidden = true;
         memberPage.hidden = false;
+
         document.getElementById("year").textContent =
           new Date().getFullYear();
 
       } catch (error) {
         console.error("Member session check failed:", error);
+
         pageStatus.textContent =
           "We could not verify your account. Please sign in again.";
+
         setTimeout(() => {
           window.location.replace("auth.html?mode=login");
         }, 1200);
@@ -290,6 +306,7 @@
 
       const query = document.getElementById("search-query")
         .value.trim().toLowerCase();
+
       const message = document.getElementById("search-message");
 
       if (!query) {
@@ -323,6 +340,94 @@
           "No direct match found. Try Guides, Digital Skills, Website Basics, Careers or Tools.";
       }
     });
+
+    // GlobalDev Hub installation support
+    const installAppButton =
+      document.getElementById("installAppButton");
+
+    const installHelp =
+      document.getElementById("installHelp");
+
+    let deferredInstallPrompt = null;
+
+    function isIOS() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function isInstalled() {
+      return window.matchMedia("(display-mode: standalone)").matches ||
+        navigator.standalone === true;
+    }
+
+    if (isInstalled()) {
+      installAppButton.textContent = "GlobalDev Hub Installed";
+      installAppButton.disabled = true;
+      installHelp.textContent =
+        "GlobalDev Hub is already installed on this device.";
+    }
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+
+      installAppButton.hidden = false;
+      installAppButton.textContent = "Install GlobalDev Hub";
+
+      installHelp.textContent =
+        "Your browser supports direct installation.";
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+
+      installAppButton.textContent = "GlobalDev Hub Installed";
+      installAppButton.disabled = true;
+
+      installHelp.textContent =
+        "GlobalDev Hub was successfully installed.";
+    });
+
+    installAppButton.addEventListener("click", async () => {
+      if (isInstalled()) {
+        installHelp.textContent =
+          "GlobalDev Hub is already installed.";
+        return;
+      }
+
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+
+        const choice = await deferredInstallPrompt.userChoice;
+
+        if (choice.outcome === "accepted") {
+          installAppButton.textContent = "Installing…";
+        }
+
+        deferredInstallPrompt = null;
+        return;
+      }
+
+      if (isIOS()) {
+        installHelp.textContent =
+          "On iPhone or iPad, open this page in Safari, tap Share, then choose Add to Home Screen.";
+        return;
+      }
+
+      installHelp.textContent =
+        "Open your browser menu and look for Install app or Add to Home Screen. On desktop, look for the install icon near the address bar.";
+    });
+
+    // Register the existing service worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", async () => {
+        try {
+          await navigator.serviceWorker.register("/service-worker.js");
+          console.log("GlobalDev Hub service worker registered.");
+        } catch (error) {
+          console.error("Service worker registration failed:", error);
+        }
+      });
+    }
   </script>
 </body>
 </html>
