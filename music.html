@@ -11,6 +11,34 @@
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#080d1d">
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
+document.documentElement.style.visibility = "hidden";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function protectMemberPage() {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session) {
+      window.location.replace("welcome.html");
+      return;
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (error) {
+    window.location.replace("welcome.html");
+  }
+}
+
+protectMemberPage();
+</script>
 </head>
 
 <body>
