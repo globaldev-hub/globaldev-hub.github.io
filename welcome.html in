@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0755e9">
+  <meta name="description" content="Welcome to GlobalDev Hub — practical digital knowledge, technology guides and learning resources.">
+  <title>Welcome | GlobalDev Hub</title>
+
+  <style>
+    :root {
+      --blue: #0755e9;
+      --navy: #071e46;
+      --ink: #17243b;
+      --muted: #5e6c82;
+      --pale: #eef5ff;
+      --line: #dce6f5;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 12px #071e460b;
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--navy);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand span { color: var(--blue); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      padding: 10px 15px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .92rem;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn.secondary {
+      color: var(--blue);
+      background: #fff;
+    }
+
+    /* Three-dot menu */
+    .menu-wrap {
+      position: relative;
+    }
+
+    .menu-button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--navy);
+      font-size: 25px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .menu-button:hover {
+      background: var(--pale);
+    }
+
+    .menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 220px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 12px 35px #071e4620;
+      padding: 8px;
+      z-index: 30;
+    }
+
+    .menu.show { display: block; }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      color: #34445e;
+      text-decoration: none;
+      font-size: .94rem;
+      border-radius: 7px;
+    }
+
+    .menu a:hover {
+      background: var(--pale);
+      color: var(--blue);
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 6px 4px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #eef5ff 0%, #fff 65%);
+      padding: 76px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      color: var(--navy);
+      margin: 14px 0 18px;
+    }
+
+    h1 span { color: var(--blue); }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 0 25px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 18px 50px #123a7010;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 14px;
+      color: var(--navy);
+      font-size: 1.2rem;
+    }
+
+    .hero-card ul {
+      padding-left: 20px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .hero-card li { padding: 5px 0; }
+
+    section { padding: 64px 0; }
+
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 34px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.7rem, 3vw, 2.45rem);
+      line-height: 1.2;
+      color: var(--navy);
+      margin: 8px 0 12px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 23px;
+      background: #fff;
+    }
+
+    .card .symbol { font-size: 1.65rem; }
+
+    .card h3 {
+      margin: 10px 0 8px;
+      color: var(--navy);
+      font-size: 1.12rem;
+    }
+
+    .card p {
+      margin: 0 0 15px;
+      color: var(--muted);
+    }
+
+    .card a {
+      color: var(--blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .soft { background: #f7faff; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .about-grid h2 {
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--navy);
+      margin: 8px 0 14px;
+    }
+
+    .about-grid p { color: var(--muted); }
+
+    .feedback {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .feedback h2 {
+      font-size: 1.7rem;
+      margin: 0 0 8px;
+    }
+
+    .feedback p {
+      color: #dce8ff;
+      margin: 0;
+      max-width: 650px;
+    }
+
+    .feedback .btn {
+      background: #fff;
+      color: var(--blue);
+      border-color: #fff;
+      white-space: nowrap;
+    }
+
+    footer {
+      background: #f2f6fc;
+      border-top: 1px solid var(--line);
+      padding: 30px 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #40516b;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--blue); }
+
+    .copyright {
+      margin-top: 18px;
+      font-size: .85rem;
+    }
+
+    @media(max-width: 900px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { padding: 55px 0; }
+    }
+
+    @media(max-width: 560px) {
+      .nav { min-height: 66px; }
+      .brand { font-size: 1rem; }
+      .nav-actions { gap: 6px; }
+      .nav-actions .btn { padding: 8px 10px; font-size: .82rem; }
+      .cards { grid-template-columns: 1fr; }
+      .feedback {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 25px;
+      }
+      section { padding: 48px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="welcome.html">G <span>GlobalDev Hub</span></a>
+
+      <div class="nav-actions">
+        <a class="btn secondary" href="auth.html">Log In</a>
+        <a class="btn primary" href="auth.html?mode=signup">Sign Up</a>
+
+        <div class="menu-wrap">
+          <button
+            class="menu-button"
+            id="menuButton"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="publicMenu"
+          >⋮</button>
+
+          <div class="menu" id="publicMenu">
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+            <div class="menu-divider"></div>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms &amp; Conditions</a>
+            <div class="menu-divider"></div>
+            <a href="auth.html">Log In</a>
+            <a href="auth.html?mode=signup">Create an Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Welcome to GlobalDev Hub</div>
+
+          <h1>Digital Knowledge <span>&amp; Real Opportunities</span></h1>
+
+          <p>
+            Discover practical technology guides, free digital tools,
+            learning resources and online opportunity information.
+            Learn, grow and build your digital future with GlobalDev Hub.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="auth.html?mode=signup">Get Started</a>
+            <a class="btn secondary" href="about.html">Learn About Us</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Start your digital journey</h2>
+          <ul>
+            <li>Web development and website basics</li>
+            <li>Digital skills for beginners</li>
+            <li>Free tools to support your work</li>
+            <li>Career and online opportunity guidance</li>
+            <li>Practical learning resources</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Explore GlobalDev Hub</div>
+          <h2>Knowledge to help you take your next step</h2>
+          <p>
+            Learn new skills, understand technology and discover
+            useful information for your digital journey.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="symbol">🌐</div>
+            <h3>Website Basics</h3>
+            <p>Learn how websites work and understand the basics of building online.</p>
+            <a href="article-website-basics.html">Read article →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">💡</div>
+            <h3>Digital Skills</h3>
+            <p>Discover useful digital skills and ways to keep learning as technology changes.</p>
+            <a href="article-digital-skills.html">Read article →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🚀</div>
+            <h3>Your First Website</h3>
+            <p>Explore the steps involved in creating and publishing your first website.</p>
+            <a href="article-first-website.html">Read article →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🤖</div>
+            <h3>Artificial Intelligence</h3>
+            <p>Understand AI and how it can support learning and everyday digital work.</p>
+            <a href="article-ai.html">Read article →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">💼</div>
+            <h3>Digital Careers</h3>
+            <p>Learn about digital career paths and the skills they may require.</p>
+            <a href="article-digital-careers.html">Read article →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">📣</div>
+            <h3>Social Content</h3>
+            <p>Explore ideas for creating useful and engaging digital content.</p>
+            <a href="article-social-content.html">Read article →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap about-grid">
+        <div>
+          <div class="eyebrow">About GlobalDev Hub</div>
+          <h2>A practical starting point for your digital journey</h2>
+          <p>
+            GlobalDev Hub brings together digital knowledge, technology
+            resources, educational guides and information about online
+            opportunities. Our goal is to make learning easier, explain
+            technology clearly and help people discover useful resources.
+          </p>
+          <a class="btn primary" href="about.html">Learn More</a>
+        </div>
+
+        <div class="card">
+          <h3>Become part of the community</h3>
+          <p>
+            Create an account to access the member area and explore
+            the learning resources and tools available on GlobalDev Hub.
+          </p>
+          <a href="auth.html?mode=signup">Create your account →</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap feedback">
+        <div>
+          <div class="eyebrow" style="color:#9dbdff">Your voice matters</div>
+          <h2>Help Us Improve GlobalDev Hub</h2>
+          <p>
+            Tell us what you want to learn and how we can make the
+            platform more useful.
+          </p>
+        </div>
+
+        <a
+          class="btn"
+          href="https://docs.google.com/forms/d/e/1FAIpQLScjQTLxkcU8s31mJL87HH_FkPSnaP5UTEjkWo7c6J11GWACvQ/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Give Feedback →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-row">
+        <div>
+          <a class="brand" href="welcome.html">G <span>GlobalDev Hub</span></a>
+          <p>Digital Knowledge &amp; Resources</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </div>
+
+      <div class="copyright">
+        © <span id="year"></span> GlobalDev Hub. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const publicMenu = document.getElementById("publicMenu");
+
+    menuButton.addEventListener("click", function(event) {
+      event.stopPropagation();
+
+      const isOpen = publicMenu.classList.toggle("show");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", function(event) {
+      if (!event.target.closest(".menu-wrap")) {
+        publicMenu.classList.remove("show");
+        menuButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        publicMenu.classList.remove("show");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.focus();
+      }
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>
