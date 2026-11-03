@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,6 +10,34 @@
 <meta name="description" content="Responsible tools for social-media content planning and profile improvement.">
 
 <link rel="stylesheet" href="style.css">
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
+document.documentElement.style.visibility = "hidden";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function protectMemberPage() {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session) {
+      window.location.replace("welcome.html");
+      return;
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (error) {
+    window.location.replace("welcome.html");
+  }
+}
+
+protectMemberPage();
+</script>
 
 <style>
 .social-tools {
@@ -144,7 +173,6 @@
         <div class="social-output" id="captionOutput"></div>
       </div>
 
-
       <div class="social-tool">
         <h3>Hashtag organizer</h3>
 
@@ -159,7 +187,6 @@
 
         <div class="social-output" id="hashtagOutput"></div>
       </div>
-
 
       <div class="social-tool">
         <h3>Profile bio draft</h3>
@@ -181,7 +208,6 @@
         <div class="social-output" id="bioOutput"></div>
       </div>
 
-
       <div class="social-tool">
         <h3>7-day content framework</h3>
 
@@ -202,7 +228,6 @@
   </div>
 </main>
 
-
 <footer>
   <div class="wrap">
     <p>
@@ -212,7 +237,6 @@
     </p>
   </div>
 </footer>
-
 
 <script>
 
@@ -234,7 +258,6 @@ ${points}
 Takeaway: give the reader one useful action they can try.`;
 }
 
-
 function organizeHashtags() {
 
   const text =
@@ -255,7 +278,6 @@ function organizeHashtags() {
       : "Add hashtags such as #webdev #coding #learning";
 }
 
-
 function makeBio() {
 
   const who =
@@ -270,7 +292,6 @@ function makeBio() {
 `Helping ${who} ${help}.
 Practical tips and useful resources.`;
 }
-
 
 function makePlan() {
 
