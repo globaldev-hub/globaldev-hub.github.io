@@ -20,7 +20,27 @@
       border-radius: 18px; background: white;
       box-shadow: 0 12px 40px rgba(20,45,90,.10);
     }
-    .brand { text-align: center; color: #0b55db; font-size: 25px; font-weight: 800; }
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #0b55db;
+      font-size: 25px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #0b55db;
+      color: white;
+      font-size: 22px;
+      line-height: 1;
+    }
     h1 { text-align: center; font-size: 25px; }
     .intro { text-align: center; color: #667085; line-height: 1.6; }
     .tabs { display: flex; gap: 8px; margin: 24px 0; }
@@ -46,8 +66,14 @@
       line-height: 1.5; overflow-wrap: anywhere;
     }
     #message:empty { display: none; }
-    .back { display: block; text-align: center; margin-top: 22px; color: #0b55db; }
-    .note { font-size: 13px; color: #667085; line-height: 1.5; margin-top: 18px; }
+    .back {
+      display: block; text-align: center; margin-top: 22px;
+      color: #0b55db;
+    }
+    .note {
+      font-size: 13px; color: #667085;
+      line-height: 1.5; margin-top: 18px;
+    }
     .forgot { text-align: center; margin-top: 17px; }
     a { color: #0b55db; }
     [hidden] { display: none !important; }
@@ -55,7 +81,11 @@
 </head>
 <body>
   <main class="card">
-    <div class="brand">G GlobalDev Hub</div>
+    <a class="brand" href="welcome.html" aria-label="GlobalDev Hub home">
+      <span class="brand-mark" aria-hidden="true">G</span>
+      <span>GlobalDev Hub</span>
+    </a>
+
     <h1 id="heading">Create your account</h1>
     <p class="intro">Join GlobalDev Hub to explore digital knowledge and resources.</p>
 
@@ -92,7 +122,8 @@
       Keep your password private. Creating an account does not guarantee earnings.
       GlobalDev Hub is being developed.
     </p>
-    <a class="back" href="index.html">← Back to GlobalDev Hub</a>
+
+    <a class="back" href="welcome.html">← Back to GlobalDev Hub</a>
   </main>
 
   <script type="module">
@@ -134,8 +165,10 @@
       fullName.required = signingUp;
       password.autocomplete = signingUp ? "new-password" : "current-password";
       password.value = "";
+
       heading.textContent = signingUp ? "Create your account" : "Welcome back";
       submitButton.textContent = signingUp ? "Create Account" : "Log In";
+
       signupTab.classList.toggle("active", signingUp);
       loginTab.classList.toggle("active", !signingUp);
       forgotRow.hidden = signingUp;
@@ -145,16 +178,20 @@
     signupTab.addEventListener("click", () => setMode("signup"));
     loginTab.addEventListener("click", () => setMode("login"));
 
+    // Existing signed-in members go to the members' Home page.
     async function redirectIfSignedIn() {
       const { data, error } = await supabase.auth.getSession();
+
       if (!error && data.session) {
-        window.location.replace("dashboard.html");
+        window.location.replace("index.html");
       }
     }
+
     redirectIfSignedIn();
 
     form.addEventListener("submit", async event => {
       event.preventDefault();
+
       submitButton.disabled = true;
       showMessage("Please wait…");
 
@@ -171,25 +208,33 @@
               emailRedirectTo: "https://globaldev-hub.github.io/auth.html"
             }
           });
+
           if (error) throw error;
 
           if (data.session) {
-            showMessage("Account created. Opening your dashboard…");
-            window.location.replace("dashboard.html");
+            showMessage("Account created. Opening your Home page…");
+            window.location.replace("index.html");
           } else {
-            showMessage("Registration started! Check your email to confirm your account, then log in.");
+            showMessage(
+              "Registration started! Check your email to confirm your account, then log in."
+            );
           }
         } else {
           const { error } = await supabase.auth.signInWithPassword({
             email: userEmail,
             password: userPassword
           });
+
           if (error) throw error;
-          showMessage("Login successful. Opening your dashboard…");
-          window.location.replace("dashboard.html");
+
+          showMessage("Login successful. Opening your Home page…");
+          window.location.replace("index.html");
         }
       } catch (error) {
-        showMessage(error.message || "Something went wrong. Please try again.", true);
+        showMessage(
+          error.message || "Something went wrong. Please try again.",
+          true
+        );
       } finally {
         submitButton.disabled = false;
       }
@@ -197,10 +242,14 @@
 
     forgotLink.addEventListener("click", async event => {
       event.preventDefault();
+
       const userEmail = email.value.trim();
 
       if (!userEmail) {
-        showMessage("Enter your email address above first, then tap Forgot your password.", true);
+        showMessage(
+          "Enter your email address above first, then tap Forgot your password.",
+          true
+        );
         email.focus();
         return;
       }
@@ -212,15 +261,26 @@
         const { error } = await supabase.auth.resetPasswordForEmail(userEmail, {
           redirectTo: "https://globaldev-hub.github.io/reset-password.html"
         });
+
         if (error) throw error;
 
-        showMessage("If an account exists for that email, a recovery link will be sent. Check your inbox and spam folder.");
+        showMessage(
+          "If an account exists for that email, a recovery link will be sent. Check your inbox and spam folder."
+        );
       } catch (error) {
-        showMessage(error.message || "Could not request password recovery. Please try again.", true);
+        showMessage(
+          error.message || "Could not request password recovery. Please try again.",
+          true
+        );
       } finally {
         forgotLink.style.pointerEvents = "";
       }
     });
+
+    // Respect signup links that request the login tab.
+    const requestedMode = new URLSearchParams(window.location.search).get("mode");
+    if (requestedMode === "login") setMode("login");
+    else setMode("signup");
   </script>
 </body>
 </html>
