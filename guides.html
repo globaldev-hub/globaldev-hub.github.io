@@ -10,6 +10,30 @@
 <meta name="description" content="Practical technology guides for GlobalDev Hub. Learn web development, digital skills, online tools, security and useful technology.">
 
 <link rel="stylesheet" href="style.css">
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function protectMemberPage() {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session) {
+        window.location.replace("welcome.html");
+        return;
+    }
+
+    document.documentElement.style.visibility = "visible";
+}
+
+document.documentElement.style.visibility = "hidden";
+protectMemberPage();
+</script>
+
 </head>
 
 <body>
