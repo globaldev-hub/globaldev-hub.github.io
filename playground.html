@@ -313,6 +313,7 @@ button {
     <div class="preview-heading">
       <h2>Live Preview</h2>
     </div>
+
     <iframe
       id="preview"
       title="Your webpage preview"
@@ -336,7 +337,7 @@ button {
 </main>
 
 <footer>
-  © 2026 GlobalDev Hub · Learn, Build & Grow
+  © 2026 GlobalDev Hub · Learn, Build &amp; Grow
 </footer>
 
 <script>
@@ -358,11 +359,22 @@ function runCode() {
     '<style>' + css + '</style>' +
     '</head><body>' +
     html +
-    '<script>' + js + '<' + '/script>' +
+    '<script>' +
+    'window.addEventListener("DOMContentLoaded", function () {' +
+    'try {' +
+    js +
+    '} catch (error) {' +
+    'const errorBox = document.createElement("pre");' +
+    'errorBox.style.cssText = "color:red;white-space:pre-wrap;padding:12px";' +
+    'errorBox.textContent = "JavaScript error: " + error.message;' +
+    'document.body.appendChild(errorBox);' +
+    '}' +
+    '});' +
+    '<' + '/script>' +
     '</body></html>';
 
   preview.srcdoc = page;
-  status.textContent = "Preview updated.";
+  status.textContent = "Preview updated. JavaScript is ready.";
 }
 
 function resetExample() {
