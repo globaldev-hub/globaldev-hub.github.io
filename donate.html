@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1d">
+  <meta name="description" content="Support GlobalDev Hub. Your donation helps us provide digital skills education, learning resources, and useful opportunities.">
+
+  <title>Support GlobalDev Hub | Donate</title>
+
+  <style>
+    :root {
+      --blue: #0b55db;
+      --dark: #080d1d;
+      --text: #172033;
+      --muted: #667085;
+      --light: #f4f7fc;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 17px 6%;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      color: var(--dark);
+      font-size: 21px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand span {
+      color: var(--blue);
+    }
+
+    .back {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    main {
+      padding: 65px 20px;
+    }
+
+    .donation-card {
+      max-width: 760px;
+      margin: auto;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 45px 35px;
+      text-align: center;
+      box-shadow: 0 15px 45px rgba(20, 40, 80, 0.07);
+    }
+
+    .icon {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      background: #eaf1ff;
+      border-radius: 50%;
+      font-size: 35px;
+    }
+
+    .label {
+      color: var(--blue);
+      font-weight: 800;
+      letter-spacing: 2px;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 43px);
+      line-height: 1.2;
+      margin-bottom: 18px;
+      color: var(--dark);
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 570px;
+      margin: 0 auto 28px;
+      font-size: 16px;
+    }
+
+    .donate-button {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      padding: 15px 34px;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 800;
+      transition: 0.2s;
+    }
+
+    .donate-button:hover {
+      background: #0844b3;
+      transform: translateY(-2px);
+    }
+
+    .secure {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    .impact {
+      margin-top: 40px;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
+
+    .impact h2 {
+      text-align: center;
+      font-size: 21px;
+      margin-bottom: 20px;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .impact-item {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 17px;
+    }
+
+    .impact-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+
+    .impact-item p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .thanks {
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 35px 15px;
+      }
+
+      .donation-card {
+        padding: 35px 20px;
+      }
+
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span>G</span> GlobalDev Hub
+      </a>
+
+      <a class="back" href="index.html">← Back to Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="donation-card">
+
+      <div class="icon">❤️</div>
+
+      <p class="label">Support Our Mission</p>
+
+      <h1>Help Us Build a More Digitally Empowered Community</h1>
+
+      <p class="intro">
+        GlobalDev Hub is committed to helping people discover digital
+        skills, access useful learning resources, explore technology,
+        and find legitimate opportunities.
+        Your support helps us continue this mission.
+      </p>
+
+      <a
+        class="donate-button"
+        href="https://paystack.shop/pay/globaldevhub"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ❤️ Donate to GlobalDev Hub
+      </a>
+
+      <p class="secure">
+        Payments are handled securely through Paystack.
+      </p>
+
+      <div class="impact">
+        <h2>Your Support Makes a Difference</h2>
+
+        <div class="impact-grid">
+
+          <div class="impact-item">
+            <strong>📚 Learning Resources</strong>
+            <p>
+              Help us create and maintain useful educational
+              materials.
+            </p>
+          </div>
+
+          <div class="impact-item">
+            <strong>💻 Digital Skills</strong>
+            <p>
+              Support access to practical technology and
+              digital skills education.
+            </p>
+          </div>
+
+          <div class="impact-item">
+            <strong>🛠️ Website Development</strong>
+            <p>
+              Help maintain and improve GlobalDev Hub and
+              its digital tools.
+            </p>
+          </div>
+
+          <div class="impact-item">
+            <strong>🌍 Wider Opportunities</strong>
+            <p>
+              Help us make useful information and opportunities
+              accessible to more people.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="thanks">
+        Every contribution is appreciated. Thank you for believing
+        in the GlobalDev Hub mission.
+      </p>
+
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> GlobalDev Hub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>
