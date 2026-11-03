@@ -1,10 +1,32 @@
+
 {
+  "id": "/",
   "name": "GlobalDev Hub",
   "short_name": "GlobalDev",
   "description": "Practical technology guides, useful tools, learning resources, careers, and legitimate online resources.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
   "background_color": "#080d1d",
   "theme_color": "#080d1d",
-  "orientation": "portrait"
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
