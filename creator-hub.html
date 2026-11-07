@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GlobalDev Creator Hub - Create, publish, share and grow your creative work.">
+<title>Creator Hub | GlobalDev Hub</title>
+
+<style>
+:root {
+  --blue:#0755e9;
+  --navy:#071e46;
+  --ink:#17243b;
+  --muted:#64748b;
+  --pale:#eef5ff;
+  --line:#dce6f5;
+  --white:#fff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:#f7f9fd;
+  line-height:1.6;
+}
+.gdh-wrap {
+  width:min(1120px,92%);
+  margin:auto;
+}
+.gdh-header {
+  background:white;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.gdh-nav {
+  min-height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.gdh-brand {
+  font-size:20px;
+  font-weight:800;
+  color:var(--navy);
+  text-decoration:none;
+}
+.gdh-brand span { color:var(--blue); }
+.gdh-links {
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+.gdh-links a {
+  color:var(--ink);
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+}
+.gdh-links a:hover { color:var(--blue); }
+.gdh-button {
+  display:inline-block;
+  padding:12px 19px;
+  background:var(--blue);
+  color:white !important;
+  border:0;
+  border-radius:9px;
+  text-decoration:none;
+  font-weight:700;
+  cursor:pointer;
+}
+.gdh-button:hover { background:#0645bd; }
+.gdh-secondary {
+  background:white;
+  color:var(--blue) !important;
+  border:1px solid var(--line);
+}
+.gdh-hero {
+  background:linear-gradient(130deg,#071e46,#0755e9);
+  color:white;
+  padding:76px 0;
+}
+.gdh-hero-inner {
+  max-width:760px;
+}
+.gdh-label {
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:30px;
+  background:#ffffff20;
+  font-size:13px;
+  font-weight:700;
+}
+.gdh-hero h1 {
+  font-size:clamp(36px,6vw,60px);
+  line-height:1.1;
+  margin:20px 0;
+}
+.gdh-hero p {
+  max-width:650px;
+  color:#e0eaff;
+  font-size:17px;
+}
+.gdh-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:25px;
+}
+.gdh-hero .gdh-secondary {
+  background:transparent;
+  color:white !important;
+  border-color:#ffffff70;
+}
+.gdh-section { padding:55px 0; }
+.gdh-section h2 {
+  color:var(--navy);
+  font-size:28px;
+  margin:0 0 8px;
+}
+.gdh-intro {
+  color:var(--muted);
+  margin:0 0 25px;
+}
+.gdh-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.gdh-card {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:23px;
+  box-shadow:0 5px 18px #071e4608;
+}
+.gdh-card h3 { margin:10px 0 5px; }
+.gdh-card p {
+  color:var(--muted);
+  font-size:14px;
+  margin:0;
+}
+.gdh-icon {
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:var(--pale);
+  font-size:25px;
+}
+.gdh-search {
+  width:100%;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font-size:15px;
+  margin:15px 0;
+}
+.gdh-filters {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:10px 0 22px;
+}
+.gdh-filter {
+  border:1px solid var(--line);
+  background:white;
+  color:var(--ink);
+  border-radius:30px;
+  padding:9px 15px;
+  cursor:pointer;
+  font-weight:600;
+}
+.gdh-filter.active {
+  background:var(--blue);
+  color:white;
+  border-color:var(--blue);
+}
+.gdh-content-card {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+}
+.gdh-content-art {
+  min-height:125px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#dceaff,#edf4ff);
+  font-size:42px;
+}
+.gdh-content-info { padding:17px; }
+.gdh-tag {
+  color:var(--blue);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.gdh-content-info h3 {
+  font-size:17px;
+  margin:7px 0;
+}
+.gdh-content-info p {
+  color:var(--muted);
+  font-size:13px;
+  margin:0;
+}
+.gdh-creator {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:15px;
+  font-size:13px;
+  font-weight:700;
+}
+.gdh-avatar {
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--pale);
+}
+.gdh-earning {
+  background:var(--pale);
+  border-radius:18px;
+  padding:35px;
+}
+.gdh-earning-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+.gdh-earning-item {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+.gdh-earning-item h3 { margin:5px 0; }
+.gdh-earning-item p {
+  color:var(--muted);
+  font-size:13px;
+}
+.gdh-join {
+  background:var(--navy);
+  color:white;
+  border-radius:18px;
+  padding:40px;
+  text-align:center;
+}
+.gdh-join h2 { color:white; }
+.gdh-join p { color:#d6e5ff; }
+.gdh-footer {
+  background:white;
+  border-top:1px solid var(--line);
+  padding:25px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+.gdh-footer-inner {
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.gdh-empty {
+  display:none;
+  color:var(--muted);
+  padding:25px;
+  text-align:center;
+}
+@media(max-width:760px) {
+  .gdh-links { display:none; }
+  .gdh-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .gdh-earning-grid { grid-template-columns:1fr; }
+  .gdh-hero { padding:55px 0; }
+}
+@media(max-width:480px) {
+  .gdh-grid { grid-template-columns:1fr; }
+  .gdh-hero h1 { font-size:38px; }
+  .gdh-join,.gdh-earning { padding:25px 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="gdh-header">
+  <div class="gdh-wrap gdh-nav">
+    <a class="gdh-brand" href="#top">GlobalDev <span>Creator Hub</span></a>
+    <nav class="gdh-links" aria-label="Creator Hub navigation">
+      <a href="#categories">Categories</a>
+      <a href="#discover">Discover</a>
+      <a href="#earn">Monetisation</a>
+      <a href="#join">Join</a>
+    </nav>
+    <a class="gdh-button" href="#join">Become a Creator</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="gdh-hero">
+  <div class="gdh-wrap gdh-hero-inner">
+    <span class="gdh-label">A place for every creator</span>
+    <h1>Create. Share. Grow. Earn.</h1>
+    <p>
+      Turn your ideas, knowledge and creativity into something meaningful.
+      Publish your work, discover other creators and build opportunities
+      with GlobalDev Creator Hub.
+    </p>
+    <div class="gdh-actions">
+      <a class="gdh-button" href="#join">Start Creating</a>
+      <a class="gdh-button gdh-secondary" href="#discover">Explore Content</a>
+    </div>
+  </div>
+</section>
+
+<section class="gdh-section" id="categories">
+  <div class="gdh-wrap">
+    <h2>What can you create?</h2>
+    <p class="gdh-intro">
+      Beginners and professionals are welcome. Choose your creative format.
+    </p>
+
+    <div class="gdh-grid">
+      <article class="gdh-card">
+        <div class="gdh-icon">✍️</div>
+        <h3>Articles and Blogs</h3>
+        <p>Publish stories, opinions, guides, ideas and educational articles.</p>
+      </article>
+
+      <article class="gdh-card">
+        <div class="gdh-icon">📸</div>
+        <h3>Images and Photography</h3>
+        <p>Share photographs, illustrations, designs and visual creativity.</p>
+      </article>
+
+      <article class="gdh-card">
+        <div class="gdh-icon">🎬</div>
+        <h3>Videos</h3>
+        <p>Share educational videos, demonstrations and creative productions.</p>
+      </article>
+
+      <article class="gdh-card">
+        <div class="gdh-icon">📚</div>
+        <h3>E-books and Downloads</h3>
+        <p>Publish digital books, templates, documents and downloadable files.</p>
+      </article>
+
+      <article class="gdh-card">
+        <div class="gdh-icon">🎓</div>
+        <h3>Courses and Tutorials</h3>
+        <p>Teach skills through lessons, tutorials and structured courses.</p>
+      </article>
+
+      <article class="gdh-card">
+        <div class="gdh-icon">🎧</div>
+        <h3>Audio and Podcasts</h3>
+        <p>Publish podcasts, audio lessons, interviews and spoken content.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="gdh-section" id="discover">
+  <div class="gdh-wrap">
+    <h2>Discover Creator Content</h2>
+    <p class="gdh-intro">
+      Explore examples of the content that will be available on the platform.
+    </p>
+
+    <input
+      class="gdh-search"
+      id="gdhSearch"
+      type="search"
+      placeholder="Search content..."
+      aria-label="Search content"
+    >
+
+    <div class="gdh-filters" id="gdhFilters">
+      <button class="gdh-filter active" data-filter="all">All</button>
+      <button class="gdh-filter" data-filter="articles">Articles</button>
+      <button class="gdh-filter" data-filter="images">Images</button>
+      <button class="gdh-filter" data-filter="videos">Videos</button>
+      <button class="gdh-filter" data-filter="ebooks">E-books</button>
+      <button class="gdh-filter" data-filter="courses">Courses</button>
+      <button class="gdh-filter" data-filter="audio">Audio</button>
+    </div>
+
+    <div class="gdh-grid" id="gdhContent">
+      <article class="gdh-content-card" data-category="articles">
+        <div class="gdh-content-art">✍️</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">Article</span>
+          <h3>My Journey Into Digital Skills</h3>
+          <p>An example of a creator sharing a learning journey.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+
+      <article class="gdh-content-card" data-category="images">
+        <div class="gdh-content-art">📸</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">Photography</span>
+          <h3>Creative Photography Collection</h3>
+          <p>An example of a photography portfolio.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+
+      <article class="gdh-content-card" data-category="videos">
+        <div class="gdh-content-art">🎬</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">Video</span>
+          <h3>Introduction to Web Development</h3>
+          <p>An example of a video tutorial publication.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+
+      <article class="gdh-content-card" data-category="ebooks">
+        <div class="gdh-content-art">📚</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">E-book</span>
+          <h3>Beginner's Digital Skills Guide</h3>
+          <p>An example of a downloadable learning resource.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+
+      <article class="gdh-content-card" data-category="courses">
+        <div class="gdh-content-art">🎓</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">Course</span>
+          <h3>Learn the Basics of Coding</h3>
+          <p>An example of a structured course.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+
+      <article class="gdh-content-card" data-category="audio">
+        <div class="gdh-content-art">🎧</div>
+        <div class="gdh-content-info">
+          <span class="gdh-tag">Podcast</span>
+          <h3>Conversations About Technology</h3>
+          <p>An example of an audio publication.</p>
+          <div class="gdh-creator"><span class="gdh-avatar">👤</span> Sample Creator</div>
+        </div>
+      </article>
+    </div>
+    <p class="gdh-empty" id="gdhEmpty">No matching content found.</p>
+  </div>
+</section>
+
+<section class="gdh-section" id="earn">
+  <div class="gdh-wrap">
+    <div class="gdh-earning">
+      <h2>Turn Your Creativity Into Opportunity</h2>
+      <p class="gdh-intro">
+        The planned Creator Hub monetisation programme will give eligible
+        creators ways to earn from their original work.
+      </p>
+
+      <div class="gdh-earning-grid">
+        <div class="gdh-earning-item">
+          <div class="gdh-icon">🛍️</div>
+          <h3>Sell Products</h3>
+          <p>Offer e-books, templates and other digital downloads.</p>
+        </div>
+        <div class="gdh-earning-item">
+          <div class="gdh-icon">❤️</div>
+          <h3>Receive Support</h3>
+          <p>Allow readers and followers to support your work.</p>
+        </div>
+        <div class="gdh-earning-item">
+          <div class="gdh-icon">⭐</div>
+          <h3>Premium Content</h3>
+          <p>Offer exclusive content and learning experiences.</p>
+        </div>
+      </div>
+      <p class="gdh-intro" style="margin-top:20px">
+        Monetisation and creator payouts are planned features and are not
+        active on this introductory page.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="gdh-section" id="join">
+  <div class="gdh-wrap">
+    <div class="gdh-join">
+      <h2>Your Creative Journey Starts Here</h2>
+      <p>
+        Whether you are a beginner or an experienced professional,
+        there is room for your ideas.
+      </p>
+      <a class="gdh-button" href="mailto:contact@globaldevhub.com?subject=GlobalDev%20Creator%20Hub">
+        Contact Us About Joining
+      </a>
+      <p style="font-size:12px;margin-top:15px">
+        Creator registration will be connected in a later development stage.
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="gdh-footer">
+  <div class="gdh-wrap gdh-footer-inner">
+    <span>© <span id="gdhYear"></span> GlobalDev Hub. All rights reserved.</span>
+    <span>GlobalDev Creator Hub · Create. Share. Grow.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const cards = document.querySelectorAll("#gdhContent .gdh-content-card");
+  const filters = document.querySelectorAll("#gdhFilters .gdh-filter");
+  const search = document.getElementById("gdhSearch");
+  const empty = document.getElementById("gdhEmpty");
+  let activeFilter = "all";
+
+  function updateContent() {
+    const term = search.value.toLowerCase().trim();
+    let visible = 0;
+
+    cards.forEach(function (card) {
+      const category = card.dataset.category;
+      const matchesCategory =
+        activeFilter === "all" || category === activeFilter;
+      const matchesSearch = card.textContent.toLowerCase().includes(term);
+      const show = matchesCategory && matchesSearch;
+
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+
+    empty.style.display = visible ? "none" : "block";
+  }
+
+  filters.forEach(function (button) {
+    button.addEventListener("click", function () {
+      activeFilter = button.dataset.filter;
+
+      filters.forEach(function (item) {
+        item.classList.toggle("active", item === button);
+      });
+
+      updateContent();
+    });
+  });
+
+  search.addEventListener("input", updateContent);
+  document.getElementById("gdhYear").textContent =
+    new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
