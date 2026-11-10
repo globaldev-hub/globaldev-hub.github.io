@@ -1,0 +1,116 @@
+
+/*
+ * GLOBALDEV HUB — STORIES & REELS PATCH
+ *
+ * Apply this to your existing creator-hub.html.
+ * This is a patch, not a standalone website.
+ */
+
+const fs = require("fs");
+
+const file = "creator-hub.html";
+
+if (!fs.existsSync(file)) {
+  throw new Error("Your existing creator-hub.html file was not found.");
+}
+
+let html = fs.readFileSync(file, "utf8");
+const original = html;
+
+function replaceOnce(oldText, newText, description) {
+  const count = html.split(oldText).length - 1;
+
+  if (count !== 1) {
+    throw new Error(
+      description + ": expected one match, found " + count
+    );
+  }
+
+  html = html.replace(oldText, newText);
+}
+
+// 1. Make Create Story an actual composer action.
+replaceOnce(
+  '<a class="gdh-story gdh-story-create" href="#gdhQuickPostForm"><span>＋</span><strong>Create story</strong><small>Share a moment</small></a>',
+  '<button class="gdh-story gdh-story-create" id="gdhCreateStory" type="button"><span>＋</span><strong>Create story</strong><small>Share a moment</small></button>',
+  "Create Story button"
+);
+
+// 2. Add story and Reels state.
+replaceOnce(
+  'let currentUser=null,activeFilter="all",searchTerm="",redirecting=false,savingPost=false,selectedMusic=null,editingMusic=null,creatorDirectory=[],followingIds=new Set(),peopleMode="all";',
+  'let currentUser=null,activeFilter="all",searchTerm="",redirecting=false,savingPost=false,selectedMusic=null,editingMusic=null,creatorDirectory=[],followingIds=new Set(),peopleMode="all",quickPostKind="status",reelsMode=false;',
+  "Composer state"
+);
+
+// 3. Allow the composer to publish stories.
+replaceOnce(
+  'const kind=file?(file.type.startsWith("video/")?"video":"image"):selectedMusic?"music":"status";const category=kind==="video"?"videos":kind==="image"?"images":"articles";',
+  'const kind=quickPostKind==="story"?"story":file?(file.type.startsWith("video/")?"video":"image"):selectedMusic?"music":"status";const category=kind==="video"?"videos":kind==="image"?"images":"articles";',
+  "Story publishing"
+);
+
+// 4. Reset composer after publishing.
+replaceOnce(
+  '$("gdhQuickPostForm").reset();selectedMusic=null;$("gdhSelectedMusicPreview").textContent="";',
+  '$("gdhQuickPostForm").reset();quickPostKind="status";$("gdhCreateStory").querySelector("strong").textContent="Create story";$("gdhQuickText").placeholder="Write something…";selectedMusic=null;$("gdhSelectedMusicPreview").textContent="";',
+  "Composer reset"
+);
+
+// 5. Connect the Create Story button.
+replaceOnce(
+  'function setupQuickComposer(){const form=$("gdhQuickPostForm");form.addEventListener("submit",publishQuickPost);setupEmojiPicker();',
+  'function setupQuickComposer(){const form=$("gdhQuickPostForm");form.addEventListener("submit",publishQuickPost);$("gdhCreateStory")?.addEventListener("click",()=>{quickPostKind="story";$("gdhCreateStory").querySelector("strong").textContent="Story mode active";$("gdhQuickText").placeholder="Share a moment — stories disappear after 24 hours.";say("gdhQuickPostStatus","Story mode: add text, a photo or a video, then publish. Stories are shown for 24 hours.");$("gdhQuickPostForm").scrollIntoView({behavior:"smooth",block:"center"});$("gdhQuickText").focus()});setupEmojiPicker();',
+  "Story composer action"
+);
+
+// 6. Load recent stories into the Stories row.
+replaceOnce(
+  'function setupSocialChrome(){const menu=$("gdhMenu"),toggle=$("gdhMenuButton");',
+  `async function loadStories(){const strip=$(".gdh-stories");if(!strip)return;strip.querySelectorAll("[data-gdh-story-card]").forEach(n=>n.remove());const cutoff=Date.now()-24*60*60*1000;const {data,error}=await supabase.from("creator_posts").select("id,creator_id,title,description,content,media_path,created_at,published_at").eq("status","published").order("created_at",{ascending:false}).limit(100);if(error){console.info("Stories could not be loaded:",error.message);return}const stories=(data||[]).filter(p=>unpackPostContent(p.content).kind==="story"&&new Date(p.created_at||p.published_at).getTime()>=cutoff);const names=await getAuthorNames([...new Set(stories.map(p=>p.creator_id))]);for(const p of stories){const parsed=unpackPostContent(p.content);const card=document.createElement("button");card.type="button";card.className="gdh-story";card.dataset.gdhStoryCard="true";const who=names.get(p.creator_id)||"Member";const heading=document.createElement("strong");heading.textContent=who;const sub=document.createElement("small");sub.textContent=parsed.text||p.title||"View story";const icon=document.createElement("span");icon.textContent=p.media_path?(p.media_path.match(/\\.(mp4|webm)$/i)?"▶️":"📷"):"💬";card.append(icon,heading,sub);card.addEventListener("click",()=>{const target=document.querySelector('[data-post-id="'+p.id+'"]');if(target)target.scrollIntoView({behavior:"smooth",block:"center"});else say("gdhQuickPostStatus","Refresh the feed to view this story post.")});strip.append(card)}}\\nfunction setupSocialChrome(){const menu=$("gdhMenu"),toggle=$("gdhMenuButton");`,
+  "Stories loader"
+);
+
+// 7. Give posts an ID for story navigation.
+replaceOnce(
+  'const card=text(box,"article","","gdh-content-card");card.dataset.category=p.category;',
+  'const card=text(box,"article","","gdh-content-card");card.dataset.category=p.category;card.dataset.postId=p.id;',
+  "Post navigation"
+);
+
+// 8. Add a dedicated vertical video/Reels mode.
+replaceOnce(
+  '$("gdhReelsButton")?.addEventListener("click",()=>{activeFilter="videos";',
+  '$("gdhReelsButton")?.addEventListener("click",()=>{reelsMode=!reelsMode;$("gdhPublishedContent").classList.toggle("gdh-reels-mode",reelsMode);$("gdhReelsButton").textContent=reelsMode?"↩ Exit Reels":"▶ Explore videos & Reels";activeFilter="videos";',
+  "Reels mode"
+);
+
+// 9. Load stories when the member feed loads.
+replaceOnce(
+  'await Promise.all([loadMyPosts(),loadCreatorDirectory(),loadPublishedPosts(),loadNotifications()]);setupFeedRealtime()}',
+  'await Promise.all([loadMyPosts(),loadCreatorDirectory(),loadPublishedPosts(),loadNotifications(),loadStories()]);setupFeedRealtime()}',
+  "Stories initialization"
+);
+
+// 10. Add vertical Reels presentation.
+replaceOnce(
+  '</style></head>',
+  '#gdhPublishedContent.gdh-reels-mode{display:grid;gap:18px}#gdhPublishedContent.gdh-reels-mode .gdh-content-card{max-width:520px;margin-inline:auto;width:100%}#gdhPublishedContent.gdh-reels-mode .gdh-video-card .gdh-video-player{width:100%;max-height:78vh;aspect-ratio:9/16;object-fit:cover;background:#050505}#gdhPublishedContent.gdh-reels-mode .gdh-content-card:not(.gdh-video-card){display:none}\\n</style></head>',
+  "Reels styling"
+);
+
+// 11. Save safely, keeping a backup.
+if (html === original) {
+  throw new Error("No changes were made.");
+}
+
+fs.writeFileSync(
+  file + ".backup",
+  original,
+  "utf8"
+);
+
+fs.writeFileSync(file, html, "utf8");
+
+console.log("GlobalDev Hub patch applied.");
+console.log("Original backup saved.");
