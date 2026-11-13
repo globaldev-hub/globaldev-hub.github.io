@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Suggest useful learning materials, developer tools, websites and digital resources for the GlobalDev Hub community.">
+  <title>Submit a Resource | GlobalDev Hub</title>
+  <style>
+    :root {
+      --navy: #101827;
+      --blue: #2563eb;
+      --teal: #0d9488;
+      --light: #f3f6fb;
+      --text: #263247;
+      --muted: #64748b;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .brand { font-size: 1.25rem; }
+
+    nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    nav a { font-size: .92rem; }
+
+    .hero {
+      background: linear-gradient(135deg, #101827, #1d4ed8);
+      color: white;
+      padding: 65px 7%;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: auto;
+      color: #dbeafe;
+    }
+
+    main {
+      width: min(920px, 90%);
+      margin: 40px auto 65px;
+    }
+
+    .intro, .form-card, .guidelines {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, .06);
+    }
+
+    h2 { color: var(--navy); margin-top: 0; }
+
+    .guidelines ul { padding-left: 22px; }
+    .guidelines li { margin: 8px 0; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 17px 0 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea { min-height: 125px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #93c5fd;
+      border-color: var(--blue);
+    }
+
+    button {
+      margin-top: 22px;
+      border: 0;
+      border-radius: 9px;
+      padding: 14px 23px;
+      background: var(--blue);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #1d4ed8; }
+
+    .notice {
+      background: #ecfeff;
+      border-left: 4px solid var(--teal);
+      padding: 14px 16px;
+      border-radius: 7px;
+      color: #134e4a;
+      font-size: .93rem;
+    }
+
+    #form-message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    footer {
+      background: var(--navy);
+      color: #cbd5e1;
+      text-align: center;
+      padding: 28px 7%;
+    }
+
+    footer a { color: #93c5fd; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      header { justify-content: center; text-align: center; }
+      nav { justify-content: center; }
+      .intro, .form-card, .guidelines { padding: 21px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="brand" href="welcome.html">🌍 GlobalDev Hub</a>
+    <nav>
+      <a href="welcome.html">Home</a>
+      <a href="resources.html">Resources</a>
+      <a href="tools.html">Tools</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Submit a Resource</h1>
+    <p>Found something useful? Help the community discover valuable tools, tutorials, websites and learning materials.</p>
+  </section>
+
+  <main>
+    <section class="intro">
+      <h2>Share something valuable</h2>
+      <p>GlobalDev Hub is built around learning, discovery and opportunity. Your suggestions can help developers, students, creators and digital professionals find useful resources.</p>
+      <p>Submit a resource for consideration. Our team can review suggestions for relevance, usefulness and quality before deciding whether to feature them.</p>
+    </section>
+
+    <section class="guidelines">
+      <h2>What can you submit?</h2>
+      <ul>
+        <li>Programming tutorials and learning websites.</li>
+        <li>Developer tools and productivity resources.</li>
+        <li>Free courses, documentation and educational materials.</li>
+        <li>Useful websites, communities and digital opportunities.</li>
+        <li>Templates, guides and other helpful digital resources.</li>
+      </ul>
+      <div class="notice">
+        Please submit resources that are relevant, accessible and useful. Avoid spam, misleading links, harmful downloads and material that violates another person's rights.
+      </div>
+    </section>
+
+    <section class="form-card">
+      <h2>Resource submission form</h2>
+      <p>Provide enough information for the resource to be reviewed.</p>
+
+      <form id="resource-form">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" placeholder="Enter your name" required>
+
+        <label for="email">Your email address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+        <label for="title">Resource title</label>
+        <input id="title" name="title" type="text" placeholder="Name of the resource" required>
+
+        <label for="url">Resource URL</label>
+        <input id="url" name="url" type="url" placeholder="https://example.com" required>
+
+        <label for="category">Resource category</label>
+        <select id="category" name="category" required>
+          <option value="">Choose a category</option>
+          <option>Developer Tools</option>
+          <option>Programming Tutorials</option>
+          <option>Courses and Education</option>
+          <option>Career and Opportunities</option>
+          <option>Design and Creativity</option>
+          <option>Business and Entrepreneurship</option>
+          <option>Other</option>
+        </select>
+
+        <label for="description">Why should we feature this resource?</label>
+        <textarea id="description" name="description" placeholder="Describe what it offers and who may find it useful..." required></textarea>
+
+        <button type="submit">Submit Resource</button>
+        <div id="form-message" role="status">
+          This is a preview form. Your submission has not been sent or stored yet. A secure submission service will be connected before the form is used for real submissions.
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> GlobalDev Hub. Built for learning, growth and opportunity.</p>
+    <p>
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="terms.html">Terms</a> ·
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("resource-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("form-message").style.display = "block";
+    });
+  </script>
+</body>
+</html>
