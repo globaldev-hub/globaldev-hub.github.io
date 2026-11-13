@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Apply to sell your digital products through GlobalDev Hub. Connect with an audience looking for useful digital resources.">
+  <meta name="theme-color" content="#101827">
+  <title>Sell With Us | GlobalDev Hub</title>
+
+  <style>
+    :root {
+      --dark: #101827;
+      --primary: #2563eb;
+      --teal: #0d9488;
+      --bg: #f5f7fb;
+      --text: #243247;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; }
+
+    header {
+      background: var(--dark);
+      padding: 16px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 17px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    nav a:hover { color: #5eead4; }
+
+    .hero {
+      padding: 75px 20px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #101827, #174b82, #0d9488);
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 47px);
+      margin: 0 0 15px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #e0f2fe;
+      font-size: 17px;
+    }
+
+    .hero a {
+      display: inline-block;
+      margin-top: 24px;
+      background: white;
+      color: #12345a;
+      padding: 13px 23px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    main {
+      width: min(1050px, 92%);
+      margin: 45px auto;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .heading h2 {
+      color: var(--dark);
+      font-size: 28px;
+    }
+
+    .heading p { color: var(--muted); }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-bottom: 55px;
+    }
+
+    .benefit {
+      background: white;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .benefit span { font-size: 32px; }
+    .benefit h3 { color: var(--dark); margin-bottom: 8px; }
+    .benefit p { color: var(--muted); font-size: 14px; }
+
+    .form-container {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 25px #0f172a0b;
+    }
+
+    .form-container h2 {
+      color: var(--dark);
+      margin-top: 0;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--dark);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #93c5fd;
+      border-color: var(--primary);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 15px 0 20px;
+    }
+
+    .consent input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #1d4ed8; }
+
+    .notice {
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      padding: 17px;
+      border-radius: 9px;
+      margin-top: 22px;
+      color: #155e75;
+      font-size: 13px;
+    }
+
+    .success {
+      display: none;
+      padding: 18px;
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      border-radius: 9px;
+      color: #166534;
+      margin-top: 20px;
+    }
+
+    .cta {
+      margin-top: 45px;
+      padding: 35px 20px;
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      border-radius: 13px;
+    }
+
+    .cta p { color: #cbd5e1; }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 11px 20px;
+      background: var(--teal);
+      color: white;
+      border-radius: 7px;
+      font-weight: bold;
+    }
+
+    footer {
+      background: var(--dark);
+      color: #cbd5e1;
+      text-align: center;
+      padding: 28px 15px;
+      margin-top: 55px;
+      font-size: 14px;
+    }
+
+    footer a { color: #5eead4; }
+
+    @media(max-width: 650px) {
+      header { justify-content: center; }
+      nav { justify-content: center; }
+      .form-grid { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .form-container { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="welcome.html">G GlobalDev Hub</a>
+  <nav aria-label="Main navigation">
+    <a href="welcome.html">Home</a>
+    <a href="digital-store.html">Digital Store</a>
+    <a href="digital-products.html">Digital Products</a>
+    <a href="recommended-tools.html">Recommended Tools</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Sell Your Digital Products With Us</h1>
+  <p>
+    Have useful digital products, templates or educational resources?
+    Apply to become a GlobalDev Hub creator and explore opportunities
+    to reach more people with your work.
+  </p>
+  <a href="#application">Become a Creator</a>
+</section>
+
+<main>
+
+  <section>
+    <div class="heading">
+      <h2>Why Become a GlobalDev Creator?</h2>
+      <p>Bring your digital ideas to a wider audience.</p>
+    </div>
+
+    <div class="benefits">
+      <article class="benefit">
+        <span>🌍</span>
+        <h3>Reach More People</h3>
+        <p>Present your digital products to visitors exploring GlobalDev Hub.</p>
+      </article>
+
+      <article class="benefit">
+        <span>💡</span>
+        <h3>Share Your Ideas</h3>
+        <p>Showcase useful resources, templates and digital knowledge.</p>
+      </article>
+
+      <article class="benefit">
+        <span>💰</span>
+        <h3>Explore Earning Opportunities</h3>
+        <p>Explore potential product sales through our digital marketplace.</p>
+      </article>
+
+      <article class="benefit">
+        <span>🤝</span>
+        <h3>Grow Together</h3>
+        <p>Become part of a growing community focused on digital resources.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="application" class="form-container">
+    <h2>Creator Application Form</h2>
+    <p class="intro">
+      Tell us about yourself and the digital products you would like
+      to submit. Applications will be reviewed before any product is listed.
+    </p>
+
+    <form id="creatorForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input id="name" name="name" required maxlength="100"
+                 autocomplete="name" placeholder="Enter your full name">
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input id="email" name="email" type="email" required
+                 maxlength="150" autocomplete="email"
+                 placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="country">Country *</label>
+          <input id="country" name="country" required maxlength="80"
+                 autocomplete="country-name" placeholder="Your country">
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone / WhatsApp</label>
+          <input id="phone" name="phone" type="tel" maxlength="30"
+                 autocomplete="tel" placeholder="Your contact number">
+        </div>
+
+        <div class="field">
+          <label for="product">Product Name *</label>
+          <input id="product" name="product" required maxlength="120"
+                 placeholder="Name of your digital product">
+        </div>
+
+        <div class="field">
+          <label for="category">Product Category *</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option>CV & Resume Templates</option>
+            <option>E-books & Digital Guides</option>
+            <option>Website Templates</option>
+            <option>Business & Social Media Templates</option>
+            <option>Online Courses & Educational Materials</option>
+            <option>Software & Digital Resources</option>
+            <option>Other Digital Products</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="format">Product Format *</label>
+          <select id="format" name="format" required>
+            <option value="">Select format</option>
+            <option>PDF</option>
+            <option>Word Document</option>
+            <option>Excel Spreadsheet</option>
+            <option>Image / Graphics</option>
+            <option>Website Files</option>
+            <option>Video / Audio</option>
+            <option>ZIP Package</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="price">Proposed Price</label>
+          <input id="price" name="price" maxlength="50"
+                 placeholder="e.g. ₦5,000 or $10">
+        </div>
+
+        <div class="field full">
+          <label for="description">Product Description *</label>
+          <textarea id="description" name="description" required
+                    maxlength="1500"
+                    placeholder="Describe your product, what it offers and who it is for."></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="preview">Product Preview or Existing Link</label>
+          <input id="preview" name="preview" type="url" maxlength="500"
+                 placeholder="https://example.com">
+          <span class="help">
+            Optional. Share a link to a preview or an existing product page.
+          </span>
+        </div>
+
+        <div class="field full">
+          <label for="experience">Tell Us About Yourself</label>
+          <textarea id="experience" name="experience" maxlength="1000"
+                    placeholder="Share a little about your work or experience."></textarea>
+        </div>
+
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consent" required>
+        <span>
+          I confirm that I own this product or have permission to distribute
+          it, and that the information I have provided is accurate.
+        </span>
+      </label>
+
+      <button type="submit">Submit Creator Application</button>
+
+      <div id="successMessage" class="success" role="status" aria-live="polite">
+        <strong>Application prepared successfully!</strong>
+        <p>
+          This demonstration form does not send or save your application yet.
+          The submission system will be connected when the secure backend
+          is configured.
+        </p>
+      </div>
+
+    </form>
+
+    <div class="notice">
+      <strong>Important:</strong> Submitting an application does not guarantee
+      acceptance or product listing. Product approval, seller terms,
+      commissions and payment arrangements will be communicated before
+      the marketplace begins accepting sales.
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Have Questions?</h2>
+    <p>Contact GlobalDev Hub if you need more information about becoming a creator.</p>
+    <a href="contact.html">Contact GlobalDev Hub</a>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>G GlobalDev Hub</strong></p>
+  <p>Digital Knowledge & Resources</p>
+  <p>
+    <a href="welcome.html">Home</a> |
+    <a href="digital-store.html">Digital Store</a> |
+    <a href="digital-products.html">Digital Products</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms & Conditions</a>
+  </p>
+  <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  document.getElementById("creatorForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (!this.reportValidity()) return;
+
+    document.getElementById("successMessage").style.display = "block";
+    document.getElementById("successMessage").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  });
+</script>
+
+</body>
+</html>
