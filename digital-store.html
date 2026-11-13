@@ -3,522 +3,307 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0755e9">
-  <meta name="description" content="Explore GlobalDev Digital Store for CV templates, e-books, website templates and business and social media templates.">
-  <title>GlobalDev Digital Store | GlobalDev Hub</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore digital products, templates, guides and resources at GlobalDev Hub.">
+  <title>GlobalDev Digital Store</title>
   <style>
     :root {
-      --blue: #0755e9;
-      --navy: #071e46;
-      --ink: #17243b;
+      --primary: #155eef;
+      --dark: #14213d;
       --muted: #64748b;
-      --pale: #eef5ff;
-      --line: #dce6f5;
+      --light: #f5f8ff;
       --white: #ffffff;
     }
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--ink);
-      background: #fff;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      background: var(--light);
       line-height: 1.6;
     }
 
-    a { color: inherit; }
-
-    .wrap {
-      width: min(1120px, 92%);
-      margin: auto;
-    }
-
     header {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav {
-      min-height: 72px;
+      background: var(--white);
+      padding: 17px 6%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
       flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 2px 12px #14213d0c;
     }
 
     .brand {
-      color: var(--navy);
-      font-size: 1.15rem;
+      font-size: 21px;
       font-weight: 800;
+      color: var(--primary);
       text-decoration: none;
     }
 
-    .brand span { color: var(--blue); }
-
-    .nav-links {
+    nav {
       display: flex;
-      align-items: center;
-      gap: 18px;
       flex-wrap: wrap;
+      gap: 18px;
     }
 
-    .nav-links a {
-      color: #40516b;
+    nav a {
+      color: var(--dark);
       text-decoration: none;
+      font-size: 14px;
       font-weight: 600;
-      font-size: .92rem;
     }
 
-    .nav-links a:hover { color: var(--blue); }
+    nav a:hover { color: var(--primary); }
 
     .hero {
-      padding: 85px 0;
-      background: linear-gradient(135deg, #eaf2ff, #fff 75%);
-    }
-
-    .hero-content {
-      max-width: 760px;
-      margin: auto;
+      padding: 75px 20px;
       text-align: center;
+      color: white;
+      background: linear-gradient(130deg, #102b62, #155eef);
     }
 
-    .eyebrow {
-      color: var(--blue);
-      font-size: .8rem;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin: 0 0 12px;
     }
-
-    h1 {
-      color: var(--navy);
-      font-size: clamp(2.3rem, 6vw, 4rem);
-      line-height: 1.12;
-      margin: 15px 0;
-      letter-spacing: -.04em;
-    }
-
-    h1 span { color: var(--blue); }
 
     .hero p {
-      color: var(--muted);
-      font-size: 1.08rem;
       max-width: 650px;
-      margin: 0 auto 25px;
+      margin: auto;
+      color: #e2eaff;
+      font-size: 17px;
     }
 
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px 19px;
-      border-radius: 9px;
-      text-decoration: none;
-      font-weight: 700;
-      border: 1px solid var(--blue);
+    .container {
+      width: min(1100px, 90%);
+      margin: 45px auto;
     }
 
-    .btn.primary {
-      background: var(--blue);
-      color: #fff;
-    }
-
-    .btn.secondary {
-      background: #fff;
-      color: var(--blue);
-    }
-
-    section { padding: 65px 0; }
-
-    .section-head {
-      max-width: 720px;
+    .section-heading {
       text-align: center;
-      margin: 0 auto 35px;
+      margin-bottom: 28px;
     }
 
-    .section-head h2 {
-      color: var(--navy);
-      font-size: clamp(1.7rem, 3vw, 2.4rem);
-      line-height: 1.2;
-      margin: 10px 0;
+    .section-heading h2 {
+      margin-bottom: 5px;
+      font-size: 27px;
     }
 
-    .section-head p { color: var(--muted); }
+    .section-heading p { color: var(--muted); }
 
     .categories {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
     }
 
     .category {
-      padding: 27px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fff;
-      transition: transform .2s, box-shadow .2s;
+      background: white;
+      padding: 23px;
+      border-radius: 14px;
+      text-align: center;
+      border: 1px solid #e7edf7;
     }
 
-    .category:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px #071e4610;
-    }
-
-    .category-icon { font-size: 2.3rem; }
+    .category .emoji { font-size: 32px; }
 
     .category h3 {
-      color: var(--navy);
-      margin: 12px 0 7px;
-      font-size: 1.25rem;
+      font-size: 17px;
+      margin: 9px 0 5px;
     }
 
     .category p {
+      font-size: 13px;
       color: var(--muted);
       margin: 0;
     }
 
     .products {
-      background: #f7faff;
-    }
-
-    .product-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 20px;
     }
 
     .product {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 15px;
+      background: white;
+      border: 1px solid #e7edf7;
+      border-radius: 14px;
       padding: 25px;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
     }
 
     .product-icon {
-      font-size: 2rem;
+      font-size: 35px;
       margin-bottom: 10px;
     }
 
-    .product h3 {
-      color: var(--navy);
-      margin: 5px 0;
-    }
+    .product h3 { margin: 0 0 8px; }
 
     .product p {
       color: var(--muted);
-      margin: 8px 0 15px;
+      font-size: 14px;
+      flex: 1;
     }
 
-    .status {
+    .coming {
       display: inline-block;
+      align-self: flex-start;
+      background: #fff4d6;
+      color: #865800;
       padding: 5px 11px;
       border-radius: 20px;
-      background: #eef5ff;
-      color: #0755e9;
-      font-size: .78rem;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: bold;
     }
-
-    .currency {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 27px;
-      text-align: center;
-      max-width: 750px;
-      margin: 35px auto 0;
-    }
-
-    .currency h3 {
-      color: var(--navy);
-      margin-top: 0;
-    }
-
-    .currency p { color: var(--muted); }
 
     .notice {
-      background: #071e46;
-      color: #fff;
-      border-radius: 18px;
-      padding: 35px;
+      background: white;
+      border: 1px solid #e7edf7;
+      padding: 25px;
+      border-radius: 14px;
       text-align: center;
-    }
-
-    .notice h2 { margin-top: 0; }
-
-    .notice p {
-      color: #dce8ff;
-      max-width: 650px;
-      margin: 0 auto 20px;
-    }
-
-    .notice .btn {
-      background: #fff;
-      color: var(--blue);
-      border-color: #fff;
+      margin-top: 35px;
     }
 
     footer {
-      background: #f2f6fc;
-      border-top: 1px solid var(--line);
-      padding: 30px 0;
-      color: var(--muted);
-      font-size: .9rem;
+      background: #10213f;
+      color: #dbe5f5;
+      text-align: center;
+      padding: 28px 15px;
+      margin-top: 60px;
+      font-size: 13px;
     }
 
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .footer-links a {
-      color: #40516b;
+    footer a {
+      color: white;
       text-decoration: none;
+      margin: 0 8px;
     }
 
-    .footer-links a:hover { color: var(--blue); }
-
-    @media(max-width: 650px) {
-      .nav {
-        padding: 14px 0;
-        align-items: flex-start;
-      }
-
-      .nav-links { gap: 12px; }
-
-      .hero { padding: 60px 0; }
-
-      .categories,
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
-
-      section { padding: 48px 0; }
-
-      .notice { padding: 27px 20px; }
+    @media (max-width: 600px) {
+      header { justify-content: center; }
+      nav { justify-content: center; }
+      .hero { padding: 55px 18px; }
     }
   </style>
 </head>
 
 <body>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="welcome.html">
-      G <span>GlobalDev Hub</span>
-    </a>
-
-    <nav class="nav-links" aria-label="Main navigation">
+  <header>
+    <a class="brand" href="welcome.html">GlobalDev Hub</a>
+    <nav aria-label="Main navigation">
       <a href="welcome.html">Home</a>
-      <a href="tools.html">Digital Tools</a>
+      <a href="tools.html">Free Tools</a>
       <a href="recommended-tools.html">Recommended Tools</a>
-      <a href="about.html">About</a>
+      <a href="donate.html">Donate</a>
     </nav>
-  </div>
-</header>
+  </header>
 
-<main>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-content">
-      <div class="eyebrow">GlobalDev Hub Marketplace</div>
-
-      <h1>
-        Welcome to <span>GlobalDev Digital Store</span>
-      </h1>
-
+  <main>
+    <section class="hero">
+      <h1>GlobalDev Digital Store</h1>
       <p>
-        Discover digital products and practical resources designed
-        to support your learning, creativity, business and online journey.
+        Discover practical digital resources, templates and guides
+        designed to support your learning, creativity and projects.
       </p>
+    </section>
 
-      <a href="#categories" class="btn primary">
-        Explore Categories
-      </a>
-    </div>
-  </section>
-
-  <!-- PRODUCT CATEGORIES -->
-  <section id="categories">
-    <div class="wrap">
-
-      <div class="section-head">
-        <div class="eyebrow">Explore the store</div>
-        <h2>Find Digital Products for Your Next Step</h2>
-        <p>
-          Explore our four planned product categories.
-          New digital products will be added as they become available.
-        </p>
+    <section class="container">
+      <div class="section-heading">
+        <h2>Explore Categories</h2>
+        <p>Find the type of digital resource you're looking for.</p>
       </div>
 
       <div class="categories">
-
         <article class="category">
-          <div class="category-icon">📄</div>
-          <h3>CV &amp; Resume Templates</h3>
-          <p>
-            Professional CV and resume templates to help you
-            present your skills, experience and qualifications.
-          </p>
+          <div class="emoji">📄</div>
+          <h3>CV & Resume Templates</h3>
+          <p>Professional resume and CV resources.</p>
         </article>
 
         <article class="category">
-          <div class="category-icon">📚</div>
-          <h3>E-books &amp; Digital Guides</h3>
-          <p>
-            Digital reading materials, educational guides
-            and practical learning resources.
-          </p>
+          <div class="emoji">📚</div>
+          <h3>E-books & Digital Guides</h3>
+          <p>Digital reading and learning resources.</p>
         </article>
 
         <article class="category">
-          <div class="category-icon">🌐</div>
+          <div class="emoji">💻</div>
           <h3>Website Templates</h3>
-          <p>
-            Website design templates and digital resources
-            for people building their online presence.
-          </p>
+          <p>Templates for websites and online projects.</p>
         </article>
 
         <article class="category">
-          <div class="category-icon">📱</div>
-          <h3>Business &amp; Social Media Templates</h3>
-          <p>
-            Digital templates and resources for business
-            communication and social media content.
-          </p>
+          <div class="emoji">🎨</div>
+          <h3>Business & Social Media</h3>
+          <p>Creative templates for business and social content.</p>
         </article>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PRODUCT LISTINGS -->
-  <section class="products" id="products">
-    <div class="wrap">
-
-      <div class="section-head">
-        <div class="eyebrow">Our digital collection</div>
-        <h2>Products Coming Soon</h2>
-        <p>
-          We're preparing digital products for the GlobalDev
-          Digital Store. Available products will appear here.
-        </p>
+    <section class="container">
+      <div class="section-heading">
+        <h2>Digital Products</h2>
+        <p>Our product collection will appear here as items become available.</p>
       </div>
 
-      <div class="product-grid">
-
+      <div class="products">
         <article class="product">
           <div class="product-icon">📄</div>
-          <h3>CV &amp; Resume Collection</h3>
-          <p>Professional templates for job seekers and professionals.</p>
-          <span class="status">Products coming soon</span>
+          <h3>CV & Resume Collection</h3>
+          <p>Explore professional CV and resume templates.</p>
+          <span class="coming">Coming soon</span>
         </article>
 
         <article class="product">
-          <div class="product-icon">📖</div>
-          <h3>E-books &amp; Guides Collection</h3>
-          <p>Digital learning materials and practical guides.</p>
-          <span class="status">Products coming soon</span>
+          <div class="product-icon">📘</div>
+          <h3>Digital Guides Collection</h3>
+          <p>Discover helpful e-books and digital guides.</p>
+          <span class="coming">Coming soon</span>
         </article>
 
         <article class="product">
-          <div class="product-icon">💻</div>
+          <div class="product-icon">🌐</div>
           <h3>Website Template Collection</h3>
-          <p>Templates and resources for creating websites.</p>
-          <span class="status">Products coming soon</span>
+          <p>Browse templates for your next website project.</p>
+          <span class="coming">Coming soon</span>
         </article>
 
         <article class="product">
           <div class="product-icon">🎨</div>
-          <h3>Business &amp; Social Media Collection</h3>
-          <p>Templates for business and social media projects.</p>
-          <span class="status">Products coming soon</span>
+          <h3>Business Template Collection</h3>
+          <p>Find business and social media design resources.</p>
+          <span class="coming">Coming soon</span>
         </article>
-
       </div>
 
-      <div class="currency">
-        <h3>💲 Naira &amp; Dollar Pricing</h3>
-        <p>
-          Product listings will display prices in Nigerian Naira
-          (₦) or US Dollars ($), depending on the product and
-          supported payment currency.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PAYMENT INFORMATION -->
-  <section>
-    <div class="wrap">
       <div class="notice">
-        <h2>Secure Payments with Paystack</h2>
+        <h2>More digital resources are on the way!</h2>
         <p>
-          Paystack will be used for product purchases once
-          individual product prices, checkout links and secure
-          digital delivery have been configured.
+          Product details, downloadable files and secure checkout
+          will be added as our store collection is prepared.
         </p>
-        <a href="contact.html" class="btn">
-          Contact GlobalDev Hub
-        </a>
+        <p><strong>Payment currencies planned:</strong> NGN and USD, subject to Paystack account support.</p>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-row">
-
-      <div>
-        <a class="brand" href="welcome.html">
-          G <span>GlobalDev Hub</span>
-        </a>
-        <p>Digital Knowledge &amp; Real Opportunities</p>
-      </div>
-
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="welcome.html">Home</a>
-        <a href="guides.html">Guides</a>
-        <a href="tools.html">Tools</a>
-        <a href="recommended-tools.html">Recommended Tools</a>
-        <a href="donate.html">Donate</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms &amp; Conditions</a>
-      </nav>
-
-    </div>
-
+  <footer>
+    <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
     <p>
-      © <span id="year"></span> GlobalDev Hub. All rights reserved.
+      <a href="welcome.html">Home</a>
+      <a href="tools.html">Free Tools</a>
+      <a href="donate.html">Donate</a>
     </p>
-  </div>
-</footer>
+  </footer>
 
-<script>
-  document.getElementById("year").textContent =
-    new Date().getFullYear();
-</script>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
