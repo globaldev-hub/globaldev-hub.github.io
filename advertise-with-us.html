@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Advertise with GlobalDev Hub. Explore advertising, brand partnerships and promotional opportunities.">
+<meta name="theme-color" content="#101827">
+<title>Advertise With Us | GlobalDev Hub</title>
+
+<style>
+:root {
+  --dark:#101827;
+  --primary:#2563eb;
+  --teal:#0d9488;
+  --bg:#f5f7fb;
+  --text:#243247;
+  --muted:#64748b;
+  --border:#e2e8f0;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg);
+}
+
+a { text-decoration:none; }
+
+header {
+  background:var(--dark);
+  padding:16px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.brand {
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+}
+
+nav {
+  display:flex;
+  gap:17px;
+  flex-wrap:wrap;
+}
+
+nav a {
+  color:#e2e8f0;
+  font-size:14px;
+}
+
+nav a:hover { color:#5eead4; }
+
+.hero {
+  padding:75px 20px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg,#101827,#174b82,#0d9488);
+}
+
+.hero h1 {
+  font-size:clamp(32px,5vw,46px);
+  margin:0 0 15px;
+}
+
+.hero p {
+  max-width:700px;
+  margin:auto;
+  color:#e0f2fe;
+  font-size:17px;
+}
+
+.hero a {
+  display:inline-block;
+  margin-top:25px;
+  padding:13px 22px;
+  background:white;
+  color:#12345a;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+main {
+  width:min(1050px,92%);
+  margin:45px auto;
+}
+
+.heading {
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.heading h2 {
+  color:var(--dark);
+  font-size:28px;
+}
+
+.heading p { color:var(--muted); }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:50px;
+}
+
+.card {
+  background:white;
+  padding:24px;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.card span { font-size:35px; }
+
+.card h3 { color:var(--dark); }
+
+.card p {
+  color:var(--muted);
+  font-size:14px;
+}
+
+.form-box {
+  background:white;
+  padding:30px;
+  border:1px solid var(--border);
+  border-radius:13px;
+}
+
+.form-box h2 { color:var(--dark); }
+
+.form-box > p {
+  color:var(--muted);
+  font-size:14px;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:25px;
+}
+
+.field {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.full { grid-column:1/-1; }
+
+label {
+  font-size:14px;
+  font-weight:bold;
+}
+
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:7px;
+  font:inherit;
+}
+
+textarea {
+  min-height:110px;
+  resize:vertical;
+}
+
+input:focus,select:focus,textarea:focus {
+  outline:2px solid #93c5fd;
+  border-color:var(--primary);
+}
+
+button {
+  width:100%;
+  padding:14px;
+  background:var(--primary);
+  color:white;
+  border:0;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:22px;
+}
+
+button:hover { background:#1d4ed8; }
+
+.notice {
+  margin-top:22px;
+  padding:17px;
+  background:#ecfeff;
+  border:1px solid #a5f3fc;
+  border-radius:9px;
+  color:#155e75;
+  font-size:13px;
+}
+
+.success {
+  display:none;
+  margin-top:20px;
+  padding:17px;
+  background:#ecfdf5;
+  border:1px solid #86efac;
+  color:#166534;
+  border-radius:9px;
+}
+
+.cta {
+  margin-top:45px;
+  padding:35px 20px;
+  background:var(--dark);
+  color:white;
+  text-align:center;
+  border-radius:13px;
+}
+
+.cta p { color:#cbd5e1; }
+
+.cta a {
+  display:inline-block;
+  margin-top:10px;
+  padding:11px 20px;
+  background:var(--teal);
+  color:white;
+  border-radius:7px;
+  font-weight:bold;
+}
+
+footer {
+  background:var(--dark);
+  color:#cbd5e1;
+  text-align:center;
+  padding:28px 15px;
+  margin-top:55px;
+  font-size:14px;
+}
+
+footer a { color:#5eead4; }
+
+@media(max-width:650px) {
+  header { justify-content:center; }
+  nav { justify-content:center; }
+  .form-grid { grid-template-columns:1fr; }
+  .full { grid-column:auto; }
+  .form-box { padding:20px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="welcome.html">G GlobalDev Hub</a>
+  <nav aria-label="Main navigation">
+    <a href="welcome.html">Home</a>
+    <a href="tools.html">Free Tools</a>
+    <a href="recommended-tools.html">Recommended Tools</a>
+    <a href="digital-store.html">Digital Store</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Advertise With GlobalDev Hub</h1>
+  <p>
+    Connect your brand, business or digital service with people
+    exploring technology, digital skills, learning resources
+    and online opportunities.
+  </p>
+  <a href="#inquiry">Explore Advertising Opportunities</a>
+</section>
+
+<main>
+
+<section>
+  <div class="heading">
+    <h2>Promote Your Brand</h2>
+    <p>Explore potential ways to work with GlobalDev Hub.</p>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <span>📢</span>
+      <h3>Sponsored Content</h3>
+      <p>
+        Enquire about sponsored articles, announcements
+        and relevant promotional content.
+      </p>
+    </article>
+
+    <article class="card">
+      <span>🤝</span>
+      <h3>Brand Partnerships</h3>
+      <p>
+        Explore potential collaborations with a platform
+        focused on digital knowledge and resources.
+      </p>
+    </article>
+
+    <article class="card">
+      <span>💻</span>
+      <h3>Digital Product Promotion</h3>
+      <p>
+        Discuss promotional opportunities for relevant
+        digital products and services.
+      </p>
+    </article>
+
+    <article class="card">
+      <span>🌍</span>
+      <h3>Business Visibility</h3>
+      <p>
+        Enquire about opportunities to introduce your
+        business to our platform visitors.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section id="inquiry" class="form-box">
+  <h2>Advertising Inquiry Form</h2>
+  <p>
+    Tell us about your organisation and the promotional
+    opportunity you would like to discuss.
+  </p>
+
+  <form id="advertForm">
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label for="name">Full Name *</label>
+        <input id="name" name="name" required maxlength="100"
+               autocomplete="name" placeholder="Your full name">
+      </div>
+
+      <div class="field">
+        <label for="email">Business Email *</label>
+        <input id="email" name="email" type="email" required
+               maxlength="150" autocomplete="email"
+               placeholder="you@example.com">
+      </div>
+
+      <div class="field">
+        <label for="company">Company / Brand Name *</label>
+        <input id="company" name="company" required maxlength="150"
+               placeholder="Your business name">
+      </div>
+
+      <div class="field">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="url" maxlength="500"
+               placeholder="https://example.com">
+      </div>
+
+      <div class="field">
+        <label for="country">Country *</label>
+        <input id="country" name="country" required maxlength="80"
+               autocomplete="country-name" placeholder="Your country">
+      </div>
+
+      <div class="field">
+        <label for="type">Advertising Type *</label>
+        <select id="type" name="type" required>
+          <option value="">Choose an option</option>
+          <option>Sponsored Content</option>
+          <option>Brand Partnership</option>
+          <option>Digital Product Promotion</option>
+          <option>Advertising Placement</option>
+          <option>Affiliate Partnership</option>
+          <option>Other Collaboration</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label for="budget">Proposed Advertising Budget</label>
+        <select id="budget" name="budget">
+          <option value="">Not decided yet</option>
+          <option>Under $50</option>
+          <option>$50 - $100</option>
+          <option>$100 - $500</option>
+          <option>$500 - $1,000</option>
+          <option>Above $1,000</option>
+          <option>Prefer to discuss</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label for="message">Tell Us About Your Proposal *</label>
+        <textarea id="message" name="message" required
+                  maxlength="2000"
+                  placeholder="Describe your business, target audience and the advertising opportunity you have in mind."></textarea>
+      </div>
+
+    </div>
+
+    <button type="submit">Submit Advertising Inquiry</button>
+
+    <div id="success" class="success" role="status" aria-live="polite">
+      <strong>Inquiry prepared successfully!</strong>
+      <p>
+        This is currently a demonstration form. Your inquiry has not
+        been sent or saved. We will connect secure submission
+        functionality before accepting real inquiries.
+      </p>
+    </div>
+
+  </form>
+
+  <div class="notice">
+    <strong>Important:</strong>
+    Submitting an inquiry does not guarantee advertising placement.
+    All advertising opportunities, availability, pricing and terms
+    will be discussed and agreed upon before any campaign begins.
+    Sponsored content will be appropriately disclosed.
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Let's Explore a Partnership</h2>
+  <p>
+    Have questions about GlobalDev Hub or our advertising opportunities?
+  </p>
+  <a href="contact.html">Contact Us</a>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>G GlobalDev Hub</strong></p>
+  <p>Digital Knowledge & Resources</p>
+  <p>
+    <a href="welcome.html">Home</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms & Conditions</a>
+  </p>
+  <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+document.getElementById("advertForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!this.reportValidity()) return;
+
+  const success = document.getElementById("success");
+  success.style.display = "block";
+
+  success.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+});
+</script>
+
+</body>
+</html>
