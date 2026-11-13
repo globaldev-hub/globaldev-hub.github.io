@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Discover useful AI tools, website builders, hosting, creator software and digital marketing resources recommended by GlobalDev Hub.">
+<meta name="theme-color" content="#071e46">
+<title>Recommended Digital Tools | GlobalDev Hub</title>
+<style>
+:root {
+  --navy:#071e46;
+  --blue:#0755e9;
+  --bg:#f4f7fc;
+  --white:#fff;
+  --ink:#17243b;
+  --muted:#64748b;
+  --line:#dce6f5;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+}
+.wrap{width:min(1120px,92%);margin:auto}
+header{
+  background:#fff;
+  border-bottom:1px solid var(--line);
+}
+nav{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.brand{
+  color:var(--navy);
+  font-size:20px;
+  font-weight:800;
+  text-decoration:none;
+}
+.brand span{color:var(--blue)}
+nav a:not(.brand){
+  text-decoration:none;
+  color:var(--ink);
+  font-weight:600;
+  font-size:14px;
+}
+.hero{
+  padding:75px 0;
+  background:linear-gradient(135deg,#071e46,#0755e9);
+  color:white;
+}
+.eyebrow{
+  color:#a9ccff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+h1{
+  font-size:clamp(34px,6vw,55px);
+  line-height:1.1;
+  max-width:750px;
+  margin:14px 0;
+}
+.hero p{
+  color:#dce8ff;
+  max-width:650px;
+  font-size:17px;
+}
+.search{
+  display:flex;
+  max-width:600px;
+  margin-top:25px;
+  gap:8px;
+}
+.search input{
+  flex:1;
+  min-width:0;
+  padding:14px;
+  border:0;
+  border-radius:9px;
+  font-size:15px;
+}
+section{padding:55px 0}
+.heading{text-align:center;margin-bottom:30px}
+.heading h2{color:var(--navy);font-size:30px;margin:8px}
+.heading p{color:var(--muted)}
+.categories{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
+  margin:25px 0;
+}
+.categories button{
+  border:1px solid var(--line);
+  background:white;
+  padding:10px 15px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:700;
+  color:var(--ink);
+}
+.categories button.active,
+.categories button:hover{
+  background:var(--blue);
+  color:white;
+  border-color:var(--blue);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 5px 20px #071e4608;
+}
+.icon{font-size:35px}
+.tag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:800;
+  color:var(--blue);
+  background:#eef5ff;
+  border-radius:20px;
+  padding:5px 10px;
+  width:max-content;
+  margin-top:12px;
+}
+.card h3{color:var(--navy);margin:12px 0 5px}
+.card p{color:var(--muted);font-size:14px;flex:1}
+.card a{
+  display:block;
+  text-align:center;
+  background:var(--blue);
+  color:white;
+  text-decoration:none;
+  padding:11px;
+  border-radius:8px;
+  font-weight:700;
+  margin-top:12px;
+}
+.card a:hover{background:var(--navy)}
+.disclosure{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#7c3d12;
+  padding:17px;
+  border-radius:12px;
+  font-size:13px;
+  margin-top:30px;
+}
+.empty{text-align:center;color:var(--muted);grid-column:1/-1}
+.cta{
+  background:var(--navy);
+  color:white;
+  border-radius:18px;
+  padding:35px;
+  text-align:center;
+}
+.cta p{color:#dce8ff}
+.cta a{color:#fff;font-weight:700}
+footer{
+  padding:28px 0;
+  background:#07152f;
+  color:#cbd5e1;
+  text-align:center;
+  font-size:13px;
+}
+footer a{color:white;margin:8px}
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:550px){
+  .grid{grid-template-columns:1fr}
+  .hero{padding:50px 0}
+  nav{flex-wrap:wrap;padding:12px 0}
+  .search{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<nav>
+<a class="brand" href="welcome.html">G <span>GlobalDev Hub</span></a>
+<a href="welcome.html">Home</a>
+<a href="blog.html">Blog</a>
+<a href="contact.html">Contact</a>
+</nav>
+</div>
+</header>
+
+<main>
+<div class="hero">
+<div class="wrap">
+<div class="eyebrow">GlobalDev Hub Recommendations</div>
+<h1>Discover smarter digital tools.</h1>
+<p>Explore useful AI software, website builders, hosting services, creator tools and digital marketing resources to help you learn, create and grow online.</p>
+<div class="search">
+<input id="search" type="search" placeholder="Search AI, hosting, design, SEO...">
+</div>
+</div>
+</div>
+
+<section>
+<div class="wrap">
+<div class="heading">
+<div class="eyebrow">Explore the directory</div>
+<h2>Recommended Digital Tools</h2>
+<p>Explore platforms and services for your digital journey.</p>
+</div>
+
+<div class="categories">
+<button class="active" data-filter="all">All Tools</button>
+<button data-filter="ai">AI Tools</button>
+<button data-filter="hosting">Hosting</button>
+<button data-filter="design">Design</button>
+<button data-filter="marketing">Marketing</button>
+<button data-filter="learning">Learning</button>
+</div>
+
+<div class="grid" id="toolGrid">
+
+<article class="card" data-category="ai">
+<div class="icon">🤖</div>
+<span class="tag">AI TOOLS</span>
+<h3>ChatGPT</h3>
+<p>Explore an AI assistant for writing, research, brainstorming and productivity.</p>
+<a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+<article class="card" data-category="hosting">
+<div class="icon">🌐</div>
+<span class="tag">WEB HOSTING</span>
+<h3>Hostinger</h3>
+<p>Explore website hosting, domain and website building services.</p>
+<a href="https://www.hostinger.com/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+<article class="card" data-category="design">
+<div class="icon">🎨</div>
+<span class="tag">DESIGN</span>
+<h3>Canva</h3>
+<p>Explore graphic design and visual content creation tools.</p>
+<a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+<article class="card" data-category="marketing">
+<div class="icon">📈</div>
+<span class="tag">SEO & MARKETING</span>
+<h3>Semrush</h3>
+<p>Explore SEO research, keyword analysis and digital marketing tools.</p>
+<a href="https://www.semrush.com/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+<article class="card" data-category="learning">
+<div class="icon">🎓</div>
+<span class="tag">ONLINE LEARNING</span>
+<h3>Coursera</h3>
+<p>Discover online courses and professional learning opportunities.</p>
+<a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+<article class="card" data-category="ai">
+<div class="icon">✨</div>
+<span class="tag">AI PRODUCTIVITY</span>
+<h3>Google Gemini</h3>
+<p>Explore Google's AI assistant and its productivity capabilities.</p>
+<a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Visit Official Website →</a>
+</article>
+
+</div>
+
+<div id="noResults" class="empty" hidden>
+No matching tools found. Try another search.
+</div>
+
+<div class="disclosure">
+<strong>Affiliate disclosure:</strong> GlobalDev Hub may earn a commission when you purchase through qualifying affiliate links on this website, at no additional cost to you. We will clearly identify affiliate links. Recommendations should be based on usefulness and honest evaluation.
+</div>
+</div>
+</section>
+
+<section style="padding-top:0">
+<div class="wrap">
+<div class="cta">
+<h2>Grow your digital knowledge</h2>
+<p>Discover technology guides, practical resources and tools to help you move forward.</p>
+<a href="guides.html">Explore Learning Guides →</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap">
+<p><strong>GlobalDev Hub</strong> — Digital Knowledge & Opportunities</p>
+<a href="about.html">About</a>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+<a href="contact.html">Contact</a>
+<p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+const search = document.getElementById("search");
+const cards = [...document.querySelectorAll(".card")];
+const buttons = [...document.querySelectorAll("[data-filter]")];
+const noResults = document.getElementById("noResults");
+
+let category = "all";
+
+function filterTools(){
+ const query = search.value.trim().toLowerCase();
+ let visible = 0;
+
+ cards.forEach(card=>{
+   const matchesCategory =
+     category === "all" || card.dataset.category === category;
+   const matchesSearch =
+     card.innerText.toLowerCase().includes(query);
+
+   card.hidden = !(matchesCategory && matchesSearch);
+   if(!card.hidden) visible++;
+ });
+
+ noResults.hidden = visible !== 0;
+}
+
+buttons.forEach(button=>{
+ button.addEventListener("click",()=>{
+   buttons.forEach(b=>b.classList.remove("active"));
+   button.classList.add("active");
+   category = button.dataset.filter;
+   filterTools();
+ });
+});
+
+search.addEventListener("input",filterTools);
+
+document.getElementById("year").textContent =
+ new Date().getFullYear();
+</script>
+</body>
+</html>
