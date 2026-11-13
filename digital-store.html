@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Explore digital products, templates, guides and resources at GlobalDev Hub.">
-  <title>GlobalDev Digital Store</title>
+  <meta name="theme-color" content="#102b62">
+  <title>GlobalDev Digital Store | GlobalDev Hub</title>
+
   <style>
     :root {
       --primary: #155eef;
@@ -13,6 +15,8 @@
       --muted: #64748b;
       --light: #f5f8ff;
       --white: #ffffff;
+      --border: #e7edf7;
+      --teal: #0d9488;
     }
 
     * { box-sizing: border-box; }
@@ -24,6 +28,8 @@
       background: var(--light);
       line-height: 1.6;
     }
+
+    a { color: inherit; }
 
     header {
       background: var(--white);
@@ -77,6 +83,31 @@
       font-size: 17px;
     }
 
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 9px;
+      background: white;
+      color: #155eef;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid #ffffff99;
+    }
+
     .container {
       width: min(1100px, 90%);
       margin: 45px auto;
@@ -105,7 +136,13 @@
       padding: 23px;
       border-radius: 14px;
       text-align: center;
-      border: 1px solid #e7edf7;
+      border: 1px solid var(--border);
+      transition: transform .2s, border-color .2s;
+    }
+
+    .category:hover {
+      transform: translateY(-3px);
+      border-color: #9bbcff;
     }
 
     .category .emoji { font-size: 32px; }
@@ -121,6 +158,44 @@
       margin: 0;
     }
 
+    .category button {
+      margin-top: 13px;
+      border: 0;
+      background: #edf3ff;
+      color: var(--primary);
+      padding: 8px 13px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .store-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 13px;
+      margin: 25px 0;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-box input,
+    .currency-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d8e1ef;
+      border-radius: 9px;
+      background: white;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .currency-select { width: auto; min-width: 130px; }
+
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -129,7 +204,7 @@
 
     .product {
       background: white;
-      border: 1px solid #e7edf7;
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 25px;
       display: flex;
@@ -150,7 +225,21 @@
       flex: 1;
     }
 
-    .coming {
+    .product-category {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .product-price {
+      font-size: 19px;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+
+    .product-status {
       display: inline-block;
       align-self: flex-start;
       background: #fff4d6;
@@ -161,13 +250,61 @@
       font-weight: bold;
     }
 
+    .empty-state {
+      background: white;
+      border: 1px dashed #b9c9e2;
+      padding: 35px 20px;
+      border-radius: 14px;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    .empty-state .emoji { font-size: 40px; }
+
+    .empty-state p {
+      color: var(--muted);
+      max-width: 550px;
+      margin: 10px auto 20px;
+    }
+
+    .primary-link {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
     .notice {
       background: white;
-      border: 1px solid #e7edf7;
+      border: 1px solid var(--border);
       padding: 25px;
       border-radius: 14px;
       text-align: center;
       margin-top: 35px;
+    }
+
+    .notice p { color: var(--muted); }
+
+    .notice a {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .seller-section {
+      background: #eaf1ff;
+      border-radius: 16px;
+      padding: 35px 25px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .seller-section p {
+      color: #52627c;
+      max-width: 650px;
+      margin: 10px auto 20px;
     }
 
     footer {
@@ -189,6 +326,8 @@
       header { justify-content: center; }
       nav { justify-content: center; }
       .hero { padding: 55px 18px; }
+      .store-controls { align-items: stretch; }
+      .currency-select { width: 100%; }
     }
   </style>
 </head>
@@ -196,10 +335,12 @@
 <body>
   <header>
     <a class="brand" href="welcome.html">GlobalDev Hub</a>
+
     <nav aria-label="Main navigation">
       <a href="welcome.html">Home</a>
       <a href="tools.html">Free Tools</a>
       <a href="recommended-tools.html">Recommended Tools</a>
+      <a href="digital-products.html">Digital Products</a>
       <a href="donate.html">Donate</a>
     </nav>
   </header>
@@ -211,6 +352,11 @@
         Discover practical digital resources, templates and guides
         designed to support your learning, creativity and projects.
       </p>
+
+      <div class="hero-actions">
+        <a class="button" href="#products">Explore Products</a>
+        <a class="button secondary" href="sell-with-us.html">Become a Creator</a>
+      </div>
     </section>
 
     <section class="container">
@@ -224,71 +370,86 @@
           <div class="emoji">📄</div>
           <h3>CV & Resume Templates</h3>
           <p>Professional resume and CV resources.</p>
+          <button type="button" data-category="cv">Explore category</button>
         </article>
 
         <article class="category">
           <div class="emoji">📚</div>
           <h3>E-books & Digital Guides</h3>
           <p>Digital reading and learning resources.</p>
+          <button type="button" data-category="guides">Explore category</button>
         </article>
 
         <article class="category">
           <div class="emoji">💻</div>
           <h3>Website Templates</h3>
           <p>Templates for websites and online projects.</p>
+          <button type="button" data-category="websites">Explore category</button>
         </article>
 
         <article class="category">
           <div class="emoji">🎨</div>
           <h3>Business & Social Media</h3>
           <p>Creative templates for business and social content.</p>
+          <button type="button" data-category="business">Explore category</button>
         </article>
       </div>
     </section>
 
-    <section class="container">
+    <section class="container" id="products">
       <div class="section-heading">
-        <h2>Digital Products</h2>
-        <p>Our product collection will appear here as items become available.</p>
+        <h2>Browse Digital Products</h2>
+        <p>Search the store and explore available resources.</p>
       </div>
 
-      <div class="products">
-        <article class="product">
-          <div class="product-icon">📄</div>
-          <h3>CV & Resume Collection</h3>
-          <p>Explore professional CV and resume templates.</p>
-          <span class="coming">Coming soon</span>
-        </article>
+      <div class="store-controls">
+        <div class="search-box">
+          <input
+            type="search"
+            id="productSearch"
+            placeholder="Search products..."
+            aria-label="Search digital products"
+          >
+        </div>
 
-        <article class="product">
-          <div class="product-icon">📘</div>
-          <h3>Digital Guides Collection</h3>
-          <p>Discover helpful e-books and digital guides.</p>
-          <span class="coming">Coming soon</span>
-        </article>
+        <select class="currency-select" id="currency" aria-label="Select display currency">
+          <option value="NGN">Display: NGN ₦</option>
+          <option value="USD">Display: USD $</option>
+        </select>
+      </div>
 
-        <article class="product">
-          <div class="product-icon">🌐</div>
-          <h3>Website Template Collection</h3>
-          <p>Browse templates for your next website project.</p>
-          <span class="coming">Coming soon</span>
-        </article>
-
-        <article class="product">
-          <div class="product-icon">🎨</div>
-          <h3>Business Template Collection</h3>
-          <p>Find business and social media design resources.</p>
-          <span class="coming">Coming soon</span>
-        </article>
+      <div class="products" id="productGrid" aria-live="polite">
+        <div class="empty-state">
+          <div class="emoji">🛍️</div>
+          <h3>Our digital shelves are being prepared!</h3>
+          <p>
+            We are preparing useful templates, guides and other digital
+            resources. Check back as our collection grows.
+          </p>
+          <a class="primary-link" href="digital-products.html">Explore Digital Products</a>
+        </div>
       </div>
 
       <div class="notice">
-        <h2>More digital resources are on the way!</h2>
+        <h2>Safe and convenient shopping is the goal</h2>
         <p>
-          Product details, downloadable files and secure checkout
-          will be added as our store collection is prepared.
+          Product listings, prices, secure checkout and downloadable files
+          will become available as the store is prepared.
         </p>
-        <p><strong>Payment currencies planned:</strong> NGN and USD, subject to Paystack account support.</p>
+        <p>
+          <strong>Planned display currencies:</strong> Nigerian Naira (NGN)
+          and US Dollars (USD). Actual payment options will depend on the
+          payment provider and account support.
+        </p>
+      </div>
+
+      <div class="seller-section">
+        <h2>Have a digital product to sell?</h2>
+        <p>
+          GlobalDev Hub is preparing opportunities for creators to showcase
+          useful digital resources. Submit your interest through our creator page.
+        </p>
+        <a class="primary-link" href="sell-with-us.html">Sell With GlobalDev Hub</a>
       </div>
     </section>
   </main>
@@ -298,12 +459,147 @@
     <p>
       <a href="welcome.html">Home</a>
       <a href="tools.html">Free Tools</a>
+      <a href="digital-products.html">Digital Products</a>
+      <a href="sell-with-us.html">Sell With Us</a>
       <a href="donate.html">Donate</a>
+      <a href="privacy.html">Privacy</a>
     </p>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    /*
+      PRODUCT CATALOGUE
+
+      Add real products here when their files, descriptions and prices
+      are ready. Prices are display information only. Do not add payment
+      secret keys or private download links to this public file.
+
+      Example structure:
+
+      {
+        name: "Your actual product name",
+        description: "A clear description of the product",
+        category: "cv",
+        icon: "📄",
+        priceNGN: 5000,
+        priceUSD: 5,
+        status: "Available"
+      }
+    */
+
+    const products = [];
+
+    const searchInput = document.getElementById("productSearch");
+    const currencySelect = document.getElementById("currency");
+    const productGrid = document.getElementById("productGrid");
+
+    let selectedCategory = "all";
+
+    const categoryNames = {
+      cv: "CV & Resume",
+      guides: "E-books & Guides",
+      websites: "Website Templates",
+      business: "Business & Social Media"
+    };
+
+    function formatPrice(amount, currency) {
+      return new Intl.NumberFormat(
+        currency === "NGN" ? "en-NG" : "en-US",
+        {
+          style: "currency",
+          currency: currency,
+          maximumFractionDigits: 2
+        }
+      ).format(amount);
+    }
+
+    function renderProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const currency = currencySelect.value;
+
+      const filtered = products.filter(product => {
+        const matchesSearch =
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query);
+
+        const matchesCategory =
+          selectedCategory === "all" ||
+          product.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      productGrid.innerHTML = "";
+
+      if (filtered.length === 0) {
+        const message = products.length === 0
+          ? "We are preparing our first collection of digital products. Please check back soon."
+          : "No products match your search. Try another search or category.";
+
+        productGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="emoji">🔎</div>
+            <h3>${products.length === 0 ? "Products coming soon" : "No matching products"}</h3>
+            <p>${message}</p>
+            <a class="primary-link" href="sell-with-us.html">Become a Creator</a>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(product => {
+        const price = currency === "NGN"
+          ? product.priceNGN
+          : product.priceUSD;
+
+        const card = document.createElement("article");
+        card.className = "product";
+
+        const icon = document.createElement("div");
+        icon.className = "product-icon";
+        icon.textContent = product.icon || "📦";
+
+        const category = document.createElement("span");
+        category.className = "product-category";
+        category.textContent = categoryNames[product.category] || "Digital Product";
+
+        const heading = document.createElement("h3");
+        heading.textContent = product.name;
+
+        const description = document.createElement("p");
+        description.textContent = product.description;
+
+        const priceElement = document.createElement("div");
+        priceElement.className = "product-price";
+        priceElement.textContent =
+          typeof price === "number" ? formatPrice(price, currency) : "Price to be confirmed";
+
+        const status = document.createElement("span");
+        status.className = "product-status";
+        status.textContent = product.status || "Coming soon";
+
+        card.append(icon, category, heading, description, priceElement, status);
+        productGrid.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+    currencySelect.addEventListener("change", renderProducts);
+
+    document.querySelectorAll("[data-category]").forEach(button => {
+      button.addEventListener("click", () => {
+        selectedCategory = button.dataset.category;
+        searchInput.value = "";
+        renderProducts();
+        document.getElementById("products").scrollIntoView({
+          behavior: "smooth"
+        });
+      });
+    });
+
+    renderProducts();
   </script>
 </body>
 </html>
