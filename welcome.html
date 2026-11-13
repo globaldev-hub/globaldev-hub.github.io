@@ -28,7 +28,7 @@
     .menu-wrap{position:relative}
     .menu-button{width:44px;height:44px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);font-size:26px;line-height:1;cursor:pointer}
     .menu-button:hover{background:var(--pale)}
-    .menu-panel{position:absolute;right:0;top:52px;width:220px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #071e4620}
+    .menu-panel{position:absolute;right:0;top:52px;width:240px;max-height:75vh;overflow-y:auto;padding:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #071e4620}
     .menu-panel a{display:block;width:100%;padding:11px 12px;border:0;border-radius:8px;background:#fff;text-align:left;text-decoration:none;color:#34445e;font:600 .93rem Arial;cursor:pointer}
     .menu-panel a:hover{background:var(--pale);color:var(--blue)}
     [hidden]{display:none!important}
@@ -62,6 +62,7 @@
     .card h3{margin:10px 0 8px;color:var(--navy);font-size:1.12rem}
     .card p{margin:0 0 15px;color:var(--muted)}
     .card a,.text-link{color:var(--blue);font-weight:700;text-decoration:none}
+    .card a:hover,.text-link:hover{text-decoration:underline}
     .soft{background:#f7faff}
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
     .about-grid h2{font-size:2rem;line-height:1.2;color:var(--navy);margin:8px 0 14px}
@@ -124,6 +125,8 @@
             <a href="assistant.html">AI Assistant</a>
             <a href="guides.html">Learning Guides</a>
             <a href="tools.html">Digital Tools</a>
+            <a href="recommended-tools.html">⭐ Recommended Tools</a>
+            <a href="digital-store.html">🛍️ GlobalDev Digital Store</a>
             <a href="social.html">Social Toolkit</a>
             <a href="careers.html">Careers</a>
             <a href="resources.html">Resources</a>
@@ -182,12 +185,61 @@
         </div>
 
         <div class="cards">
-          <article class="card"><div class="symbol">🧭</div><h3>Guides for Beginners</h3><p>Understand technology and learn new skills through clear, step-by-step guides.</p><a href="guides.html">Explore guides →</a></article>
-          <article class="card"><div class="symbol">🧰</div><h3>Digital Tools</h3><p>Discover helpful digital tools and resources for learning and getting work done.</p><a href="tools.html">Explore tools →</a></article>
-          <article class="card"><div class="symbol">💼</div><h3>Careers &amp; Opportunities</h3><p>Explore career resources, remote-work guidance and online opportunity information.</p><a href="careers.html">Explore careers →</a></article>
-          <article class="card"><div class="symbol">🌐</div><h3>Build Your First Website</h3><p>Start with the basics of websites, web development and publishing online.</p><a href="article-first-website.html">Start learning →</a></article>
-          <article class="card"><div class="symbol">🤖</div><h3>AI Assistant</h3><p>Get help understanding digital skills, website building and platform resources.</p><a href="assistant.html">Visit AI Assistant →</a></article>
-          <article class="card"><div class="symbol">📚</div><h3>Learning Resources</h3><p>Find practical articles and learning materials to support your digital journey.</p><a href="resources.html">Browse resources →</a></article>
+          <article class="card">
+            <div class="symbol">🧭</div>
+            <h3>Guides for Beginners</h3>
+            <p>Understand technology and learn new skills through clear, step-by-step guides.</p>
+            <a href="guides.html">Explore guides →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🧰</div>
+            <h3>Digital Tools</h3>
+            <p>Discover helpful digital tools and resources for learning and getting work done.</p>
+            <a href="tools.html">Explore tools →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">⭐</div>
+            <h3>Recommended Tools</h3>
+            <p>Discover our recommended digital platforms, services and useful tools.</p>
+            <a href="recommended-tools.html">Explore recommended tools →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🛍️</div>
+            <h3>GlobalDev Digital Store</h3>
+            <p>Explore digital products, CV templates, e-books, website templates and creative resources.</p>
+            <a href="digital-store.html">Visit Digital Store →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">💼</div>
+            <h3>Careers &amp; Opportunities</h3>
+            <p>Explore career resources, remote-work guidance and online opportunity information.</p>
+            <a href="careers.html">Explore careers →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🌐</div>
+            <h3>Build Your First Website</h3>
+            <p>Start with the basics of websites, web development and publishing online.</p>
+            <a href="article-first-website.html">Start learning →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">🤖</div>
+            <h3>AI Assistant</h3>
+            <p>Get help understanding digital skills, website building and platform resources.</p>
+            <a href="assistant.html">Visit AI Assistant →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">📚</div>
+            <h3>Learning Resources</h3>
+            <p>Find practical articles and learning materials to support your digital journey.</p>
+            <a href="resources.html">Browse resources →</a>
+          </article>
         </div>
       </div>
     </section>
@@ -226,12 +278,18 @@
   <footer>
     <div class="wrap">
       <div class="footer-row">
-        <div><a class="brand" href="welcome.html">G <span>GlobalDev Hub</span></a><p>Digital Knowledge &amp; Resources</p></div>
+        <div>
+          <a class="brand" href="welcome.html">G <span>GlobalDev Hub</span></a>
+          <p>Digital Knowledge &amp; Resources</p>
+        </div>
+
         <div class="footer-links">
           <a href="welcome.html">Home</a>
           <a href="about.html">About</a>
           <a href="guides.html">Guides</a>
           <a href="tools.html">Tools</a>
+          <a href="recommended-tools.html">Recommended Tools</a>
+          <a href="digital-store.html">Digital Store</a>
           <a href="careers.html">Careers</a>
           <a href="contact.html">Contact</a>
           <a href="privacy.html">Privacy Policy</a>
@@ -283,6 +341,11 @@
       }
 
       const pages = [
+        ["recommended tools", "recommended-tools.html"],
+        ["recommended", "recommended-tools.html"],
+        ["digital store", "digital-store.html"],
+        ["marketplace", "digital-store.html"],
+        ["store", "digital-store.html"],
         ["website", "article-first-website.html"],
         ["web development", "article-first-website.html"],
         ["digital skill", "article-digital-skills.html"],
@@ -305,7 +368,7 @@
         window.location.href = match[1];
       } else {
         message.textContent =
-          "No direct match found. Try Guides, Digital Skills, Website Basics, Careers or Tools.";
+          "No direct match found. Try Guides, Digital Skills, Website Basics, Careers, Recommended Tools or Digital Store.";
       }
     });
 
