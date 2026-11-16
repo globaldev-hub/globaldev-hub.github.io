@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,11 +199,20 @@
       color: white;
       padding: 11px;
       text-align: center;
+      border: 0;
       border-radius: 7px;
       font-weight: bold;
+      width: 100%;
+      font-size: 15px;
+      cursor: pointer;
     }
 
     .buy-button:hover { background: #1d4ed8; }
+
+    .buy-button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
 
     .coming {
       display: inline-block;
@@ -224,6 +232,13 @@
       border-radius: 10px;
       color: #155e75;
       font-size: 14px;
+    }
+
+    .checkout-message {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #b91c1c;
+      overflow-wrap: anywhere;
     }
 
     .cta {
@@ -364,15 +379,16 @@
             qualifications, skills and experience confidently.
           </p>
 
-          <div class="price"
-               data-ngn="2500"
-               data-usd="4.99">
+          <div class="price" data-ngn="2500" data-usd="4.99">
             ₦2,500
           </div>
 
-          <a class="buy-button" href="contact.html">
-            Get Product Information
-          </a>
+          <button class="buy-button" type="button" id="buy-cv-bundle">
+            Buy Now
+          </button>
+
+          <p id="checkout-message" class="checkout-message"
+             role="status" aria-live="polite"></p>
         </div>
       </article>
 
@@ -454,12 +470,11 @@
 
     <div class="notice">
       <strong>Important product information:</strong>
-      The GlobalDev Professional CV & Resume Bundle has
-      proposed introductory prices of ₦2,500 and $4.99.
-      Contact GlobalDev Hub for purchase information.
-      Secure checkout and digital downloads will be activated
-      when the actual product, payment and delivery arrangements
-      are ready. No payment is collected directly on this page.
+      The GlobalDev Professional CV & Resume Bundle is offered
+      at ₦2,500 or $4.99. Checkout is initiated through Paystack.
+      After payment, the payment verification process checks the
+      transaction before making the digital download available.
+      Other products are coming soon.
     </div>
 
   </section>
@@ -535,6 +550,78 @@
   );
 
   updateCurrency();
+
+  // GlobalDev Hub Paystack checkout integration
+  const PAYMENT_ENDPOINT =
+    "https://globaldev-payments.yakubusamuel966.workers.dev/api/payments/initialize";
+
+  const buyButton =
+    document.getElementById("buy-cv-bundle");
+
+  const checkoutMessage =
+    document.getElementById("checkout-message");
+
+  buyButton.addEventListener("click", async function () {
+    const email = window.prompt(
+      "Enter your email address for your CV Bundle purchase:"
+    );
+
+    if (email === null) {
+      return;
+    }
+
+    const customerEmail = email.trim();
+
+    if (
+      !customerEmail ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
+    ) {
+      checkoutMessage.textContent =
+        "Please enter a valid email address.";
+      return;
+    }
+
+    const currency = currencySelect.value;
+
+    buyButton.disabled = true;
+    buyButton.textContent = "Connecting to Paystack...";
+    checkoutMessage.textContent =
+      "Preparing your secure checkout. Please wait.";
+
+    try {
+      const response = await fetch(PAYMENT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: customerEmail,
+          currency: currency
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.authorization_url) {
+        throw new Error(
+          result.error || "Unable to initialize payment."
+        );
+      }
+
+      checkoutMessage.textContent =
+        "Redirecting you to secure Paystack checkout...";
+
+      window.location.assign(result.authorization_url);
+
+    } catch (error) {
+      checkoutMessage.textContent =
+        error.message ||
+        "Checkout could not be started. Please try again.";
+
+      buyButton.disabled = false;
+      buyButton.textContent = "Buy Now";
+    }
+  });
 </script>
 
 </body>
