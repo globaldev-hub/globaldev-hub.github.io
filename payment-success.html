@@ -1,18 +1,77 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101827">
-  <title>Payment confirmation | GlobalDev Hub</title>
+  <title>Payment Confirmation | GlobalDev Hub</title>
   <style>
-    :root{color-scheme:dark;--bg:#101827;--panel:#172338;--text:#f4f7fb;--muted:#aab7c9;--accent:#39c98a;--line:#2a3b55}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--bg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
-    main{width:min(100%,560px);padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:0 18px 55px #0005;text-align:center}
-    .mark{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;background:#173d35;color:var(--accent);font-size:30px}
-    h1{margin:0 0 10px;font-size:clamp(25px,6vw,34px)}p{color:var(--muted);margin:8px 0 18px}.status{min-height:28px;margin:20px 0;color:var(--text)}
-    a.button{display:none;margin:12px auto 0;padding:13px 22px;width:100%;max-width:320px;border-radius:10px;background:var(--accent);color:#062016;text-decoration:none;font-weight:750}
-    a.secondary{display:inline-block;margin-top:18px;color:#b9c9df;text-decoration:none}small{display:block;margin-top:20px;color:var(--muted)}
+    :root {
+      color-scheme: dark;
+      --bg: #101827;
+      --panel: #172338;
+      --text: #f4f7fb;
+      --muted: #aab7c9;
+      --accent: #39c98a;
+      --line: #2a3b55;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 system-ui, sans-serif;
+    }
+    main {
+      width: min(100%, 560px);
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      text-align: center;
+    }
+    .mark {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #173d35;
+      color: var(--accent);
+      font-size: 30px;
+    }
+    h1 { margin: 0 0 10px; }
+    p { color: var(--muted); }
+    .status { margin: 20px 0; }
+    a.button {
+      display: none;
+      margin: 12px auto 0;
+      padding: 13px 22px;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #062016;
+      text-decoration: none;
+      font-weight: 750;
+    }
+    a.secondary {
+      display: inline-block;
+      margin-top: 18px;
+      color: #b9c9df;
+      text-decoration: none;
+    }
+    small {
+      display: block;
+      margin-top: 20px;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
@@ -20,42 +79,66 @@
     <div class="mark" aria-hidden="true">✓</div>
     <h1>Confirming your payment</h1>
     <p>Thank you for choosing GlobalDev Hub. Please keep this page open while we securely verify your payment.</p>
-    <div class="status" id="status" role="status" aria-live="polite">Checking your transaction…</div>
-    <a class="button" id="download" href="#" rel="nofollow">Download your CV &amp; Resume Bundle</a>
-    <a class="secondary" href="https://globaldev-hub.github.io/">Return to GlobalDev Hub</a>
+
+    <div class="status" id="status" role="status" aria-live="polite">
+      Checking your transaction…
+    </div>
+
+    <a class="button" id="download" href="#" rel="nofollow">
+      Download your CV &amp; Resume Bundle
+    </a>
+
+    <a class="secondary" href="https://globaldev-hub.github.io/">
+      Return to GlobalDev Hub
+    </a>
+
     <small>Your secure download link expires after 5 minutes. Do not share it.</small>
   </main>
+
   <script>
     (() => {
       const status = document.getElementById('status');
       const download = document.getElementById('download');
       const params = new URLSearchParams(location.search);
       const reference = params.get('reference') || params.get('trxref');
-      const worker = 'https://globaldev-payments.yakubusamuel966.workers.dev';
+
+      const worker =
+        'https://globaldev-payments.yakubusamuel966.workers.dev';
 
       if (!reference) {
-        status.textContent = 'We could not find a payment reference in this page address. If you completed payment, contact support and include your Paystack receipt.';
+        status.textContent =
+          'Payment reference not found. If you completed payment, contact support with your Paystack receipt.';
         return;
       }
 
-      fetch(`${worker}/api/payments/verify?reference=${encodeURIComponent(reference)}`, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      })
+      fetch(
+        `${worker}/api/payments/verify?reference=${encodeURIComponent(reference)}`,
+        {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' }
+        }
+      )
       .then(async response => {
         const data = await response.json().catch(() => ({}));
+
         if (!response.ok || data.success !== true || !data.download_url) {
-          throw new Error(data.message || data.error || 'Payment could not be verified.');
+          throw new Error(
+            data.message || data.error || 'Payment could not be verified.'
+          );
         }
+
         return data;
       })
       .then(data => {
-        status.textContent = 'Payment confirmed. Your download is ready.';
+        status.textContent =
+          'Payment confirmed. Your download is ready.';
+
         download.href = data.download_url;
         download.style.display = 'inline-block';
       })
       .catch(error => {
-        status.textContent = `${error.message} Please wait a moment and refresh this page. If the problem continues, contact GlobalDev Hub support with your payment reference.`;
+        status.textContent =
+          `${error.message} Please wait and refresh this page. If the problem continues, contact support with your payment reference.`;
       });
     })();
   </script>
