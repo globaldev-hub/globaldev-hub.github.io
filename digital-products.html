@@ -1,514 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover professional CV bundles, ebooks, website templates and digital resources at GlobalDev Hub.">
-  <meta name="theme-color" content="#101827">
-  <title>GlobalDev Digital Products | GlobalDev Hub</title>
-
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --dark: #101827;
-      --primary: #2563eb;
-      --accent: #0d9488;
-      --text: #243247;
-      --muted: #64748b;
-      --white: #fff;
-      --border: #e2e8f0;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a { text-decoration: none; }
-
-    header {
-      background: var(--dark);
-      color: white;
-      padding: 16px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .brand {
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    nav {
-      display: flex;
-      gap: 17px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: #e2e8f0;
-      font-size: 14px;
-    }
-
-    nav a:hover { color: #5eead4; }
-
-    .hero {
-      padding: 75px 20px;
-      text-align: center;
-      color: white;
-      background: linear-gradient(135deg, #101827, #174b82, #0d9488);
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      margin: 0 0 15px;
-    }
-
-    .hero p {
-      max-width: 680px;
-      margin: auto;
-      color: #e0f2fe;
-      font-size: 17px;
-    }
-
-    .hero-button {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 13px 23px;
-      background: white;
-      color: #12345a;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    main {
-      width: min(1150px, 92%);
-      margin: 45px auto;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    .section-heading h2 {
-      color: var(--dark);
-      font-size: 29px;
-      margin-bottom: 7px;
-    }
-
-    .section-heading p { color: var(--muted); }
-
-    .currency-panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 17px;
-      margin-bottom: 35px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .currency-panel select {
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      background: white;
-      font-size: 15px;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-bottom: 55px;
-    }
-
-    .category {
-      background: white;
-      border: 1px solid var(--border);
-      padding: 23px;
-      border-radius: 13px;
-      text-align: center;
-      transition: transform .2s, box-shadow .2s;
-    }
-
-    .category:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 9px 25px #0f172a12;
-    }
-
-    .category .emoji { font-size: 38px; }
-    .category h3 { color: var(--dark); margin: 10px 0; }
-    .category p { color: var(--muted); font-size: 14px; }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-      gap: 22px;
-    }
-
-    .product {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      overflow: hidden;
-    }
-
-    .product-image {
-      min-height: 155px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #dbeafe, #ccfbf1);
-      font-size: 55px;
-    }
-
-    .product-content { padding: 20px; }
-
-    .product-content h3 {
-      color: var(--dark);
-      margin: 0 0 8px;
-    }
-
-    .product-content p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .price {
-      color: var(--primary);
-      font-weight: bold;
-      margin: 15px 0;
-    }
-
-    .buy-button {
-      display: block;
-      background: var(--primary);
-      color: white;
-      padding: 11px;
-      text-align: center;
-      border: 0;
-      border-radius: 7px;
-      font-weight: bold;
-      width: 100%;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    .buy-button:hover { background: #1d4ed8; }
-
-    .buy-button:disabled {
-      opacity: .65;
-      cursor: wait;
-    }
-
-    .coming {
-      display: inline-block;
-      font-size: 12px;
-      background: #fef3c7;
-      color: #92400e;
-      padding: 4px 9px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-    }
-
-    .notice {
-      margin-top: 35px;
-      padding: 20px;
-      background: #ecfeff;
-      border: 1px solid #a5f3fc;
-      border-radius: 10px;
-      color: #155e75;
-      font-size: 14px;
-    }
-
-    .checkout-message {
-      margin-top: 12px;
-      font-size: 14px;
-      color: #b91c1c;
-      overflow-wrap: anywhere;
-    }
-
-    .cta {
-      margin-top: 55px;
-      padding: 40px 20px;
-      background: var(--dark);
-      color: white;
-      text-align: center;
-      border-radius: 14px;
-    }
-
-    .cta p { color: #cbd5e1; }
-
-    .cta a {
-      display: inline-block;
-      background: #0d9488;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 7px;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    footer {
-      background: var(--dark);
-      color: #cbd5e1;
-      text-align: center;
-      padding: 28px 15px;
-      margin-top: 55px;
-      font-size: 14px;
-    }
-
-    footer a { color: #5eead4; }
-
-    @media(max-width:600px) {
-      header { justify-content: center; }
-      nav { justify-content: center; }
-      .hero { padding: 55px 18px; }
-      .currency-panel { justify-content: center; }
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <a class="brand" href="welcome.html">G GlobalDev Hub</a>
-
-  <nav aria-label="Main navigation">
-    <a href="welcome.html">Home</a>
-    <a href="tools.html">Free Tools</a>
-    <a href="recommended-tools.html">Recommended Tools</a>
-    <a href="digital-store.html">Digital Store</a>
-    <a href="donate.html">Donate</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <h1>GlobalDev Digital Products</h1>
-  <p>
-    Discover practical digital products designed to support your
-    learning, career development, business and online journey.
-  </p>
-  <a class="hero-button" href="#products">Explore Products</a>
-</section>
-
-<main>
-
-  <section class="currency-panel">
-    <div>
-      <strong>Shop in your preferred currency</strong>
-      <div style="font-size:13px;color:#64748b">
-        Choose Nigerian naira or US dollars.
-      </div>
-    </div>
-
-    <select id="currency" aria-label="Select display currency">
-      <option value="NGN">Nigerian Naira (₦)</option>
-      <option value="USD">US Dollar ($)</option>
-    </select>
-  </section>
-
-  <section>
-    <div class="section-heading">
-      <h2>Explore Product Categories</h2>
-      <p>Find digital resources for your next big step.</p>
-    </div>
-
-    <div class="category-grid">
-
-      <a class="category" href="#cv">
-        <div class="emoji">📄</div>
-        <h3>CV & Resume Templates</h3>
-        <p>Professional templates to help present your experience.</p>
-      </a>
-
-      <a class="category" href="#ebooks">
-        <div class="emoji">📚</div>
-        <h3>E-books & Digital Guides</h3>
-        <p>Practical digital learning materials and guides.</p>
-      </a>
-
-      <a class="category" href="#websites">
-        <div class="emoji">💻</div>
-        <h3>Website Templates</h3>
-        <p>Templates for personal projects and online businesses.</p>
-      </a>
-
-      <a class="category" href="#business">
-        <div class="emoji">🎨</div>
-        <h3>Business & Social Media</h3>
-        <p>Creative resources for business and online branding.</p>
-      </a>
-
-    </div>
-  </section>
-
-  <section id="products">
-    <div class="section-heading">
-      <h2>Featured Digital Products</h2>
-      <p>Explore our digital resources and upcoming products.</p>
-    </div>
-
-    <div class="products">
-
-      <!-- FIRST PAID DIGITAL PRODUCT -->
-      <article class="product" id="cv">
-        <div class="product-image">📄</div>
-
-        <div class="product-content">
-          <span class="coming">Introductory Offer</span>
-
-          <h3>GlobalDev Professional CV & Resume Bundle</h3>
-
-          <p>
-            A professional CV and resume resource bundle
-            designed to help job seekers present their
-            qualifications, skills and experience confidently.
-          </p>
-
-          <div class="price" data-ngn="2500" data-usd="4.99">
-            ₦2,500
-          </div>
-
-          <button class="buy-button" type="button" id="buy-cv-bundle">
-            Buy Now
-          </button>
-
-          <p id="checkout-message" class="checkout-message"
-             role="status" aria-live="polite"></p>
-        </div>
-      </article>
-
-      <!-- DIGITAL SKILLS EBOOKS -->
-      <article class="product" id="ebooks">
-        <div class="product-image">📚</div>
-
-        <div class="product-content">
-          <span class="coming">Coming soon</span>
-
-          <h3>Digital Skills E-books</h3>
-
-          <p>
-            Practical guides covering useful technology,
-            digital skills and opportunities for personal
-            and professional development.
-          </p>
-
-          <div class="price" data-ngn="0" data-usd="0">
-            Coming soon
-          </div>
-
-          <a class="buy-button" href="contact.html">
-            Product enquiries
-          </a>
-        </div>
-      </article>
-
-      <!-- WEBSITE TEMPLATES -->
-      <article class="product" id="websites">
-        <div class="product-image">🌐</div>
-
-        <div class="product-content">
-          <span class="coming">Coming soon</span>
-
-          <h3>Website Templates</h3>
-
-          <p>
-            Website starter designs for personal projects,
-            portfolios, startups and online businesses.
-          </p>
-
-          <div class="price" data-ngn="0" data-usd="0">
-            Coming soon
-          </div>
-
-          <a class="buy-button" href="contact.html">
-            Product enquiries
-          </a>
-        </div>
-      </article>
-
-      <!-- BUSINESS AND SOCIAL MEDIA KITS -->
-      <article class="product" id="business">
-        <div class="product-image">🎨</div>
-
-        <div class="product-content">
-          <span class="coming">Coming soon</span>
-
-          <h3>Business & Social Media Kits</h3>
-
-          <p>
-            Creative resources, branding materials and
-            templates for business communication and
-            social media growth.
-          </p>
-
-          <div class="price" data-ngn="0" data-usd="0">
-            Coming soon
-          </div>
-
-          <a class="buy-button" href="contact.html">
-            Product enquiries
-          </a>
-        </div>
-      </article>
-
-    </div>
-
-    <div class="notice">
-      <strong>Important product information:</strong>
-      The GlobalDev Professional CV & Resume Bundle is offered
-      at ₦2,500 or $4.99. Checkout is initiated through Paystack.
-      After payment, the payment verification process checks the
-      transaction before making the digital download available.
-      Other products are coming soon.
-    </div>
-
-  </section>
-
-  <section class="cta">
-    <h2>Keep Growing with GlobalDev Hub</h2>
-
-    <p>
-      Explore our free learning resources and digital tools
-      while our digital store expands.
-    </p>
-
-    <a href="tools.html">Explore Free Tools</a>
-  </section>
-
-</main>
-
-<footer>
-  <p><strong>G GlobalDev Hub</strong></p>
-  <p>Digital Knowledge & Resources</p>
-
-  <p>
-    <a href="welcome.html">Home</a> |
-    <a href="about.html">About</a> |
-    <a href="contact.html">Contact</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms & Conditions</a>
-  </p>
-
-  <p>
-    © <span id="year"></span> GlobalDev Hub.
-    All rights reserved.
-  </p>
-</footer>
 
 <script>
   document.getElementById("year").textContent =
@@ -534,26 +23,20 @@
           symbol + amount.toLocaleString(
             currency === "NGN" ? "en-NG" : "en-US",
             {
-              minimumFractionDigits:
-                currency === "USD" ? 2 : 0,
-              maximumFractionDigits:
-                currency === "USD" ? 2 : 0
+              minimumFractionDigits: currency === "USD" ? 2 : 0,
+              maximumFractionDigits: currency === "USD" ? 2 : 0
             }
           );
       }
     });
   }
 
-  currencySelect.addEventListener(
-    "change",
-    updateCurrency
-  );
-
+  currencySelect.addEventListener("change", updateCurrency);
   updateCurrency();
 
-  // GlobalDev Hub Paystack checkout integration
+  // TEST MODE ONLY — LIVE PAYMENT SETTINGS REMAIN UNCHANGED
   const PAYMENT_ENDPOINT =
-    "https://globaldev-payments.yakubusamuel966.workers.dev/api/payments/initialize";
+    "https://globaldev-payments.yakubusamuel966.workers.dev/api/payments/test/initialize";
 
   const buyButton =
     document.getElementById("buy-cv-bundle");
@@ -566,9 +49,7 @@
       "Enter your email address for your CV Bundle purchase:"
     );
 
-    if (email === null) {
-      return;
-    }
+    if (email === null) return;
 
     const customerEmail = email.trim();
 
@@ -586,7 +67,7 @@
     buyButton.disabled = true;
     buyButton.textContent = "Connecting to Paystack...";
     checkoutMessage.textContent =
-      "Preparing your secure checkout. Please wait.";
+      "Preparing your TEST checkout. Please wait.";
 
     try {
       const response = await fetch(PAYMENT_ENDPOINT, {
@@ -604,25 +85,22 @@
 
       if (!response.ok || !result.authorization_url) {
         throw new Error(
-          result.error || "Unable to initialize payment."
+          result.error || "Unable to initialize test payment."
         );
       }
 
       checkoutMessage.textContent =
-        "Redirecting you to secure Paystack checkout...";
+        "Redirecting to Paystack TEST checkout...";
 
       window.location.assign(result.authorization_url);
 
     } catch (error) {
       checkoutMessage.textContent =
         error.message ||
-        "Checkout could not be started. Please try again.";
+        "Test checkout could not be started. Please try again.";
 
       buyButton.disabled = false;
       buyButton.textContent = "Buy Now";
     }
   });
 </script>
-
-</body>
-</html>
