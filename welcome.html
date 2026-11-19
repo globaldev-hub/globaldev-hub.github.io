@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,6 +127,7 @@
             <a href="recommended-tools.html">⭐ Recommended Tools</a>
             <a href="digital-store.html">🛍️ GlobalDev Digital Store</a>
             <a href="digital-products.html">Digital Products</a>
+            <a href="ebooks.html">📚 Digital E-books</a>
             <a href="sell-with-us.html">Sell With Us</a>
             <a href="submit-resource.html">Submit a Resource</a>
             <a href="advertise-with-us.html">Advertise With Us</a>
@@ -224,6 +224,13 @@
             <h3>Digital Products</h3>
             <p>Discover product categories and featured digital downloads from GlobalDev Hub.</p>
             <a href="digital-products.html">Explore digital products →</a>
+          </article>
+
+          <article class="card">
+            <div class="symbol">📚</div>
+            <h3>Digital E-books</h3>
+            <p>Explore practical e-books designed to help beginners learn digital skills step by step.</p>
+            <a href="ebooks.html">Explore E-books →</a>
           </article>
 
           <article class="card">
@@ -359,6 +366,7 @@
           <a href="recommended-tools.html">Recommended Tools</a>
           <a href="digital-store.html">Digital Store</a>
           <a href="digital-products.html">Digital Products</a>
+          <a href="ebooks.html">Digital E-books</a>
           <a href="sell-with-us.html">Sell With Us</a>
           <a href="submit-resource.html">Submit a Resource</a>
           <a href="advertise-with-us.html">Advertise With Us</a>
@@ -417,6 +425,10 @@
       }
 
       const pages = [
+        ["digital e-books", "ebooks.html"],
+        ["e-books", "ebooks.html"],
+        ["ebooks", "ebooks.html"],
+        ["e-book", "ebooks.html"],
         ["recommended tools", "recommended-tools.html"],
         ["recommended", "recommended-tools.html"],
         ["digital products", "digital-products.html"],
@@ -458,7 +470,7 @@
         window.location.href = match[1];
       } else {
         message.textContent =
-          "No direct match found. Try Guides, Digital Skills, Website Basics, Careers, Digital Products, Digital Store or FAQ.";
+          "No direct match found. Try Guides, Digital Skills, Website Basics, Careers, Digital Products, Digital Store, E-books or FAQ.";
       }
     });
 
