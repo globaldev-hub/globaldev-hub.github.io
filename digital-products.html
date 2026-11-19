@@ -1,14 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover professional digital products at GlobalDev Hub.">
+  <meta name="description" content="Discover professional digital products, CV resources and beginner-friendly e-books at GlobalDev Hub.">
   <meta name="theme-color" content="#101827">
   <title>Digital Products | GlobalDev Hub</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -48,6 +51,11 @@
       font-size: 14px;
     }
 
+    nav a:hover,
+    footer a:hover {
+      text-decoration: underline;
+    }
+
     .hero {
       padding: 75px 20px;
       text-align: center;
@@ -84,7 +92,8 @@
       margin-bottom: 30px;
     }
 
-    select, input {
+    select,
+    input {
       padding: 12px;
       border: 1px solid #cbd5e1;
       border-radius: 7px;
@@ -166,7 +175,8 @@
       margin: 15px 0 6px;
     }
 
-    button, .contact-button {
+    button,
+    .contact-button {
       display: block;
       width: 100%;
       padding: 13px;
@@ -181,7 +191,8 @@
       cursor: pointer;
     }
 
-    button:hover, .contact-button:hover {
+    button:hover,
+    .contact-button:hover {
       background: #1d4ed8;
     }
 
@@ -222,9 +233,17 @@
     }
 
     @media(max-width: 600px) {
-      header { justify-content: center; }
-      nav { justify-content: center; }
-      .currency-panel { justify-content: center; }
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .currency-panel {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -238,12 +257,14 @@
     <a href="welcome.html">Home</a>
     <a href="tools.html">Free Tools</a>
     <a href="digital-store.html">Digital Store</a>
+    <a href="ebooks.html">E-books</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
   <h1>GlobalDev Digital Products</h1>
+
   <p>
     Discover practical digital resources for your career,
     learning, business and online journey.
@@ -255,6 +276,7 @@
   <section class="currency-panel">
     <div>
       <strong>Choose your payment currency</strong>
+
       <div style="font-size:13px;color:#64748b">
         Select Nigerian Naira or US Dollars.
       </div>
@@ -273,6 +295,8 @@
     </div>
 
     <div class="products">
+
+      <!-- CV AND RESUME BUNDLE -->
 
       <article class="product">
         <div class="product-image">📄</div>
@@ -306,53 +330,79 @@
             Buy Now
           </button>
 
-          <p class="message" id="checkout-message"
-             role="status" aria-live="polite"></p>
+          <p
+            class="message"
+            id="checkout-message"
+            role="status"
+            aria-live="polite"
+          ></p>
         </div>
       </article>
 
+      <!-- BEGINNER DIGITAL SKILLS E-BOOK -->
+
       <article class="product">
         <div class="product-image">📚</div>
+
         <div class="content">
-          <span class="tag">Coming soon</span>
-          <h3>Digital Skills E-books</h3>
+          <span class="tag">Available now</span>
+
+          <h3>Digital Skills for Complete Beginners</h3>
+
           <p>
-            Practical guides covering technology,
-            digital skills and personal development.
+            Learn essential digital skills from scratch
+            with our beginner-friendly e-book, written
+            in simple English.
           </p>
-          <div class="price">Coming soon</div>
-          <a class="contact-button" href="contact.html">
-            Product enquiries
+
+          <div class="price">₦2,500</div>
+
+          <a class="contact-button" href="ebooks.html">
+            View E-book & Buy
           </a>
         </div>
       </article>
 
+      <!-- WEBSITE TEMPLATES -->
+
       <article class="product">
         <div class="product-image">🌐</div>
+
         <div class="content">
           <span class="tag">Coming soon</span>
+
           <h3>Website Templates</h3>
+
           <p>
             Website starter designs for portfolios,
             personal projects and online businesses.
           </p>
+
           <div class="price">Coming soon</div>
+
           <a class="contact-button" href="contact.html">
             Product enquiries
           </a>
         </div>
       </article>
 
+      <!-- BUSINESS AND SOCIAL MEDIA KITS -->
+
       <article class="product">
         <div class="product-image">🎨</div>
+
         <div class="content">
           <span class="tag">Coming soon</span>
+
           <h3>Business & Social Media Kits</h3>
+
           <p>
             Creative resources and branding materials
             for businesses and online creators.
           </p>
+
           <div class="price">Coming soon</div>
+
           <a class="contact-button" href="contact.html">
             Product enquiries
           </a>
@@ -364,6 +414,7 @@
 
   <div class="notice">
     <strong>Secure payment information:</strong>
+
     Payments are processed through Paystack.
     Your digital download is made available only
     after successful payment verification.
@@ -373,7 +424,9 @@
 
 <footer>
   <p><strong>GlobalDev Hub</strong></p>
+
   <p>Digital Knowledge & Resources</p>
+
   <p>
     <a href="welcome.html">Home</a> |
     <a href="about.html">About</a> |
@@ -381,7 +434,11 @@
     <a href="privacy.html">Privacy Policy</a> |
     <a href="terms.html">Terms & Conditions</a>
   </p>
-  <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
+
+  <p>
+    © <span id="year"></span> GlobalDev Hub.
+    All rights reserved.
+  </p>
 </footer>
 
 <script>
@@ -389,11 +446,23 @@
   const PAYMENT_ENDPOINT =
     "https://globaldev-payments.yakubusamuel966.workers.dev/api/payments/initialize";
 
-  const currencySelect = document.getElementById("currency");
-  const price = document.getElementById("price");
-  const emailInput = document.getElementById("customer-email");
-  const buyButton = document.getElementById("buy-button");
-  const message = document.getElementById("checkout-message");
+  const CV_PRODUCT_CODE =
+    "globaldev-professional-cv-resume-bundle";
+
+  const currencySelect =
+    document.getElementById("currency");
+
+  const price =
+    document.getElementById("price");
+
+  const emailInput =
+    document.getElementById("customer-email");
+
+  const buyButton =
+    document.getElementById("buy-button");
+
+  const message =
+    document.getElementById("checkout-message");
 
   document.getElementById("year").textContent =
     new Date().getFullYear();
@@ -412,7 +481,9 @@
     const email = emailInput.value.trim();
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      message.textContent = "Please enter a valid email address.";
+      message.textContent =
+        "Please enter a valid email address.";
+
       emailInput.focus();
       return;
     }
@@ -421,26 +492,36 @@
 
     buyButton.disabled = true;
     buyButton.textContent = "Connecting to Paystack...";
+
     message.textContent =
       "Preparing your secure checkout. Please wait.";
 
     try {
       const response = await fetch(PAYMENT_ENDPOINT, {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
+
         body: JSON.stringify({
+          product: CV_PRODUCT_CODE,
           email: email,
           currency: currency
         })
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
-      if (!response.ok || !result.authorization_url) {
+      if (
+        !response.ok ||
+        !result.status ||
+        !result.authorization_url ||
+        result.product !== CV_PRODUCT_CODE
+      ) {
         throw new Error(
-          result.error || result.message ||
+          result.error ||
+          result.message ||
           "Unable to initialize payment."
         );
       }
@@ -452,7 +533,8 @@
 
     } catch (error) {
       message.textContent =
-        error.message || "Checkout failed. Please try again.";
+        error.message ||
+        "Checkout failed. Please try again.";
 
       buyButton.disabled = false;
       buyButton.textContent = "Buy Now";
