@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,8 @@
     body{margin:0;font-family:Arial,Helvetica,sans-serif;line-height:1.65;color:#243247;background:#f5f7fb}
     header{background:#101827;color:#fff;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
     header a{color:#fff;text-decoration:none;font-weight:700}
-    nav{display:flex;gap:16px;flex-wrap:wrap}nav a{font-size:14px;color:#e2e8f0}
+    nav{display:flex;gap:16px;flex-wrap:wrap}
+    nav a{font-size:14px;color:#e2e8f0}
     main{width:min(1000px,92%);margin:42px auto}
     .hero{background:linear-gradient(135deg,#101827,#174b82,#0d9488);color:#fff;border-radius:18px;padding:clamp(28px,6vw,60px);display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}
     .eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#99f6e4}
@@ -29,8 +31,13 @@
     li{margin:8px 0}
     .price{font-size:30px;font-weight:800;color:#2563eb;margin:8px 0}
     .notice{background:#ecfeff;border:1px solid #a5f3fc;color:#155e75;border-radius:10px;padding:15px;font-size:14px}
-    .button{display:inline-block;text-align:center;text-decoration:none;background:#2563eb;color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;margin-top:12px}
+    .button{display:inline-block;text-align:center;text-decoration:none;background:#2563eb;color:#fff;padding:13px 18px;border:0;border-radius:8px;font-weight:700;margin-top:12px;cursor:pointer;font-size:16px}
+    .button:disabled{opacity:.6;cursor:not-allowed}
     .secondary{display:inline-block;color:#2563eb;font-weight:700;text-decoration:none;margin-top:12px}
+    .checkout-form{margin-top:16px}
+    .checkout-form label{display:block;font-weight:700;margin:12px 0 6px}
+    .checkout-form input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}
+    #paymentMessage{margin-top:12px;font-size:14px;overflow-wrap:anywhere}
     footer{text-align:center;padding:25px 15px;background:#101827;color:#cbd5e1;margin-top:50px;font-size:14px}
     footer a{color:#5eead4;text-decoration:none}
     @media(max-width:700px){.hero,.details{grid-template-columns:1fr}.cover{min-height:250px}header{justify-content:center}nav{justify-content:center}}
@@ -47,6 +54,7 @@
     <a href="contact.html">Contact</a>
   </nav>
 </header>
+
 <main>
   <section class="hero">
     <div>
@@ -61,6 +69,7 @@
       <div class="foot">LEARN • PRACTISE • GROW</div>
     </div>
   </section>
+
   <section class="details">
     <article class="panel">
       <h2>What you'll learn</h2>
@@ -75,21 +84,107 @@
       </ul>
       <p>Written in simple English, with practical exercises and chapter summaries.</p>
     </article>
+
     <aside class="panel">
       <h2>Price</h2>
       <div class="price">₦2,500</div>
       <p>One-time payment for the e-book.</p>
-      <div class="notice"><strong>Checkout is being finalised.</strong><br>We are completing the separate secure payment and download process for this e-book. Please do not pay through the CV &amp; Resume Bundle checkout.</div>
-      <a class="button" href="contact.html">Contact GlobalDev Hub</a>
-      <br><a class="secondary" href="digital-products.html">Back to Digital Products</a>
+
+      <div class="notice">
+        <strong>Secure e-book checkout</strong><br>
+        Enter your email address below to proceed to Paystack. Your payment will be verified before download access is provided.
+      </div>
+
+      <form class="checkout-form" id="ebookCheckoutForm">
+        <label for="customerEmail">Email address</label>
+        <input
+          type="email"
+          id="customerEmail"
+          name="email"
+          placeholder="Enter your email address"
+          autocomplete="email"
+          required
+        >
+        <button class="button" id="buyEbookButton" type="submit">
+          Buy E-book — ₦2,500
+        </button>
+      </form>
+
+      <p id="paymentMessage" role="status" aria-live="polite"></p>
+
+      <a class="secondary" href="digital-products.html">Back to Digital Products</a>
     </aside>
   </section>
 </main>
+
 <footer>
   <p><strong>GlobalDev Hub</strong> · Digital Knowledge &amp; Resources</p>
   <p><a href="welcome.html">Home</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
 </footer>
-<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const PAYMENT_WORKER = "https://globaldev-payments.yakubusamuel966.workers.dev";
+const EBOOK_PRODUCT_CODE = "globaldev-digital-skills-beginners";
+
+const checkoutForm = document.getElementById("ebookCheckoutForm");
+const buyButton = document.getElementById("buyEbookButton");
+const paymentMessage = document.getElementById("paymentMessage");
+
+checkoutForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("customerEmail").value.trim();
+
+  if (!email) {
+    paymentMessage.textContent = "Please enter your email address.";
+    return;
+  }
+
+  buyButton.disabled = true;
+  buyButton.textContent = "Connecting to Paystack...";
+  paymentMessage.textContent = "Preparing your secure checkout...";
+
+  try {
+    const response = await fetch(
+      PAYMENT_WORKER + "/api/payments/initialize",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          product: EBOOK_PRODUCT_CODE,
+          email: email,
+          currency: "NGN"
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.status || !result.authorization_url) {
+      throw new Error(result.message || "Unable to start payment.");
+    }
+
+    if (result.product !== EBOOK_PRODUCT_CODE) {
+      throw new Error("The checkout returned an unexpected product.");
+    }
+
+    paymentMessage.textContent = "Opening secure Paystack checkout...";
+
+    window.location.assign(result.authorization_url);
+
+  } catch (error) {
+    paymentMessage.textContent =
+      error.message || "Payment could not be started. Please try again.";
+
+    buyButton.disabled = false;
+    buyButton.textContent = "Buy E-book — ₦2,500";
+  }
+});
+</script>
 </body>
 </html>
