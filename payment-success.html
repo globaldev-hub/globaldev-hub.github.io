@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101827">
-  <title>Payment Confirmation | GlobalDev Hub">
+  <title>Payment Confirmation | GlobalDev Hub</title>
 
   <style>
     :root {
@@ -136,7 +135,7 @@
     </a>
 
     <small>
-      Your secure download link expires after 5 minutes.
+      Your secure download link expires after 10 minutes.
       Do not share it.
     </small>
   </main>
@@ -183,19 +182,21 @@
       ) {
         heading.textContent = "Product could not be identified";
         status.textContent =
-          "We could not identify the purchased product. Please contact GlobalDev Hub support with your payment reference.";
+          "We could not identify the purchased product. Please contact support with your payment reference.";
         return;
       }
 
-      fetch(
-        `${worker}/api/payments/verify?reference=${encodeURIComponent(reference)}`,
-        {
-          method: "GET",
-          headers: {
-            "Accept": "application/json"
-          }
-        }
-      )
+      fetch(`${worker}/api/payments/verify`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          reference: reference
+        })
+      })
+
       .then(async response => {
         const data = await response.json().catch(() => ({}));
 
@@ -207,15 +208,11 @@
           );
         }
 
-        const verified =
-          data.status === true ||
-          data.status === "success" ||
-          data.success === true;
-
         if (
-          !verified ||
-          data.paid !== true ||
-          !data.download_url
+          data.status !== true ||
+          data.payment_status !== "success" ||
+          !data.download_url ||
+          !data.product
         ) {
           throw new Error(
             data.message ||
@@ -246,6 +243,7 @@
           product: products[productCode]
         };
       })
+
       .then(({ data, product }) => {
         heading.textContent = "Payment confirmed!";
 
@@ -256,6 +254,7 @@
         download.href = data.download_url;
         download.style.display = "block";
       })
+
       .catch(error => {
         heading.textContent = "Payment verification";
 
