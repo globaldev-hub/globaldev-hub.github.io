@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Advertise with GlobalDev Hub. Explore advertising, brand partnerships and promotional opportunities.">
+<meta name="description" content="Advertise with GlobalDev Hub. Explore promotional packages, brand partnerships and sponsored content.">
 <meta name="theme-color" content="#101827">
 <title>Advertise With Us | GlobalDev Hub</title>
 
@@ -18,9 +18,7 @@
   --muted:#64748b;
   --border:#e2e8f0;
 }
-
-* { box-sizing:border-box; }
-
+* {box-sizing:border-box}
 body {
   margin:0;
   font-family:Arial,sans-serif;
@@ -28,9 +26,7 @@ body {
   color:var(--text);
   background:var(--bg);
 }
-
-a { text-decoration:none; }
-
+a {text-decoration:none}
 header {
   background:var(--dark);
   padding:16px 6%;
@@ -40,45 +36,23 @@ header {
   flex-wrap:wrap;
   gap:15px;
 }
-
-.brand {
-  color:white;
-  font-size:20px;
-  font-weight:bold;
-}
-
-nav {
-  display:flex;
-  gap:17px;
-  flex-wrap:wrap;
-}
-
-nav a {
-  color:#e2e8f0;
-  font-size:14px;
-}
-
-nav a:hover { color:#5eead4; }
-
+.brand {color:white;font-size:20px;font-weight:bold}
+nav {display:flex;gap:17px;flex-wrap:wrap}
+nav a {color:#e2e8f0;font-size:14px}
+nav a:hover {color:#5eead4}
 .hero {
   padding:75px 20px;
   text-align:center;
   color:white;
   background:linear-gradient(135deg,#101827,#174b82,#0d9488);
 }
-
-.hero h1 {
-  font-size:clamp(32px,5vw,46px);
-  margin:0 0 15px;
-}
-
+.hero h1 {font-size:clamp(32px,5vw,46px);margin:0 0 15px}
 .hero p {
   max-width:700px;
   margin:auto;
   color:#e0f2fe;
   font-size:17px;
 }
-
 .hero a {
   display:inline-block;
   margin-top:25px;
@@ -88,81 +62,61 @@ nav a:hover { color:#5eead4; }
   border-radius:8px;
   font-weight:bold;
 }
-
-main {
-  width:min(1050px,92%);
-  margin:45px auto;
-}
-
-.heading {
-  text-align:center;
-  margin-bottom:28px;
-}
-
-.heading h2 {
-  color:var(--dark);
-  font-size:28px;
-}
-
-.heading p { color:var(--muted); }
-
+main {width:min(1050px,92%);margin:45px auto}
+.heading {text-align:center;margin-bottom:28px}
+.heading h2 {color:var(--dark);font-size:28px}
+.heading p {color:var(--muted)}
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
-  margin-bottom:50px;
+  margin-bottom:45px;
 }
-
 .card {
   background:white;
   padding:24px;
   border:1px solid var(--border);
   border-radius:12px;
 }
-
-.card span { font-size:35px; }
-
-.card h3 { color:var(--dark); }
-
-.card p {
+.card span {font-size:35px}
+.card h3 {color:var(--dark)}
+.card p {color:var(--muted);font-size:14px}
+.package {
+  border-top:4px solid var(--primary);
+}
+.package ul {
+  padding-left:20px;
   color:var(--muted);
   font-size:14px;
 }
-
+.package button {
+  width:100%;
+  padding:11px;
+  margin-top:10px;
+  background:var(--primary);
+  color:white;
+  border:0;
+  border-radius:7px;
+  font-weight:bold;
+  cursor:pointer;
+}
 .form-box {
   background:white;
   padding:30px;
   border:1px solid var(--border);
   border-radius:13px;
 }
-
-.form-box h2 { color:var(--dark); }
-
-.form-box > p {
-  color:var(--muted);
-  font-size:14px;
-}
-
+.form-box h2 {color:var(--dark)}
+.form-box > p {color:var(--muted);font-size:14px}
 .form-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px;
   margin-top:25px;
 }
-
-.field {
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.full { grid-column:1/-1; }
-
-label {
-  font-size:14px;
-  font-weight:bold;
-}
-
+.field {display:flex;flex-direction:column;gap:7px}
+.full {grid-column:1/-1}
+label {font-size:14px;font-weight:bold}
 input,select,textarea {
   width:100%;
   padding:12px;
@@ -170,18 +124,12 @@ input,select,textarea {
   border-radius:7px;
   font:inherit;
 }
-
-textarea {
-  min-height:110px;
-  resize:vertical;
-}
-
+textarea {min-height:110px;resize:vertical}
 input:focus,select:focus,textarea:focus {
   outline:2px solid #93c5fd;
   border-color:var(--primary);
 }
-
-button {
+.submit-btn {
   width:100%;
   padding:14px;
   background:var(--primary);
@@ -193,9 +141,8 @@ button {
   cursor:pointer;
   margin-top:22px;
 }
-
-button:hover { background:#1d4ed8; }
-
+.submit-btn:hover {background:#1d4ed8}
+.submit-btn:disabled {opacity:.6;cursor:wait}
 .notice {
   margin-top:22px;
   padding:17px;
@@ -205,17 +152,23 @@ button:hover { background:#1d4ed8; }
   color:#155e75;
   font-size:13px;
 }
-
-.success {
+.message {
   display:none;
   margin-top:20px;
   padding:17px;
+  border-radius:9px;
+  font-size:14px;
+}
+.success {
   background:#ecfdf5;
   border:1px solid #86efac;
   color:#166534;
-  border-radius:9px;
 }
-
+.error {
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+}
 .cta {
   margin-top:45px;
   padding:35px 20px;
@@ -224,9 +177,7 @@ button:hover { background:#1d4ed8; }
   text-align:center;
   border-radius:13px;
 }
-
-.cta p { color:#cbd5e1; }
-
+.cta p {color:#cbd5e1}
 .cta a {
   display:inline-block;
   margin-top:10px;
@@ -236,7 +187,6 @@ button:hover { background:#1d4ed8; }
   border-radius:7px;
   font-weight:bold;
 }
-
 footer {
   background:var(--dark);
   color:#cbd5e1;
@@ -245,15 +195,13 @@ footer {
   margin-top:55px;
   font-size:14px;
 }
-
-footer a { color:#5eead4; }
-
+footer a {color:#5eead4}
 @media(max-width:650px) {
-  header { justify-content:center; }
-  nav { justify-content:center; }
-  .form-grid { grid-template-columns:1fr; }
-  .full { grid-column:auto; }
-  .form-box { padding:20px; }
+  header {justify-content:center}
+  nav {justify-content:center}
+  .form-grid {grid-template-columns:1fr}
+  .full {grid-column:auto}
+  .form-box {padding:20px}
 }
 </style>
 </head>
@@ -278,52 +226,83 @@ footer a { color:#5eead4; }
     exploring technology, digital skills, learning resources
     and online opportunities.
   </p>
-  <a href="#inquiry">Explore Advertising Opportunities</a>
+  <a href="#packages">Explore Advertising Packages</a>
 </section>
 
 <main>
 
+<section id="packages">
+  <div class="heading">
+    <h2>Advertising Packages</h2>
+    <p>Choose the promotional option that best matches your goals.</p>
+  </div>
+
+  <div class="grid">
+    <article class="card package">
+      <span>🚀</span>
+      <h3>Starter Promotion</h3>
+      <p>A basic promotional opportunity for businesses and creators.</p>
+      <ul>
+        <li>Basic promotional listing</li>
+        <li>Business or product introduction</li>
+        <li>Campaign duration agreed in advance</li>
+      </ul>
+      <button type="button" data-package="Starter Promotion">
+        Choose Starter
+      </button>
+    </article>
+
+    <article class="card package">
+      <span>⭐</span>
+      <h3>Featured Promotion</h3>
+      <p>More prominent promotional placement for your brand.</p>
+      <ul>
+        <li>Featured promotional placement</li>
+        <li>Business or product description</li>
+        <li>Campaign duration agreed in advance</li>
+      </ul>
+      <button type="button" data-package="Featured Promotion">
+        Choose Featured
+      </button>
+    </article>
+
+    <article class="card package">
+      <span>🌍</span>
+      <h3>Campaign Partner</h3>
+      <p>A broader promotional collaboration with GlobalDev Hub.</p>
+      <ul>
+        <li>Sponsored content enquiries</li>
+        <li>Custom promotional opportunities</li>
+        <li>Campaign terms agreed together</li>
+      </ul>
+      <button type="button" data-package="Campaign Partner">
+        Choose Campaign Partner
+      </button>
+    </article>
+  </div>
+</section>
+
 <section>
   <div class="heading">
-    <h2>Promote Your Brand</h2>
-    <p>Explore potential ways to work with GlobalDev Hub.</p>
+    <h2>Other Partnership Opportunities</h2>
+    <p>We also welcome relevant business and promotional enquiries.</p>
   </div>
 
   <div class="grid">
     <article class="card">
       <span>📢</span>
       <h3>Sponsored Content</h3>
-      <p>
-        Enquire about sponsored articles, announcements
-        and relevant promotional content.
-      </p>
+      <p>Enquire about sponsored articles, announcements and promotional content.</p>
     </article>
-
     <article class="card">
       <span>🤝</span>
       <h3>Brand Partnerships</h3>
-      <p>
-        Explore potential collaborations with a platform
-        focused on digital knowledge and resources.
-      </p>
+      <p>Explore collaborations focused on digital knowledge and resources.</p>
     </article>
-
     <article class="card">
       <span>💻</span>
       <h3>Digital Product Promotion</h3>
-      <p>
-        Discuss promotional opportunities for relevant
-        digital products and services.
-      </p>
-    </article>
-
-    <article class="card">
-      <span>🌍</span>
-      <h3>Business Visibility</h3>
-      <p>
-        Enquire about opportunities to introduce your
-        business to our platform visitors.
-      </p>
+      <p>Discuss promotional opportunities for relevant digital products and services.</p>
     </article>
   </div>
 </section>
@@ -331,12 +310,11 @@ footer a { color:#5eead4; }
 <section id="inquiry" class="form-box">
   <h2>Advertising Inquiry Form</h2>
   <p>
-    Tell us about your organisation and the promotional
-    opportunity you would like to discuss.
+    Submit your details and tell us about the advertising opportunity
+    you would like to discuss.
   </p>
 
   <form id="advertForm">
-
     <div class="form-grid">
 
       <div class="field">
@@ -384,6 +362,17 @@ footer a { color:#5eead4; }
       </div>
 
       <div class="field full">
+        <label for="package">Advertising Package *</label>
+        <select id="package" name="package" required>
+          <option value="">Choose a package</option>
+          <option>Starter Promotion</option>
+          <option>Featured Promotion</option>
+          <option>Campaign Partner</option>
+          <option>Custom Proposal</option>
+        </select>
+      </div>
+
+      <div class="field full">
         <label for="budget">Proposed Advertising Budget</label>
         <select id="budget" name="budget">
           <option value="">Not decided yet</option>
@@ -398,40 +387,39 @@ footer a { color:#5eead4; }
 
       <div class="field full">
         <label for="message">Tell Us About Your Proposal *</label>
-        <textarea id="message" name="message" required
-                  maxlength="2000"
-                  placeholder="Describe your business, target audience and the advertising opportunity you have in mind."></textarea>
+        <textarea id="message" name="message" required maxlength="2000"
+          placeholder="Describe your business, target audience and the advertising opportunity you have in mind."></textarea>
       </div>
 
     </div>
 
-    <button type="submit">Submit Advertising Inquiry</button>
+    <button class="submit-btn" id="submitBtn" type="submit">
+      Submit Advertising Inquiry
+    </button>
 
-    <div id="success" class="success" role="status" aria-live="polite">
-      <strong>Inquiry prepared successfully!</strong>
-      <p>
-        This is currently a demonstration form. Your inquiry has not
-        been sent or saved. We will connect secure submission
-        functionality before accepting real inquiries.
-      </p>
+    <div id="success" class="message success" role="status" aria-live="polite">
+      <strong>Inquiry submitted successfully!</strong>
+      <p>Thank you for contacting GlobalDev Hub. Your inquiry has been received. We will review your proposal.</p>
     </div>
 
+    <div id="error" class="message error" role="alert" aria-live="assertive">
+      <strong>Submission unsuccessful.</strong>
+      <p id="errorText">Please try again.</p>
+    </div>
   </form>
 
   <div class="notice">
     <strong>Important:</strong>
     Submitting an inquiry does not guarantee advertising placement.
-    All advertising opportunities, availability, pricing and terms
-    will be discussed and agreed upon before any campaign begins.
-    Sponsored content will be appropriately disclosed.
+    Pricing, availability and campaign terms will be discussed and
+    agreed upon before any campaign begins. Sponsored content will
+    be appropriately disclosed.
   </div>
 </section>
 
 <section class="cta">
   <h2>Let's Explore a Partnership</h2>
-  <p>
-    Have questions about GlobalDev Hub or our advertising opportunities?
-  </p>
+  <p>Have questions about GlobalDev Hub or our advertising opportunities?</p>
   <a href="contact.html">Contact Us</a>
 </section>
 
@@ -450,22 +438,109 @@ footer a { color:#5eead4; }
   <p>© <span id="year"></span> GlobalDev Hub. All rights reserved.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 document.getElementById("year").textContent =
   new Date().getFullYear();
 
-document.getElementById("advertForm").addEventListener("submit", function(event) {
+/* GlobalDev Hub Supabase connection */
+const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+
+/* Replace this placeholder with your Supabase Publishable key */
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+const form = document.getElementById("advertForm");
+const submitBtn = document.getElementById("submitBtn");
+const successBox = document.getElementById("success");
+const errorBox = document.getElementById("error");
+const errorText = document.getElementById("errorText");
+const packageSelect = document.getElementById("package");
+
+/* Package buttons select the matching form option */
+document.querySelectorAll("[data-package]").forEach(button => {
+  button.addEventListener("click", () => {
+    packageSelect.value = button.dataset.package;
+    document.getElementById("inquiry").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+});
+
+/* Save advertiser inquiry to Supabase */
+form.addEventListener("submit", async function(event) {
   event.preventDefault();
 
-  if (!this.reportValidity()) return;
+  successBox.style.display = "none";
+  errorBox.style.display = "none";
 
-  const success = document.getElementById("success");
-  success.style.display = "block";
+  if (!form.reportValidity()) return;
 
-  success.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
+  if (
+    SUPABASE_ANON_KEY === "YOUR_SUPABASE_PUBLISHABLE_KEY" ||
+    !SUPABASE_ANON_KEY.trim()
+  ) {
+    errorText.textContent =
+      "The Supabase public key has not been added to this page yet.";
+    errorBox.style.display = "block";
+    return;
+  }
+
+  const formData = new FormData(form);
+
+  const inquiry = {
+    name: formData.get("name").trim(),
+    email: formData.get("email").trim(),
+    company: formData.get("company").trim(),
+    website: formData.get("website").trim() || null,
+    country: formData.get("country").trim(),
+    advertising_type: formData.get("type"),
+    budget: formData.get("budget") || null,
+    message: formData.get("message").trim(),
+    package: formData.get("package")
+  };
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
+  try {
+    const { error } = await supabaseClient
+      .from("advertiser_inquiries")
+      .insert([inquiry]);
+
+    if (error) throw error;
+
+    successBox.style.display = "block";
+    form.reset();
+
+    successBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  } catch (error) {
+    console.error("Advertising inquiry error:", error);
+
+    errorText.textContent =
+      "We could not submit your inquiry. Please try again later.";
+
+    errorBox.style.display = "block";
+
+    errorBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit Advertising Inquiry";
+  }
 });
 </script>
 
