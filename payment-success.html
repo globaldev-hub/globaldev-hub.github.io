@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +27,7 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding: 20px;
       background: var(--bg);
       font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       color: var(--text);
@@ -34,7 +35,7 @@
 
     main {
       width: min(100%, 560px);
-      padding: 32px;
+      padding: 28px;
       border: 1px solid var(--line);
       border-radius: 20px;
       background: var(--panel);
@@ -70,30 +71,129 @@
       color: var(--text);
     }
 
-    a.button {
+    a.button,
+    button.action {
       display: none;
       margin: 12px auto 0;
-      padding: 13px 22px;
+      padding: 13px 18px;
       width: 100%;
-      max-width: 340px;
+      max-width: 360px;
+      border: 0;
       border-radius: 10px;
       background: var(--accent);
       color: #062016;
       text-decoration: none;
+      font: inherit;
       font-weight: 750;
+      cursor: pointer;
+    }
+
+    button.secondary-action {
+      background: #29405d;
+      color: #f4f7fb;
     }
 
     a.secondary {
       display: inline-block;
-      margin-top: 18px;
+      margin-top: 20px;
       color: #b9c9df;
       text-decoration: none;
+    }
+
+    .receipt {
+      display: none;
+      margin: 26px 0 10px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #101c2d;
+      text-align: left;
+    }
+
+    .receipt-header {
+      text-align: center;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed #40516a;
+    }
+
+    .brand {
+      color: var(--accent);
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+
+    .receipt-header p {
+      margin: 5px 0;
+      font-size: 13px;
+    }
+
+    .paid-label {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: #173d35;
+      color: #65e5ad;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .amount {
+      margin: 18px 0;
+      text-align: center;
+      font-size: 30px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid #26374e;
+      font-size: 13px;
+    }
+
+    .receipt-row span:first-child {
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .receipt-row strong {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-note {
+      margin: 18px 0 0;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .receipt-actions {
+      margin-top: 18px;
     }
 
     small {
       display: block;
       margin-top: 20px;
       color: var(--muted);
+    }
+
+    @media (max-width: 420px) {
+      main {
+        padding: 20px;
+      }
+
+      .receipt {
+        padding: 16px;
+      }
+
+      .receipt-row {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -127,6 +227,65 @@
       Download your product
     </a>
 
+    <section class="receipt" id="receipt" aria-label="Payment receipt">
+      <div class="receipt-header">
+        <div class="brand">GLOBALDEV HUB</div>
+        <p>Digital Knowledge &amp; Real Opportunities</p>
+        <span class="paid-label">✓ PAYMENT SUCCESSFUL</span>
+      </div>
+
+      <div class="amount" id="receiptAmount">—</div>
+
+      <div class="receipt-row">
+        <span>Product</span>
+        <strong id="receiptProduct">—</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Customer email</span>
+        <strong id="receiptEmail">—</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Receipt number</span>
+        <strong id="receiptNumber">—</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Payment reference</span>
+        <strong id="receiptReference">—</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Payment date</span>
+        <strong id="receiptDate">—</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Payment channel</span>
+        <strong id="receiptChannel">—</strong>
+      </div>
+
+      <p class="receipt-note">
+        This is a GlobalDev Hub purchase confirmation based on
+        successful payment verification. Paystack processed the payment.
+      </p>
+
+      <div class="receipt-actions">
+        <button class="action" id="saveReceipt" type="button">
+          Save Receipt Image
+        </button>
+
+        <button
+          class="action secondary-action"
+          id="shareReceipt"
+          type="button"
+        >
+          Share Receipt
+        </button>
+      </div>
+    </section>
+
     <a
       class="secondary"
       href="https://globaldev-hub.github.io/"
@@ -145,6 +304,9 @@
       const status = document.getElementById("status");
       const heading = document.getElementById("heading");
       const download = document.getElementById("download");
+      const receipt = document.getElementById("receipt");
+      const saveButton = document.getElementById("saveReceipt");
+      const shareButton = document.getElementById("shareReceipt");
 
       const params = new URLSearchParams(window.location.search);
 
@@ -168,6 +330,266 @@
           button: "Download your Beginner's E-book"
         }
       };
+
+      let verifiedReceipt = null;
+
+      function setReceiptText(id, value) {
+        document.getElementById(id).textContent =
+          value === null || value === undefined || value === ""
+            ? "Not provided"
+            : String(value);
+      }
+
+      function formatAmount(amount, currency) {
+        const numeric = Number(amount);
+
+        if (!Number.isFinite(numeric)) {
+          return "Amount unavailable";
+        }
+
+        // Paystack NGN amounts are commonly returned in kobo.
+        const majorAmount =
+          currency === "NGN" && numeric > 9999
+            ? numeric / 100
+            : numeric;
+
+        try {
+          return new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: currency || "NGN",
+            maximumFractionDigits: 2
+          }).format(majorAmount);
+        } catch {
+          return `${currency || ""} ${majorAmount}`;
+        }
+      }
+
+      function formatDate(value) {
+        if (!value) return new Date().toLocaleString();
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return String(value);
+        }
+
+        return date.toLocaleString();
+      }
+
+      function buildReceiptImage() {
+        return new Promise((resolve, reject) => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 1200;
+          canvas.height = 1450;
+
+          const ctx = canvas.getContext("2d");
+
+          if (!ctx) {
+            reject(new Error("Could not create the receipt image."));
+            return;
+          }
+
+          const data = verifiedReceipt;
+          const left = 90;
+          const right = 1110;
+
+          ctx.fillStyle = "#101827";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          ctx.fillStyle = "#172338";
+          ctx.fillRect(45, 45, 1110, 1360);
+
+          ctx.strokeStyle = "#2a3b55";
+          ctx.lineWidth = 3;
+          ctx.strokeRect(45, 45, 1110, 1360);
+
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#39c98a";
+          ctx.font = "bold 54px Arial";
+          ctx.fillText("GLOBALDEV HUB", 600, 150);
+
+          ctx.fillStyle = "#aab7c9";
+          ctx.font = "27px Arial";
+          ctx.fillText("Digital Knowledge & Real Opportunities", 600, 205);
+
+          ctx.fillStyle = "#173d35";
+          ctx.beginPath();
+          ctx.roundRect(390, 250, 420, 65, 28);
+          ctx.fill();
+
+          ctx.fillStyle = "#65e5ad";
+          ctx.font = "bold 27px Arial";
+          ctx.fillText("PAYMENT SUCCESSFUL", 600, 293);
+
+          ctx.fillStyle = "#f4f7fb";
+          ctx.font = "bold 66px Arial";
+          ctx.fillText(data.amountText, 600, 420);
+
+          ctx.strokeStyle = "#40516a";
+          ctx.setLineDash([12, 10]);
+          ctx.beginPath();
+          ctx.moveTo(left, 475);
+          ctx.lineTo(right, 475);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          const rows = [
+            ["Product", data.productName],
+            ["Customer email", data.email],
+            ["Receipt number", data.receiptNumber],
+            ["Payment reference", data.reference],
+            ["Payment date", data.date],
+            ["Payment channel", data.channel]
+          ];
+
+          let y = 555;
+
+          rows.forEach(([label, value]) => {
+            ctx.textAlign = "left";
+            ctx.fillStyle = "#aab7c9";
+            ctx.font = "26px Arial";
+            ctx.fillText(label, left, y);
+
+            ctx.textAlign = "right";
+            ctx.fillStyle = "#f4f7fb";
+            ctx.font = "bold 25px Arial";
+
+            const maxWidth = 590;
+            const safeValue = String(value || "Not provided");
+            const words = safeValue.split(" ");
+            let line = "";
+            const lines = [];
+
+            words.forEach(word => {
+              const test = line ? `${line} ${word}` : word;
+
+              if (ctx.measureText(test).width > maxWidth && line) {
+                lines.push(line);
+                line = word;
+              } else {
+                line = test;
+              }
+            });
+
+            if (line) lines.push(line);
+
+            lines.slice(0, 2).forEach((part, index) => {
+              ctx.fillText(part, right, y + index * 32);
+            });
+
+            y += Math.max(95, lines.slice(0, 2).length * 38 + 45);
+
+            ctx.strokeStyle = "#26374e";
+            ctx.beginPath();
+            ctx.moveTo(left, y - 30);
+            ctx.lineTo(right, y - 30);
+            ctx.stroke();
+          });
+
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#aab7c9";
+          ctx.font = "22px Arial";
+          ctx.fillText(
+            "Verified GlobalDev Hub purchase confirmation",
+            600,
+            1285
+          );
+
+          ctx.fillText(
+            "Payment processed by Paystack",
+            600,
+            1325
+          );
+
+          ctx.fillStyle = "#39c98a";
+          ctx.font = "bold 23px Arial";
+          ctx.fillText(
+            "Thank you for choosing GlobalDev Hub!",
+            600,
+            1370
+          );
+
+          canvas.toBlob(blob => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error("Receipt image could not be created."));
+            }
+          }, "image/png");
+        });
+      }
+
+      async function saveReceipt() {
+        if (!verifiedReceipt) return;
+
+        try {
+          const blob = await buildReceiptImage();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+
+          link.href = url;
+          link.download = `GlobalDev-Hub-Receipt-${verifiedReceipt.reference}.png`;
+
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+
+          setTimeout(() => URL.revokeObjectURL(url), 30000);
+
+          status.textContent = "Your receipt image has been prepared for saving.";
+        } catch (error) {
+          status.textContent = error.message;
+        }
+      }
+
+      async function shareReceipt() {
+        if (!verifiedReceipt) return;
+
+        try {
+          const blob = await buildReceiptImage();
+
+          const file = new File(
+            [blob],
+            `GlobalDev-Hub-Receipt-${verifiedReceipt.reference}.png`,
+            { type: "image/png" }
+          );
+
+          const shareText =
+            `GlobalDev Hub payment confirmation\n` +
+            `Product: ${verifiedReceipt.productName}\n` +
+            `Amount: ${verifiedReceipt.amountText}\n` +
+            `Reference: ${verifiedReceipt.reference}`;
+
+          if (
+            navigator.canShare &&
+            navigator.canShare({ files: [file] }) &&
+            navigator.share
+          ) {
+            await navigator.share({
+              title: "GlobalDev Hub Payment Receipt",
+              text: shareText,
+              files: [file]
+            });
+          } else if (navigator.share) {
+            await navigator.share({
+              title: "GlobalDev Hub Payment Receipt",
+              text: shareText
+            });
+          } else {
+            await saveReceipt();
+            status.textContent =
+              "Image sharing is not available in this browser. Your receipt image has been prepared for saving.";
+          }
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            status.textContent =
+              "Sharing was unavailable. You can use Save Receipt Image instead.";
+          }
+        }
+      }
+
+      saveButton.addEventListener("click", saveReceipt);
+      shareButton.addEventListener("click", shareReceipt);
 
       if (!reference) {
         heading.textContent = "Payment reference missing";
@@ -253,6 +675,32 @@
         download.textContent = product.button;
         download.href = data.download_url;
         download.style.display = "block";
+
+        const currency = data.currency || "NGN";
+        const amountText = formatAmount(data.amount, currency);
+        const dateText = formatDate(data.paid_at);
+
+        verifiedReceipt = {
+          productName: product.name,
+          email: data.email || "Not provided",
+          receiptNumber: data.receipt_number || data.reference || reference,
+          reference: data.reference || reference,
+          date: dateText,
+          channel: data.channel || "Not provided",
+          amountText: amountText
+        };
+
+        setReceiptText("receiptProduct", verifiedReceipt.productName);
+        setReceiptText("receiptEmail", verifiedReceipt.email);
+        setReceiptText("receiptNumber", verifiedReceipt.receiptNumber);
+        setReceiptText("receiptReference", verifiedReceipt.reference);
+        setReceiptText("receiptDate", verifiedReceipt.date);
+        setReceiptText("receiptChannel", verifiedReceipt.channel);
+        setReceiptText("receiptAmount", verifiedReceipt.amountText);
+
+        receipt.style.display = "block";
+        saveButton.style.display = "block";
+        shareButton.style.display = "block";
       })
 
       .catch(error => {
