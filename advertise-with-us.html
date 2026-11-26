@@ -81,9 +81,7 @@ main {width:min(1050px,92%);margin:45px auto}
 .card span {font-size:35px}
 .card h3 {color:var(--dark)}
 .card p {color:var(--muted);font-size:14px}
-.package {
-  border-top:4px solid var(--primary);
-}
+.package {border-top:4px solid var(--primary)}
 .package ul {
   padding-left:20px;
   color:var(--muted);
@@ -445,10 +443,11 @@ document.getElementById("year").textContent =
   new Date().getFullYear();
 
 /* GlobalDev Hub Supabase connection */
-const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
+const SUPABASE_URL =
+  "https://fkaunvoidromujlhoxow.supabase.co";
 
-/* Replace this placeholder with your Supabase Publishable key */
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+const SUPABASE_ANON_KEY =
+  "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
@@ -462,10 +461,11 @@ const errorBox = document.getElementById("error");
 const errorText = document.getElementById("errorText");
 const packageSelect = document.getElementById("package");
 
-/* Package buttons select the matching form option */
+/* Package selection */
 document.querySelectorAll("[data-package]").forEach(button => {
   button.addEventListener("click", () => {
     packageSelect.value = button.dataset.package;
+
     document.getElementById("inquiry").scrollIntoView({
       behavior: "smooth",
       block: "start"
@@ -473,7 +473,7 @@ document.querySelectorAll("[data-package]").forEach(button => {
   });
 });
 
-/* Save advertiser inquiry to Supabase */
+/* Submit inquiry to Supabase */
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
 
@@ -482,12 +482,9 @@ form.addEventListener("submit", async function(event) {
 
   if (!form.reportValidity()) return;
 
-  if (
-    SUPABASE_ANON_KEY === "YOUR_SUPABASE_PUBLISHABLE_KEY" ||
-    !SUPABASE_ANON_KEY.trim()
-  ) {
+  if (!window.supabase) {
     errorText.textContent =
-      "The Supabase public key has not been added to this page yet.";
+      "The submission service could not load. Please refresh and try again.";
     errorBox.style.display = "block";
     return;
   }
