@@ -59,6 +59,24 @@ footer{text-align:center;padding:25px;color:#667085;font-size:13px}
 .note-actions button{border:0;border-radius:6px;padding:7px 11px;background:#eef4ff;color:#1647a3}
 .note-actions .delete-note{background:#fff0f0;color:#b42318}
 #notesMessage{font-size:13px;margin-top:10px;overflow-wrap:anywhere}
+.followups-section{border-top:1px solid #edf0f5;margin-top:22px;padding-top:20px}
+.followups-section h3{margin:0 0 8px}
+.followup-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:12px}
+.followup-form label{display:block;font-size:13px;color:#475467;font-weight:bold}
+.followup-form input,.followup-form select,.followup-form textarea{display:block;width:100%;margin-top:6px;padding:10px;border:1px solid #d5dce8;border-radius:7px;background:#fff;color:#172033}
+.followup-form textarea{min-height:75px;resize:vertical}
+.followup-form .wide{grid-column:1/-1}
+.followup-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.secondary-button{background:#f0f2f5;color:#344054;border:0;padding:10px 14px;border-radius:7px}
+.followup-card{border:1px solid #e5eaf2;border-radius:9px;padding:13px;margin-top:12px}
+.followup-card-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.followup-meta{font-size:12px;color:#667085}
+.followup-content{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5;font-size:14px;margin-top:7px}
+.followup-actions-small{display:flex;gap:8px;margin-top:12px}
+.followup-actions-small button{border:0;border-radius:6px;padding:7px 11px;background:#eef4ff;color:#1647a3}
+.followup-actions-small .delete-followup{background:#fff0f0;color:#b42318}
+#followupsMessage{font-size:13px;margin-top:10px;overflow-wrap:anywhere}
+@media(max-width:650px){.followup-form{grid-template-columns:1fr}.followup-form .wide{grid-column:auto}}
 @media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:15px}.details-grid{grid-template-columns:1fr}.detail-item.full{grid-column:auto}.dialog{padding:16px}}
 </style>
 </head>
@@ -90,7 +108,21 @@ footer{text-align:center;padding:25px;color:#667085;font-size:13px}
 <button class="primary-button" id="saveNoteButton">Save Private Note</button>
 <div id="notesMessage" aria-live="polite"></div>
 <h3 style="margin-top:22px">Notes History</h3><div id="notesList"><p class="notes-help">Open an inquiry to load its notes.</p></div>
-</section></section></div>
+</section>
+<section class="followups-section"><h3>Follow-up Tracking</h3>
+<p class="notes-help">Plan and record private follow-ups for this advertiser. Advertisers cannot see these records.</p>
+<div class="followup-form">
+<label>Next follow-up date<input type="date" id="followUpDate" required></label>
+<label>Contact method<select id="followUpMethod"><option value="Email">Email</option><option value="Phone">Phone</option><option value="WhatsApp">WhatsApp</option><option value="Other">Other</option></select></label>
+<label>Status<select id="followUpStatus"><option value="Pending">Pending</option><option value="Contacted">Contacted</option><option value="Completed">Completed</option></select></label>
+<label class="wide">Outcome<textarea id="followUpOutcome" maxlength="5000" placeholder="What happened or what is expected?"></textarea></label>
+<label class="wide">Remarks<textarea id="followUpNotes" maxlength="5000" placeholder="Add internal follow-up details..."></textarea></label>
+<div class="followup-actions wide"><button class="primary-button" id="saveFollowUpButton" type="button">Save Follow-up</button><button class="secondary-button" id="cancelFollowUpEditButton" type="button" hidden>Cancel Edit</button></div>
+</div>
+<div id="followupsMessage" aria-live="polite"></div>
+<h3 style="margin-top:22px">Follow-up History</h3><div id="followupsList"><p class="notes-help">Open an inquiry to load follow-ups.</p></div>
+</section>
+</section></div>
 
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
@@ -108,13 +140,24 @@ const noteInput = document.getElementById("noteInput");
 const notesList = document.getElementById("notesList");
 const notesMessage = document.getElementById("notesMessage");
 const saveNoteButton = document.getElementById("saveNoteButton");
+const followUpDate = document.getElementById("followUpDate");
+const followUpMethod = document.getElementById("followUpMethod");
+const followUpStatus = document.getElementById("followUpStatus");
+const followUpOutcome = document.getElementById("followUpOutcome");
+const followUpNotes = document.getElementById("followUpNotes");
+const followupsList = document.getElementById("followupsList");
+const followupsMessage = document.getElementById("followupsMessage");
+const saveFollowUpButton = document.getElementById("saveFollowUpButton");
+const cancelFollowUpEditButton = document.getElementById("cancelFollowUpEditButton");
 let inquiries = [];
 let currentUser = null;
 let activeInquiryId = null;
+let editingFollowUpId = null;
 
 function showMessage(message,error=false){messageBox.textContent=message;messageBox.className=error?"error":"";messageBox.style.display="block";}
 function hideMessage(){messageBox.style.display="none";}
 function showNotesMessage(message,error=false){notesMessage.textContent=message;notesMessage.style.color=error?"#b42318":"#1647a3";}
+function showFollowupsMessage(message,error=false){followupsMessage.textContent=message;followupsMessage.style.color=error?"#b42318":"#1647a3";}
 function formatDate(value){if(!value)return "—";const date=new Date(value);return Number.isNaN(date.getTime())?"—":date.toLocaleString();}
 function addTextCell(row,value,className=""){const cell=document.createElement("td");cell.textContent=value||"—";if(className)cell.className=className;row.appendChild(cell);return cell;}
 
@@ -172,13 +215,64 @@ function addWebsiteDetail(value){
 }
 
 async function openDetails(inquiry){
- activeInquiryId=inquiry.id;detailsContent.replaceChildren();notesList.replaceChildren();noteInput.value="";showNotesMessage("");
+ activeInquiryId=inquiry.id;detailsContent.replaceChildren();notesList.replaceChildren();noteInput.value="";showNotesMessage("");resetFollowUpForm();followupsList.replaceChildren();showFollowupsMessage("");
  addDetail("Advertiser",inquiry.name);addDetail("Email",inquiry.email);addDetail("Company",inquiry.company);addWebsiteDetail(inquiry.website);
  addDetail("Country",inquiry.country);addDetail("Advertising Type",inquiry.advertising_type);addDetail("Package",inquiry.package);addDetail("Budget",inquiry.budget);
  addDetail("Date Submitted",formatDate(inquiry.created_at));addDetail("Current Status",inquiry.status);addDetail("Full Message",inquiry.message,true);
- backdrop.classList.add("open");document.body.style.overflow="hidden";await loadNotes(inquiry.id);
+ backdrop.classList.add("open");document.body.style.overflow="hidden";await Promise.all([loadNotes(inquiry.id),loadFollowUps(inquiry.id)]);
 }
-function closeDetails(){backdrop.classList.remove("open");document.body.style.overflow="";activeInquiryId=null;noteInput.value="";}
+function closeDetails(){backdrop.classList.remove("open");document.body.style.overflow="";activeInquiryId=null;noteInput.value="";resetFollowUpForm();}
+
+function resetFollowUpForm(){
+ editingFollowUpId=null;followUpDate.value="";followUpMethod.value="Email";followUpStatus.value="Pending";followUpOutcome.value="";followUpNotes.value="";saveFollowUpButton.textContent="Save Follow-up";cancelFollowUpEditButton.hidden=true;
+}
+function formatFollowUpDate(value){
+ if(!value)return "—";
+ const parts=value.split("-");
+ if(parts.length!==3)return value;
+ return new Date(Number(parts[0]),Number(parts[1])-1,Number(parts[2])).toLocaleDateString();
+}
+async function loadFollowUps(inquiryId){
+ followupsList.replaceChildren();const loading=document.createElement("p");loading.className="notes-help";loading.textContent="Loading follow-ups...";followupsList.appendChild(loading);
+ const {data,error}=await supabase.from("advertiser_follow_ups").select("*").eq("inquiry_id",inquiryId).order("follow_up_date",{ascending:true}).order("created_at",{ascending:false});
+ if(activeInquiryId!==inquiryId)return;
+ followupsList.replaceChildren();
+ if(error){const p=document.createElement("p");p.className="notes-help";p.textContent="Unable to load follow-ups: "+error.message;followupsList.appendChild(p);return;}
+ if(!data||!data.length){const p=document.createElement("p");p.className="notes-help";p.textContent="No follow-ups have been scheduled yet.";followupsList.appendChild(p);return;}
+ data.forEach(item=>{
+  const card=document.createElement("div");card.className="followup-card";
+  const top=document.createElement("div");top.className="followup-card-top";
+  const title=document.createElement("strong");title.textContent=formatFollowUpDate(item.follow_up_date);
+  const meta=document.createElement("span");meta.className="followup-meta";meta.textContent=item.method+" · "+item.status;
+  top.append(title,meta);card.appendChild(top);
+  if(item.outcome){const outcome=document.createElement("div");outcome.className="followup-content";outcome.textContent="Outcome: "+item.outcome;card.appendChild(outcome);}
+  if(item.notes){const remarks=document.createElement("div");remarks.className="followup-content";remarks.textContent="Remarks: "+item.notes;card.appendChild(remarks);}
+  const actions=document.createElement("div");actions.className="followup-actions-small";
+  const edit=document.createElement("button");edit.type="button";edit.textContent="Edit";edit.addEventListener("click",()=>{
+   editingFollowUpId=item.id;followUpDate.value=item.follow_up_date||"";followUpMethod.value=item.method||"Email";followUpStatus.value=item.status||"Pending";followUpOutcome.value=item.outcome||"";followUpNotes.value=item.notes||"";saveFollowUpButton.textContent="Update Follow-up";cancelFollowUpEditButton.hidden=false;showFollowupsMessage("Editing follow-up. Update the fields above and save.");
+   document.getElementById("followUpDate").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+  const del=document.createElement("button");del.type="button";del.className="delete-followup";del.textContent="Delete";del.addEventListener("click",async()=>{
+   if(!window.confirm("Delete this follow-up record?"))return;del.disabled=true;
+   const {error}=await supabase.from("advertiser_follow_ups").delete().eq("id",item.id);del.disabled=false;
+   if(error){showFollowupsMessage("Could not delete follow-up: "+error.message,true);return;}
+   if(editingFollowUpId===item.id)resetFollowUpForm();showFollowupsMessage("Follow-up deleted successfully.");await loadFollowUps(inquiryId);
+  });
+  actions.append(edit,del);card.appendChild(actions);followupsList.appendChild(card);
+ });
+}
+async function saveFollowUp(){
+ if(!activeInquiryId||!currentUser)return;
+ if(!followUpDate.value){showFollowupsMessage("Please choose a follow-up date.",true);followUpDate.focus();return;}
+ const payload={inquiry_id:activeInquiryId,admin_user_id:currentUser.id,follow_up_date:followUpDate.value,method:followUpMethod.value,status:followUpStatus.value,outcome:followUpOutcome.value.trim()||null,notes:followUpNotes.value.trim()||null,updated_at:new Date().toISOString()};
+ saveFollowUpButton.disabled=true;showFollowupsMessage(editingFollowUpId?"Updating follow-up...":"Saving follow-up...");
+ let result;
+ if(editingFollowUpId){result=await supabase.from("advertiser_follow_ups").update(payload).eq("id",editingFollowUpId);}
+ else{result=await supabase.from("advertiser_follow_ups").insert(payload);}
+ saveFollowUpButton.disabled=false;
+ if(result.error){showFollowupsMessage("Could not save follow-up: "+result.error.message,true);return;}
+ resetFollowUpForm();showFollowupsMessage("Follow-up saved successfully.");await loadFollowUps(activeInquiryId);
+}
 
 async function loadNotes(inquiryId){
  notesList.replaceChildren();const loading=document.createElement("p");loading.className="notes-help";loading.textContent="Loading private notes...";notesList.appendChild(loading);
@@ -242,6 +336,8 @@ document.getElementById("refreshButton").addEventListener("click",loadInquiries)
 statusFilter.addEventListener("change",renderInquiries);
 document.getElementById("closeDetailsButton").addEventListener("click",closeDetails);
 document.getElementById("saveNoteButton").addEventListener("click",savePrivateNote);
+saveFollowUpButton.addEventListener("click",saveFollowUp);
+cancelFollowUpEditButton.addEventListener("click",()=>{resetFollowUpForm();showFollowupsMessage("Follow-up editing cancelled.");});
 backdrop.addEventListener("click",event=>{if(event.target===backdrop)closeDetails();});
 document.addEventListener("keydown",event=>{if(event.key==="Escape"&&backdrop.classList.contains("open"))closeDetails();});
 document.getElementById("logoutButton").addEventListener("click",async()=>{await supabase.auth.signOut();window.location.replace("auth.html");});
