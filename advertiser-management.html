@@ -76,6 +76,20 @@ footer{text-align:center;padding:25px;color:#667085;font-size:13px}
 .followup-actions-small button{border:0;border-radius:6px;padding:7px 11px;background:#eef4ff;color:#1647a3}
 .followup-actions-small .delete-followup{background:#fff0f0;color:#b42318}
 #followupsMessage{font-size:13px;margin-top:10px;overflow-wrap:anywhere}
+
+.orders-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0 18px}
+.order-stat{background:#f4f7fc;border-radius:9px;padding:14px}
+.order-stat span{display:block;color:#667085;font-size:12px}
+.order-stat strong{display:block;font-size:20px;margin-top:7px;color:#0b55db;overflow-wrap:anywhere}
+.orders-message{padding:11px;border-radius:7px;background:#eef4ff;color:#1647a3;margin:12px 0;display:none;overflow-wrap:anywhere}
+.orders-message.error{background:#fff0f0;color:#b42318}
+.orders-table{min-width:900px}
+.order-status{display:inline-block;padding:5px 8px;border-radius:20px;background:#eef4ff;color:#1647a3;font-size:12px;font-weight:bold}
+.order-status.paid{background:#e8f7ee;color:#167044}
+.order-status.failed,.order-status.rejected{background:#fff0f0;color:#b42318}
+.order-reference{font-family:monospace;overflow-wrap:anywhere;max-width:190px}
+@media(max-width:650px){.orders-summary{grid-template-columns:1fr}}
+
 @media(max-width:650px){.followup-form{grid-template-columns:1fr}.followup-form .wide{grid-column:auto}}
 @media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:15px}.details-grid{grid-template-columns:1fr}.detail-item.full{grid-column:auto}.dialog{padding:16px}}
 </style>
@@ -95,6 +109,21 @@ footer{text-align:center;padding:25px;color:#667085;font-size:13px}
 </select><button class="refresh-button" id="refreshButton">Refresh Inquiries</button></div>
 <div class="table-wrap"><table><thead><tr><th>Advertiser</th><th>Company</th><th>Package</th><th>Budget</th><th>Message</th><th>Date</th><th>Status</th><th>Details</th></tr></thead>
 <tbody id="inquiriesBody"><tr><td colspan="8" class="empty">Checking administrator access...</td></tr></tbody></table></div>
+</section>
+<section class="panel">
+<h2>Paid Advertising Orders</h2>
+<p class="notes-help">Payments verified by the GlobalDev Hub payment service appear here. Paid campaigns remain subject to administrator review before publication.</p>
+<div class="orders-summary">
+<div class="order-stat"><span>Total orders</span><strong id="ordersTotal">0</strong></div>
+<div class="order-stat"><span>Successfully paid</span><strong id="ordersPaid">0</strong></div>
+<div class="order-stat"><span>Total received</span><strong id="ordersRevenue">₦0</strong></div>
+</div>
+<div class="toolbar"><span class="notes-help">Payment records are read-only in this dashboard.</span><button class="refresh-button" id="refreshOrdersButton" type="button">Refresh Orders</button></div>
+<div class="orders-message" id="ordersMessage" role="status" aria-live="polite"></div>
+<div class="table-wrap"><table class="orders-table">
+<thead><tr><th>Advertiser</th><th>Company</th><th>Package</th><th>Amount</th><th>Payment</th><th>Campaign</th><th>Paid Date</th><th>Reference</th></tr></thead>
+<tbody id="ordersBody"><tr><td colspan="8" class="empty">Checking administrator access...</td></tr></tbody>
+</table></div>
 </section></main>
 <footer>GlobalDev Hub · Private Administration</footer>
 
@@ -131,6 +160,8 @@ const SUPABASE_URL = "https://fkaunvoidromujlhoxow.supabase.co";
 const SUPABASE_PUBLIC_KEY = "sb_publishable_kclbzY4IikQlKqvpEYuTuw_wLoT_fp_";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
 
+const ordersBody = document.getElementById("ordersBody");
+const ordersMessage = document.getElementById("ordersMessage");
 const body = document.getElementById("inquiriesBody");
 const messageBox = document.getElementById("message");
 const statusFilter = document.getElementById("statusFilter");
@@ -321,6 +352,81 @@ async function loadInquiries(){
  inquiries=data||[];updateStatistics();renderInquiries();
 }
 
+
+function showOrdersMessage(message,error=false){
+ ordersMessage.textContent=message;
+ ordersMessage.className="orders-message"+(error?" error":"");
+ ordersMessage.style.display="block";
+}
+function formatNairaFromKobo(value){
+ const amount=Number(value);
+ if(!Number.isFinite(amount))return "—";
+ return new Intl.NumberFormat("en-NG",{style:"currency",currency:"NGN",maximumFractionDigits:2}).format(amount/100);
+}
+function addOrderCell(row,value,className=""){
+ const cell=document.createElement("td");
+ cell.textContent=value===null||value===undefined||value===""?"—":String(value);
+ if(className)cell.className=className;
+ row.appendChild(cell);
+ return cell;
+}
+function addOrderStatus(row,value){
+ const cell=document.createElement("td");
+ const badge=document.createElement("span");
+ const status=String(value||"unknown").toLowerCase();
+ badge.className="order-status"+(status==="paid"||status==="active"?" paid":"")+(status==="failed"||status==="rejected"?" failed":"");
+ badge.textContent=String(value||"Unknown").replaceAll("_"," ").replace(/\b\w/g,char=>char.toUpperCase());
+ cell.appendChild(badge);row.appendChild(cell);
+}
+async function loadAdvertisingOrders(){
+ ordersBody.replaceChildren();
+ const loading=document.createElement("tr");
+ const loadingCell=document.createElement("td");
+ loadingCell.colSpan=8;loadingCell.className="empty";loadingCell.textContent="Loading paid advertising orders...";
+ loading.appendChild(loadingCell);ordersBody.appendChild(loading);
+ ordersMessage.style.display="none";
+ const {data,error}=await supabase.from("advertising_orders").select("id,name,email,company,country,package,amount_kobo,currency,paystack_reference,payment_status,campaign_status,created_at,paid_at").order("created_at",{ascending:false});
+ if(error){
+  ordersBody.replaceChildren();
+  const row=document.createElement("tr");const cell=document.createElement("td");
+  cell.colSpan=8;cell.className="empty";cell.textContent="Paid advertising orders could not be loaded.";
+  row.appendChild(cell);ordersBody.appendChild(row);
+  document.getElementById("ordersTotal").textContent="—";
+  document.getElementById("ordersPaid").textContent="—";
+  document.getElementById("ordersRevenue").textContent="—";
+  showOrdersMessage("Unable to load paid advertising orders: "+error.message,true);
+  return;
+ }
+ const orders=data||[];
+ const paid=orders.filter(order=>order.payment_status==="paid");
+ const revenue=paid.reduce((sum,order)=>sum+(Number(order.amount_kobo)||0),0);
+ document.getElementById("ordersTotal").textContent=orders.length;
+ document.getElementById("ordersPaid").textContent=paid.length;
+ document.getElementById("ordersRevenue").textContent=formatNairaFromKobo(revenue);
+ ordersBody.replaceChildren();
+ if(!orders.length){
+  const row=document.createElement("tr");const cell=document.createElement("td");
+  cell.colSpan=8;cell.className="empty";cell.textContent="No advertising orders have been received yet.";
+  row.appendChild(cell);ordersBody.appendChild(row);return;
+ }
+ orders.forEach(order=>{
+  const row=document.createElement("tr");
+  const advertiser=document.createElement("td");
+  const name=document.createElement("strong");name.textContent=order.name||"Unnamed advertiser";
+  const email=document.createElement("a");email.textContent=order.email||"No email";
+  if(order.email)email.href="mailto:"+order.email;
+  advertiser.append(name,email);row.appendChild(advertiser);
+  addOrderCell(row,[order.company,order.country].filter(Boolean).join("\n"));
+  addOrderCell(row,order.package);
+  addOrderCell(row,formatNairaFromKobo(order.amount_kobo));
+  addOrderStatus(row,order.payment_status);
+  addOrderStatus(row,order.campaign_status);
+  addOrderCell(row,order.paid_at?formatDate(order.paid_at):"Not paid");
+  addOrderCell(row,order.paystack_reference,"order-reference");
+  ordersBody.appendChild(row);
+ });
+}
+
 async function initialize(){
  const {data:{session},error:sessionError}=await supabase.auth.getSession();
  if(sessionError||!session){window.location.replace("auth.html");return;}
@@ -329,10 +435,11 @@ async function initialize(){
   document.body.replaceChildren();const denied=document.createElement("h2");denied.textContent="Access denied. Administrator permission is required.";
   denied.style.cssText="padding:40px;text-align:center;color:#b42318";document.body.appendChild(denied);return;
  }
- currentUser=session.user;await loadInquiries();
+ currentUser=session.user;await Promise.all([loadInquiries(),loadAdvertisingOrders()]);
 }
 
 document.getElementById("refreshButton").addEventListener("click",loadInquiries);
+document.getElementById("refreshOrdersButton").addEventListener("click",loadAdvertisingOrders);
 statusFilter.addEventListener("change",renderInquiries);
 document.getElementById("closeDetailsButton").addEventListener("click",closeDetails);
 document.getElementById("saveNoteButton").addEventListener("click",savePrivateNote);
